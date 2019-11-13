@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>הגדרת כפתור</title>
+        <style>
+            body {
+                font-family: sans-serif;
+            };
+        </style>
+    </head>
+    <body dir="rtl">
+        <form>
+            <div>
+            <p>
+                <input type="radio" name="img_type" value="existing" checked>קטגוריה:&nbsp;
+                <select name="category1">
+                    <option value="nill">כלום</option> <!-- Dynamically filled -->
+                </select><br/>
+                תמונות קיימות:&nbsp;
+                <select name="existing_img">
+                    <option value="nill">כלום</option> <!-- Dynamically filled -->
+                </select><br/>
+            </p>
+            <p>
+                <input type="radio" name="img_type" value="new">העלאת תמונה חדשה:&nbsp;
+                <button>עיון...</button><br/>
+                קטגוריה עבור התמונה חדשה:&nbsp;<select name="category2">
+                    <option value="nill">כלום</option> <!-- Dynamically filled -->
+                </select><br/>
+            </p>
+            <p>
+                צבע רקע:&nbsp;
+                <select name="color">
+                        <option value="white">לבן</option> <!-- Dynamically filled or not... -->
+                </select><br/>
+                פעולה בעת לחיצה:&nbsp;
+                <select name="action">
+                    <option value="nill">כלום</option> <!-- Dynamically filled -->
+                </select>
+                <div id="action-context">
+                    &lt; Context &gt; <!-- This is dynamicly picked -->
+                </div>
+                <br/>
+                <button style="align-content: center;">שמור כפתור</button>
+            </p>
+            </div>
+        </form>
+        <div style="position: absolute; width: 25%; top: 1%; left: 49%"> <!-- Fix align -->
+            תצוגה מקדימה:<br/>
+            <div style="width: 200; height: 200; border: 2px solid black;">
+            </div>
+        </div>
+    </body>
+</html>
