@@ -1,3 +1,4 @@
+<!-- Button set-up HTML skeleton -->
 <html>
     <head>
         <title>הגדרת כפתור</title>
@@ -23,11 +24,13 @@
             <p>
                 <input type="radio" name="img_type" value="new">העלאת תמונה חדשה:&nbsp;
                 <button>עיון...</button><br/>
-                קטגוריה עבור התמונה חדשה:&nbsp;<select name="category2">
+                קטגוריה עבור התמונה חדשה:&nbsp;
+                <select name="category2">
                     <option value="nill">כלום</option> <!-- Dynamically filled -->
                 </select><br/>
             </p>
             <p>
+                שם לזיהוי הכפתור:&nbsp;<input type="text" name="button_name"><br/>
                 צבע רקע:&nbsp;
                 <select name="color">
                         <option value="white">לבן</option> <!-- Dynamically filled or not... -->
@@ -44,9 +47,9 @@
             </p>
             </div>
         </form>
-        <div style="position: absolute; width: 25%; top: 1%; left: 49%"> <!-- Fix align -->
+        <div style="position: absolute; width: 25%; top: 1%; right: 250pt">
             תצוגה מקדימה:<br/>
-            <div style="width: 200; height: 200; border: 2px solid black;">
+            <div style="width: 230; height: 230; border: 2px solid black;">
             </div>
         </div>
     </body>
