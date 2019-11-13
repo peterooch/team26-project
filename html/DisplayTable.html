@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>הצגת לוח</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        ;
+    </style>
+</head>
+
+<body dir="rtl">
+    <br>
+    <form action="/action_page.php">
+        שם: <input type="text" name="Name"><br>
+    </form>
+    <p style="font-size:160%;">צבע ורקע:<select>
+            <option value="nothing">כלום</option>
+        </select>
+    </p>
+    <p style="font-size:160%;">קטגוריות:<select>
+            <option value="nothing">כלום</option>
+        </select>
+    </p>
+    <p style="font-size:160%;">פעולות:<select>
+            <option value="nothing">כלום</option>
+        </select>
+        <button>+</button>
+    </p>
+    <button>שמירה</button><button>מחק</button>
+
+    <div style="position: absolute; width: 25%; top: 1%; left: 50%"> <!-- Fix align -->
+        תצוגה מקדימה:<br/>
+        <div style="width: 200px; height: 200px; border: 2px solid black;">
+        </div>
+    </div>
+
+
+</body>
+
+</html>
