@@ -9,10 +9,10 @@ namespace BoardProject.Data
 {
     public class DataContext : DbContext
     {
-        public DbSet<UserData>   DBUsers;
-        public DbSet<BoardData>  DBBoards;
-        public DbSet<ButtonData> DBButtons;
-        public DbSet<Image>      DBImages;
+        public DbSet<UserData>   UserData;
+        public DbSet<BoardData>  BoardData;
+        public DbSet<ButtonData> ButtonData;
+        public DbSet<Image>      Image;
 
         /* Use SQLite for now */
         protected override void OnConfiguring(DbContextOptionsBuilder options) =>

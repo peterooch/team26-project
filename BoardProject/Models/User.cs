@@ -65,11 +65,11 @@ namespace BoardProject.Models
                 string[] BoardIDs = userData.BoardIDs.Split(';');
 
                 foreach (string Id in BoardIDs)
-                    Boards.Add(new Board(DbCon.DBBoards.Single(board => board.ID == int.Parse(Id))));
+                    Boards.Add(new Board(DbCon.BoardData.Single(board => board.ID == int.Parse(Id))));
             }
 
             if (userData.HomeBoardID != null)
-                HomeBoard = new Board(DbCon.DBBoards.Single(board => board.ID == int.Parse(userData.HomeBoardID)));
+                HomeBoard = new Board(DbCon.BoardData.Single(board => board.ID == int.Parse(userData.HomeBoardID)));
             else if (Boards.Count > 0)
                 HomeBoard = Boards[0];
         }

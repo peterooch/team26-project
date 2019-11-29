@@ -50,7 +50,7 @@ namespace BoardProject.Models
             // Convert source ID to Image object
             using var DbCon = new DataContext();
 
-            Source = DbCon.DBImages.Single(image => image.ID == buttonData.SourceID);
+            Source = DbCon.Image.Single(image => image.ID == buttonData.SourceID);
         }
     }
 }

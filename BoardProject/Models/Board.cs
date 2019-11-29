@@ -45,7 +45,7 @@ namespace BoardProject.Models
                 string[] ButtonIDs = boardData.ButtonIDs.Split(';');
 
                 foreach (string Id in ButtonIDs)
-                    Buttons.Add(new Button(DbCon.DBButtons.Single(button => button.ID == int.Parse(Id))));
+                    Buttons.Add(new Button(DbCon.ButtonData.Single(button => button.ID == int.Parse(Id))));
             }
         }
     }
