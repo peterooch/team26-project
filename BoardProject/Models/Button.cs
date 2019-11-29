@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoardProject.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,7 +47,10 @@ namespace BoardProject.Models
         public Button(ButtonData buttonData)
             : base(buttonData)
         {
-            // Convert source string to Image object
+            // Convert source ID to Image object
+            using var DbCon = new DataContext();
+
+            Source = DbCon.DBImages.Single(image => image.ID == buttonData.SourceID);
         }
     }
 }

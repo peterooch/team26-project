@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoardProject.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,6 +38,12 @@ namespace BoardProject.Models
             : base(boardData)
         {
             // Convert IDs to Button objects
+            using var DbCon = new DataContext();
+
+            string[] ButtonIDs = boardData.ButtonIDs.Split(';');
+
+            foreach (string Id in ButtonIDs)
+                Buttons.Add(new Button(DbCon.DBButtons.Single(button => button.ID == int.Parse(Id))));
         }
     }
 }

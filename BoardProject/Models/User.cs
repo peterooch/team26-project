@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoardProject.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,6 +58,14 @@ namespace BoardProject.Models
             : base(userData)
         {
             // Convert IDs to Board objects
+            using var DbCon = new DataContext();
+
+            string[] BoardIDs = userData.BoardIDs.Split(';');
+
+            foreach (string Id in BoardIDs)
+                Boards.Add(new Board(DbCon.DBBoards.Single(board => board.ID == int.Parse(Id))));
+
+            HomeBoard = new Board(DbCon.DBBoards.Single(board => board.ID == int.Parse(userData.HomeBoardID)));
         }
     }
 }
