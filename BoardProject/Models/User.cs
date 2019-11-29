@@ -60,12 +60,18 @@ namespace BoardProject.Models
             // Convert IDs to Board objects
             using var DbCon = new DataContext();
 
-            string[] BoardIDs = userData.BoardIDs.Split(';');
+            if (userData.BoardIDs != null)
+            {
+                string[] BoardIDs = userData.BoardIDs.Split(';');
 
-            foreach (string Id in BoardIDs)
-                Boards.Add(new Board(DbCon.DBBoards.Single(board => board.ID == int.Parse(Id))));
+                foreach (string Id in BoardIDs)
+                    Boards.Add(new Board(DbCon.DBBoards.Single(board => board.ID == int.Parse(Id))));
+            }
 
-            HomeBoard = new Board(DbCon.DBBoards.Single(board => board.ID == int.Parse(userData.HomeBoardID)));
+            if (userData.HomeBoardID != null)
+                HomeBoard = new Board(DbCon.DBBoards.Single(board => board.ID == int.Parse(userData.HomeBoardID)));
+            else if (Boards.Count > 0)
+                HomeBoard = Boards[0];
         }
     }
 }

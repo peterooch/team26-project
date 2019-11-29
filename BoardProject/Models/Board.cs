@@ -38,12 +38,15 @@ namespace BoardProject.Models
             : base(boardData)
         {
             // Convert IDs to Button objects
-            using var DbCon = new DataContext();
+            if (boardData.ButtonIDs != null)
+            {
+                using var DbCon = new DataContext();
 
-            string[] ButtonIDs = boardData.ButtonIDs.Split(';');
+                string[] ButtonIDs = boardData.ButtonIDs.Split(';');
 
-            foreach (string Id in ButtonIDs)
-                Buttons.Add(new Button(DbCon.DBButtons.Single(button => button.ID == int.Parse(Id))));
+                foreach (string Id in ButtonIDs)
+                    Buttons.Add(new Button(DbCon.DBButtons.Single(button => button.ID == int.Parse(Id))));
+            }
         }
     }
 }
