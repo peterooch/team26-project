@@ -47,6 +47,18 @@ namespace BoardProject.Models
     {
         public string BoardIDs { get; set; }     // ; delimited id numbers (ID1;ID2;ID3;...)
         public string HomeBoardID { get; set; }  // Primary board identifier
+
+        public UserData(User user)
+            : base(user)
+        {
+            // Convert Board objects to IDs
+            HomeBoardID = user.HomeBoard.ID.ToString();
+
+            BoardIDs = string.Empty;
+
+            foreach (Board board in user.Boards)
+                BoardIDs += board.ID.ToString() + ";";
+        }
     }
     /* Logical Representation of the User model */
     public class User : UserBase
