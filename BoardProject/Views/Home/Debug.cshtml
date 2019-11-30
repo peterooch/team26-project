@@ -1,0 +1,94 @@
+﻿@model DebugLists
+@{
+    ViewData["Title"] = "Debug";
+}
+
+<h1>Debug</h1>
+<h2>UserData</h2>
+<table>
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].ID);
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].Username);
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].PasswordSalt);
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].IsAdmin);
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].Language);
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].Font);
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].FontSize);
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].BackgroundColor);
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].TextColor);
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].HighContrast);
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].DPI);
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].BoardIDs);
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.userDatas[0].HomeBoardID);
+        </td>
+    </tr>
+    @foreach (var item in Model.userDatas)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PasswordSalt);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAdmin);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Language);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Font);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FontSize);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BackgroundColor);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TextColor);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HighContrast);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DPI);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BoardIDs);
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HomeBoardID);
+            </td>
+        </tr>
+    }
+</table>

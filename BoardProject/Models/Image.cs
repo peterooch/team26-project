@@ -7,9 +7,9 @@ namespace BoardProject.Models
 {
     public class Image
     {
-        public int ID;
-        public string Source;
-        public string ImageName;
-        public string Category;
+        public int ID { get; set; }
+        public string Source { get; set; }
+        public string ImageName { get; set; }
+        public string Category { get; set; }
     }
 }

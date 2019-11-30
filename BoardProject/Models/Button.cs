@@ -16,10 +16,11 @@ namespace BoardProject.Models
             SwitchBoard
         }
 
-        public int ID;               // Identifier
-        public string ButtonName;    // Button Name
-        public ActionID ActionType;  // Action Type specifier
-        public string ActionContext; // Action context (resource location)
+        public int ID { get; set; }               // Identifier
+        public string ButtonName { get; set; }    // Button Name
+        public string ButtonText { get; set; }    // Button Description
+        public ActionID ActionType { get; set; }  // Action Type specifier
+        public string ActionContext { get; set; } // Action context (resource location)
 
         public ButtonBase()
         {
@@ -30,6 +31,7 @@ namespace BoardProject.Models
         {
             ID            = buttonBase.ID;
             ButtonName    = buttonBase.ButtonName;
+            ButtonText    = buttonBase.ButtonText;
             ActionType    = buttonBase.ActionType;
             ActionContext = buttonBase.ActionContext;
         }
@@ -37,7 +39,7 @@ namespace BoardProject.Models
     /* Database Representation of the Button model */
     public class ButtonData : ButtonBase
     {
-        public int SourceID; // Database button identifier
+        public int SourceID { get; set; } // Database button identifier
     }
     /* Logical Representation of the User model */
     public class Button : ButtonBase

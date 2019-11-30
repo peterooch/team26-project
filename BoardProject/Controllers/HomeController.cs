@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BoardProject.Models;
+using BoardProject.Data;
 
 namespace BoardProject.Controllers
 {
@@ -21,6 +22,12 @@ namespace BoardProject.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+        public IActionResult Debug()
+        {
+            DebugLists debugLists = new DebugLists();
+
+            return View(debugLists);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

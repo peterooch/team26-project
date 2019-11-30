@@ -50,6 +50,7 @@ namespace BoardProject.Migrations
                 {
                     ID = table.Column<int>(nullable: false),
                     ButtonName = table.Column<string>(nullable: false),
+                    ButtonText = table.Column<string>(nullable: true),
                     ActionType = table.Column<long>(nullable: false),
                     ActionContext = table.Column<string>(nullable: true),
                     SourceID = table.Column<int>(nullable: false)

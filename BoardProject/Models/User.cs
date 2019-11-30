@@ -8,18 +8,18 @@ namespace BoardProject.Models
 { 
     public class UserBase
     {
-        public int ID;              // Identifier
-        public string Username;     // Login Identifier
-        public string PasswordHash; // SHA512 Password Hash <=> sha512(password+salt)
-        public string PasswordSalt; // Password salt
-        public bool IsAdmin;        // Is the current user is an administrator?
-        public string Language;     // Selected User language
-        public string Font;         // Selected font name
-        public int FontSize;        // Selected font size
-        public int BackgroundColor; // Selected background color
-        public int TextColor;       // Selected text color
-        public bool HighContrast;   // Do we use the high contrast theme?
-        public int DPI;             // Selected DPI
+        public int ID { get; set; }              // Identifier
+        public string Username { get; set; }     // Login Identifier
+        public string PasswordHash { get; set; } // SHA512 Password Hash <=> sha512(password+salt)
+        public string PasswordSalt { get; set; } // Password salt
+        public bool IsAdmin { get; set; }        // Is the current user is an administrator?
+        public string Language { get; set; }     // Selected User language
+        public string Font { get; set; }         // Selected font name
+        public int FontSize { get; set; }        // Selected font size
+        public int BackgroundColor { get; set; } // Selected background color
+        public int TextColor { get; set; }       // Selected text color
+        public bool HighContrast { get; set; }   // Do we use the high contrast theme?
+        public int DPI { get; set; }             // Selected DPI
 
         public UserBase()
         {
@@ -45,8 +45,8 @@ namespace BoardProject.Models
     /* Database Representation of the User model */
     public class UserData : UserBase
     {
-        public string BoardIDs;     // ; delimited id numbers (ID1;ID2;ID3;...)
-        public string HomeBoardID;  // Primary board identifier
+        public string BoardIDs { get; set; }     // ; delimited id numbers (ID1;ID2;ID3;...)
+        public string HomeBoardID { get; set; }  // Primary board identifier
     }
     /* Logical Representation of the User model */
     public class User : UserBase

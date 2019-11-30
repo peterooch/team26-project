@@ -8,9 +8,9 @@ namespace BoardProject.Models
 {
     public class BoardBase
     {
-        public int ID;          // Identitfier
-        public string BoardName;   // Board Name
-        public string BoardHeader; // Header to be displayed in the board
+        public int ID { get; set; }        // Identitfier
+        public string BoardName { get; set; }   // Board Name
+        public string BoardHeader { get; set; } // Header to be displayed in the board
 
         /* Copy constructor */
         public BoardBase(BoardBase boardBase)
@@ -27,7 +27,7 @@ namespace BoardProject.Models
     /* Database Representation of the Board model */
     public class BoardData : BoardBase
     {
-        public string ButtonIDs; //; delimited id numbers (ID1;ID2;ID3;...)
+        public string ButtonIDs { get; set; } //; delimited id numbers (ID1;ID2;ID3;...)
     }
     /* Logical Representation of the Board model */
     public class Board : BoardBase
