@@ -12,10 +12,11 @@ namespace BoardProject.Models
         public string Username { get; set; }     // Login Identifier
         public string PasswordHash { get; set; } // SHA512 Password Hash <=> sha512(password+salt)
         public string PasswordSalt { get; set; } // Password salt
+        public bool IsPrimary { get; set; }      // Is the user is the primary user? (SuperUser)
         public bool IsAdmin { get; set; }        // Is the current user is an administrator?
         public string Language { get; set; }     // Selected User language
         public string Font { get; set; }         // Selected font name
-        public int FontSize { get; set; }        // Selected font size
+        public double FontSize { get; set; }        // Selected font size
         public int BackgroundColor { get; set; } // Selected background color
         public int TextColor { get; set; }       // Selected text color
         public bool HighContrast { get; set; }   // Do we use the high contrast theme?
@@ -32,6 +33,7 @@ namespace BoardProject.Models
             Username        = userBase.Username;     
             PasswordHash    = userBase.PasswordHash;
             PasswordSalt    = userBase.PasswordSalt;
+            IsPrimary       = userBase.IsPrimary;
             IsAdmin         = userBase.IsAdmin;
             Language        = userBase.Language;
             Font            = userBase.Font;        
@@ -48,6 +50,9 @@ namespace BoardProject.Models
         public string BoardIDs { get; set; }     // ; delimited id numbers (ID1;ID2;ID3;...)
         public string HomeBoardID { get; set; }  // Primary board identifier
 
+        public UserData()
+        {
+        }
         public UserData(User user)
             : base(user)
         {

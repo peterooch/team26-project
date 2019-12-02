@@ -21,7 +21,7 @@ namespace BoardProject.Models
         public string ButtonText { get; set; }    // Button Description
         public ActionID ActionType { get; set; }  // Action Type specifier
         public string ActionContext { get; set; } // Action context (resource location)
-
+        public int BackgroundColor { get; set; }
         public ButtonBase()
         {
         }
@@ -29,17 +29,22 @@ namespace BoardProject.Models
         /* Copy constructor */
         public ButtonBase(ButtonBase buttonBase)
         {
-            ID            = buttonBase.ID;
-            ButtonName    = buttonBase.ButtonName;
-            ButtonText    = buttonBase.ButtonText;
-            ActionType    = buttonBase.ActionType;
-            ActionContext = buttonBase.ActionContext;
+            ID              = buttonBase.ID;
+            ButtonName      = buttonBase.ButtonName;
+            ButtonText      = buttonBase.ButtonText;
+            ActionType      = buttonBase.ActionType;
+            ActionContext   = buttonBase.ActionContext;
+            BackgroundColor = buttonBase.BackgroundColor;
         }
     }
     /* Database Representation of the Button model */
     public class ButtonData : ButtonBase
     {
         public int SourceID { get; set; } // Database button identifier
+
+        public ButtonData()
+        {
+        }
     }
     /* Logical Representation of the User model */
     public class Button : ButtonBase

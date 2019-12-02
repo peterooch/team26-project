@@ -11,13 +11,21 @@ namespace BoardProject.Models
         public int ID { get; set; }        // Identitfier
         public string BoardName { get; set; }   // Board Name
         public string BoardHeader { get; set; } // Header to be displayed in the board
+        public int BackgroundColor { get; set; }
+        public int TextColor { get; set; }
+        public double FontSize { get; set; }
+        public double Spacing { get; set; }
 
         /* Copy constructor */
         public BoardBase(BoardBase boardBase)
         {
-            ID          = boardBase.ID;
-            BoardName   = boardBase.BoardName;
-            BoardHeader = boardBase.BoardHeader;
+            ID              = boardBase.ID;
+            BoardName       = boardBase.BoardName;
+            BoardHeader     = boardBase.BoardHeader;
+            BackgroundColor = boardBase.BackgroundColor;
+            TextColor       = boardBase.TextColor;
+            FontSize        = boardBase.FontSize;
+            Spacing         = boardBase.Spacing;
         }
 
         public BoardBase()
@@ -28,6 +36,9 @@ namespace BoardProject.Models
     public class BoardData : BoardBase
     {
         public string ButtonIDs { get; set; } //; delimited id numbers (ID1;ID2;ID3;...)
+        public BoardData()
+        {
+        }
     }
     /* Logical Representation of the Board model */
     public class Board : BoardBase

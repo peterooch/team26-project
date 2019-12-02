@@ -14,10 +14,11 @@ namespace BoardProject.Migrations
                     Username = table.Column<string>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: false),
                     PasswordSalt = table.Column<string>(nullable: false),
+                    IsPrimary = table.Column<bool>(nullable: false),
                     IsAdmin = table.Column<bool>(nullable: false),
                     Language = table.Column<string>(nullable: true),
                     Font = table.Column<string>(nullable: true),
-                    FontSize = table.Column<int>(nullable: true),
+                    FontSize = table.Column<double>(nullable: true),
                     BackgroundColor = table.Column<int>(nullable: true),
                     TextColor = table.Column<int>(nullable: true),
                     HighContrast = table.Column<bool>(nullable: true),
@@ -36,6 +37,10 @@ namespace BoardProject.Migrations
                 {
                     ID = table.Column<int>(nullable: false),
                     BoardName = table.Column<string>(nullable: false),
+                    BackgroundColor = table.Column<int>(nullable: true),
+                    TextColor = table.Column<int>(nullable: true),
+                    FontSize = table.Column<double>(nullable: true),
+                    Spacing = table.Column<double>(nullable: true),
                     BoardHeader = table.Column<string>(nullable: true),
                     ButtonIDs = table.Column<string>(nullable: true)
                 },
@@ -53,6 +58,7 @@ namespace BoardProject.Migrations
                     ButtonText = table.Column<string>(nullable: true),
                     ActionType = table.Column<long>(nullable: false),
                     ActionContext = table.Column<string>(nullable: true),
+                    BackgroundColor = table.Column<int>(nullable: true),
                     SourceID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -68,6 +74,7 @@ namespace BoardProject.Migrations
                     Source = table.Column<string>(nullable: false),
                     ImageName = table.Column<string>(nullable: false),
                     Category = table.Column<string>(nullable: false),
+                    ReferenceCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

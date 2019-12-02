@@ -11,5 +11,6 @@ namespace BoardProject.Models
         public string Source { get; set; }
         public string ImageName { get; set; }
         public string Category { get; set; }
+        public int ReferenceCount { get; set; }
     }
 }
