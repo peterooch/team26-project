@@ -15,7 +15,7 @@ namespace BoardProject.Data
 
         public DbSet<UserData> UserData { get; set; }
         public DbSet<BoardData> BoardData { get; set; }
-        public DbSet<ButtonData> ButtonData { get; set; }
+        public DbSet<TileData> TileData { get; set; }
         public DbSet<Image> Image { get; set; }
     }
 }

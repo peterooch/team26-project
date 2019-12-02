@@ -35,7 +35,7 @@ namespace BoardProject.Models
     /* Database Representation of the Board model */
     public class BoardData : BoardBase
     {
-        public string ButtonIDs { get; set; } //; delimited id numbers (ID1;ID2;ID3;...)
+        public string TileIDs { get; set; } //; delimited id numbers (ID1;ID2;ID3;...)
         public BoardData()
         {
         }
@@ -43,20 +43,20 @@ namespace BoardProject.Models
     /* Logical Representation of the Board model */
     public class Board : BoardBase
     {
-        public List<Button> Buttons; // Button objects associated with the Board object
+        public List<Tile> Tiles; // Tile objects associated with the Board object
 
         public Board(BoardData boardData)
             : base(boardData)
         {
-            // Convert IDs to Button objects
-            if (boardData.ButtonIDs != null)
+            // Convert IDs to Tile objects
+            if (boardData.TileIDs != null)
             {
                 using var DbCon = new DataContext();
 
-                string[] ButtonIDs = boardData.ButtonIDs.Split(';');
+                string[] TileIDs = boardData.TileIDs.Split(';');
 
-                foreach (string Id in ButtonIDs)
-                    Buttons.Add(new Button(DbCon.ButtonData.Single(button => button.ID == int.Parse(Id))));
+                foreach (string Id in TileIDs)
+                    Tiles.Add(new Tile(DbCon.TileData.Single(tile => tile.ID == int.Parse(Id))));
             }
         }
     }

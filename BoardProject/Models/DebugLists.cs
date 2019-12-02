@@ -10,7 +10,7 @@ namespace BoardProject.Models
     {
         public List<UserData> userDatas;
         public List<BoardData> boardDatas;
-        public List<ButtonData> buttonDatas;
+        public List<TileData> tileDatas;
         public List<Image> images;
 
         public DebugLists()
@@ -19,7 +19,7 @@ namespace BoardProject.Models
 
             userDatas = DbCon.UserData.ToList();
             boardDatas = DbCon.BoardData.ToList();
-            buttonDatas = DbCon.ButtonData.ToList();
+            tileDatas = DbCon.TileData.ToList();
             images = DbCon.Image.ToList();
         }
     }

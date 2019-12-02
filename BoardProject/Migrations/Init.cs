@@ -42,7 +42,7 @@ namespace BoardProject.Migrations
                     FontSize = table.Column<double>(nullable: true),
                     Spacing = table.Column<double>(nullable: true),
                     BoardHeader = table.Column<string>(nullable: true),
-                    ButtonIDs = table.Column<string>(nullable: true)
+                    TileIDs = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -50,12 +50,12 @@ namespace BoardProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ButtonData",
+                name: "TileData",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false),
-                    ButtonName = table.Column<string>(nullable: false),
-                    ButtonText = table.Column<string>(nullable: true),
+                    TileName = table.Column<string>(nullable: false),
+                    TileText = table.Column<string>(nullable: true),
                     ActionType = table.Column<long>(nullable: false),
                     ActionContext = table.Column<string>(nullable: true),
                     BackgroundColor = table.Column<int>(nullable: true),
@@ -63,7 +63,7 @@ namespace BoardProject.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ButtonData", x => x.ID);
+                    table.PrimaryKey("PK_TileData", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -89,7 +89,7 @@ namespace BoardProject.Migrations
             migrationBuilder.DropTable(
                 name: "BoardData");
             migrationBuilder.DropTable(
-                name: "ButtonData");
+                name: "TileData");
             migrationBuilder.DropTable(
                 name: "Image");
         }
