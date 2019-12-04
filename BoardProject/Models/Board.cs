@@ -8,9 +8,10 @@ namespace BoardProject.Models
 {
     public class BoardBase
     {
-        public int ID { get; set; }        // Identitfier
-        public string BoardName { get; set; }   // Board Name
-        public string BoardHeader { get; set; } // Header to be displayed in the board
+        public int ID { get; set; }              // Identitfier
+        public string BoardName { get; set; }    // Board Name
+        public bool IsPublic { get; set; }       // Is the board public to all users?
+        public string BoardHeader { get; set; }  // Header to be displayed in the board
         public int BackgroundColor { get; set; }
         public int TextColor { get; set; }
         public double FontSize { get; set; }
@@ -21,6 +22,7 @@ namespace BoardProject.Models
         {
             ID              = boardBase.ID;
             BoardName       = boardBase.BoardName;
+            IsPublic        = boardBase.IsPublic;
             BoardHeader     = boardBase.BoardHeader;
             BackgroundColor = boardBase.BackgroundColor;
             TextColor       = boardBase.TextColor;

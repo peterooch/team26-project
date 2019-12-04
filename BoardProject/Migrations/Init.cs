@@ -2,6 +2,7 @@
 
 namespace BoardProject.Migrations
 {
+    /* Every data object change or its base change must be reflected here! */
     public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,6 +38,7 @@ namespace BoardProject.Migrations
                 {
                     ID = table.Column<int>(nullable: false),
                     BoardName = table.Column<string>(nullable: false),
+                    IsPublic = table.Column<bool>(nullable: false),
                     BackgroundColor = table.Column<int>(nullable: true),
                     TextColor = table.Column<int>(nullable: true),
                     FontSize = table.Column<double>(nullable: true),
@@ -55,6 +57,7 @@ namespace BoardProject.Migrations
                 {
                     ID = table.Column<int>(nullable: false),
                     TileName = table.Column<string>(nullable: false),
+                    IsPublic = table.Column<bool>(nullable: false),
                     TileText = table.Column<string>(nullable: true),
                     ActionType = table.Column<long>(nullable: false),
                     ActionContext = table.Column<string>(nullable: true),

@@ -7,10 +7,10 @@ namespace BoardProject.Models
 {
     public class Image
     {
-        public int ID { get; set; }
-        public string Source { get; set; }
-        public string ImageName { get; set; }
-        public string Category { get; set; }
-        public int ReferenceCount { get; set; }
+        public int ID { get; set; }             // Identifier
+        public string Source { get; set; }      // Image file URL location
+        public string ImageName { get; set; }   // Image display name
+        public string Category { get; set; }    // Image category
+        public int ReferenceCount { get; set; } // How many times the image is being used (Popularity)
     }
 }

@@ -7,6 +7,7 @@ using BoardProject.Models;
 
 namespace BoardProject.Data
 {
+    /* This class is being used to manipulate data in the database */
     public class DataContext : DbContext
     {
         /* Use SQLite for now */

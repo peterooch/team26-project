@@ -19,10 +19,12 @@ namespace BoardProject.Controllers
             _logger = logger;
         }
 
+        // GET /
         public IActionResult Index()
         {
             return View();
         }
+        // GET /Home/Debug
         public IActionResult Debug()
         {
             DebugLists debugLists = new DebugLists();

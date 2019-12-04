@@ -17,11 +17,12 @@ namespace BoardProject.Models
         }
 
         public int ID { get; set; }               // Identifier
-        public string TileName { get; set; }    // Tile Name
-        public string TileText { get; set; }    // Tile Description
+        public string TileName { get; set; }      // Tile Name
+        public bool IsPublic { get; set; }        // Is the tile public to all users?
+        public string TileText { get; set; }      // Tile Description
         public ActionID ActionType { get; set; }  // Action Type specifier
         public string ActionContext { get; set; } // Action context (resource location)
-        public int BackgroundColor { get; set; }
+        public int BackgroundColor { get; set; }  // Tile background color
         public TileBase()
         {
         }
@@ -30,8 +31,9 @@ namespace BoardProject.Models
         public TileBase(TileBase tileBase)
         {
             ID              = tileBase.ID;
-            TileName      = tileBase.TileName;
-            TileText      = tileBase.TileText;
+            TileName        = tileBase.TileName;
+            IsPublic        = tileBase.IsPublic;
+            TileText        = tileBase.TileText;
             ActionType      = tileBase.ActionType;
             ActionContext   = tileBase.ActionContext;
             BackgroundColor = tileBase.BackgroundColor;

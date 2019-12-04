@@ -16,7 +16,7 @@ namespace BoardProject.Models
         public bool IsAdmin { get; set; }        // Is the current user is an administrator?
         public string Language { get; set; }     // Selected User language
         public string Font { get; set; }         // Selected font name
-        public double FontSize { get; set; }        // Selected font size
+        public double FontSize { get; set; }     // Selected font size
         public int BackgroundColor { get; set; } // Selected background color
         public int TextColor { get; set; }       // Selected text color
         public bool HighContrast { get; set; }   // Do we use the high contrast theme?
