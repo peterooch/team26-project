@@ -12,7 +12,7 @@ namespace BoardProject.Controllers
 {
     public class MainPageController : Controller
     {
-        // GET Home/MainPage/
+        // GET MainPage/MainPage
 
         public IActionResult MainPage()
         {

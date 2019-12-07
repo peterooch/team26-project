@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Add Tile";
+}
+
+<form>
+    <div>
+        <p>
+            <input type="radio" name="img_type" value="existing" checked>קטגוריה:&nbsp;
+            <select name="category1">
+                <option value="nill">כלום</option> <!-- Dynamically filled -->
+            </select><br />
+            תמונות קיימות:&nbsp;
+            <select name="existing_img">
+                <option value="nill">כלום</option> <!-- Dynamically filled -->
+            </select><br />
+        </p>
+        <p>
+            <input type="radio" name="img_type" value="new">העלאת תמונה חדשה:&nbsp;
+            <button>עיון...</button><br />
+            קטגוריה עבור התמונה חדשה:&nbsp;
+            <select name="category2">
+                <option value="nill">כלום</option> <!-- Dynamically filled -->
+            </select><br />
+        </p>
+        <p>
+            שם לזיהוי הכפתור:&nbsp;<input type="text" name="button_name"><br />
+            צבע רקע:&nbsp;
+            <select name="color">
+                <option value="white">לבן</option> <!-- Dynamically filled or not... -->
+            </select><br />
+            פעולה בעת לחיצה:&nbsp;
+            <select name="action">
+                <option value="nill">כלום</option> <!-- Dynamically filled -->
+            </select>
+            <div id="action-context">
+                &lt; Context &gt; <!-- This is dynamicly picked -->
+            </div>
+            <br />
+            <button style="align-content: center;">שמירת אריח</button>
+        </p>
+    </div>
+</form>
+<div style="position: absolute; width: 25%; top: 1%; right: 250pt">
+    תצוגה מקדימה:<br />
+    <div style="width: 230px; height: 230px; border: 2px solid black;">
+    </div>
+</div>
