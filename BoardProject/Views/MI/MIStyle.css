@@ -1,0 +1,32 @@
+﻿.hed {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+}
+
+    .hed > section {
+        width: 100%;
+        margin: 10px;
+        text-align: center;
+        line-height: 75px;
+        font-size: 30px;
+    }
+
+#sec2 {
+    width: 300%;
+    margin: 10px;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px;
+}
+
+.arc {
+    display: flex;
+    justify-content: center !important;
+}
+
+#i1 {
+    width: 15%;
+    margin-left: 43%;
+    margin-bottom: 10px;
+}
