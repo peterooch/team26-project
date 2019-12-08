@@ -3,8 +3,12 @@
     ViewData["Title"] = "BoardViewer";
 }
 
-<!--<div style="background-color: @Model.BackgroundColor; color: @Model.TextColor; font-size: @Model.FontSize;"> -->
-<div class="tile_container">
+<div style="background-color: #@Model.BackgroundColor.ToString("X6"); color: #@Model.TextColor.ToString("X6"); font-size: @Model.FontSize%;" class="tile_container">
+    <script>
+        /* Correct page width and height */
+        document.getElementById("page_body").style.width  = "95vw";
+        document.getElementById("page_body").style.height = "80vh";
+    </script>
     @foreach(Tile tile in Model.Tiles)
     {
         <div style="background-color: #@tile.BackgroundColor.ToString("X6");">

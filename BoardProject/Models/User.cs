@@ -108,7 +108,10 @@ namespace BoardProject.Models
                 string[] UserIDs = userData.ManagedUsersIDs.Split(';');
 
                 foreach (string UserID in UserIDs)
-                    ManagedUsers.Add(new User(DbCon.UserData.Single(user => user.ID == int.Parse(UserID))));
+                {
+                    if (!string.IsNullOrEmpty(UserID))
+                        ManagedUsers.Add(new User(DbCon.UserData.Single(user => user.ID == int.Parse(UserID))));
+                }
             }
         }
     }

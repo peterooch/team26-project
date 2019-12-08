@@ -6,34 +6,34 @@
     <header>
         <nav class="navbar navbar-light" style="background-color: #497b9e; padding-top: 15px;">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <div class="btn-group" role="group" class="d-flex justify-content-start">
+                <div class="btn-group d-flex justify-content-start" role="group">
                     <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
                         Boards
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                         @foreach (var item in Model.Boards)
                         {
-                            <a id="@item.ID" onclick="document.getElementById('boardView').src='/BoardView/@item.ID'">@item.BoardName</a>
+                            <a id="@item.ID" onclick="document.getElementById('boardView').src='/BoardView/Index/@item.ID'">@item.BoardName</a>
                         }
                     </div>
                     <button type="button" class="btn btn-secondary" style="margin-right: 10px;"><img src="https://img.icons8.com/ios/50/000000/gear.png"></button>
                     <button type="button" class="btn btn-secondary"><img src="https://img.icons8.com/windows/50/000000/add.png"></button>
                 </div>
             </div>
-            <div class="p-3 mb-2 bg-light text-dark" class="d-flex justify-content-center">@Model.HomeBoard.BoardName</div>
-            <button type="button" onclick="SetFontSize()";>Set font size</button>
+            <div class="p-3 mb-2 bg-light text-dark d-flex justify-content-center">@Model.HomeBoard.BoardName</div>
+            <button type="button" onclick="SetFontSize()">Set font size</button>
             <div>
-                <button type="button" class="btn btn-danger" class="d-flex justify-content-end">Exit</button>
+                <button type="button" class="btn btn-danger d-flex justify-content-end">Exit</button>
             </div>
         </nav>
     </header>
-    <iframe id="boardView" src="/BoardView/" style="height: 80vh; width: 100vw;">
+    <iframe id="boardView" src="/BoardView/" style="height: 80vh; width: 95vw;">
         No iframe support
     </iframe>
     <footer>
         <div class="d-flex justify-content-center">
             <p style="text-align: center; font-weight: bold;">
-                This system was developed by Team 26. </br>
+                This system was developed by Team 26. <br/>
                 <a href="mailto:team262019@gmail.com">To send us Email.</a>
             </p>
         </div>

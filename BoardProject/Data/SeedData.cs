@@ -23,7 +23,7 @@ namespace BoardProject.Data
                 IsPrimary = true,
                 IsManager = false,
                 Font = "Comic Sans",
-                FontSize = 200,
+                FontSize = 200.0,
                 BackgroundColor = 0x800080,
                 TextColor = 0xFF0000,
                 DPI = 110,
@@ -34,7 +34,10 @@ namespace BoardProject.Data
             BoardData TestBoard = new BoardData {
                 BoardName = "TestBoard",
                 BoardHeader = "Test Header",
-                TileIDs = "1;2;3;4;5;6;"
+                TileIDs = "1;2;3;4;5;6;",
+                BackgroundColor = 0,
+                TextColor = 0x000080,
+                FontSize = 100.0
             };
             DBConnection.BoardData.Add(TestBoard);
             List<TileData> TestTiles = new List<TileData>

@@ -17,11 +17,14 @@ namespace BoardProject.Controllers
             int UserID = (int)HttpContext.Session.GetInt32("SelectedUser");
             using var DBCon = new DataContext();
             User UserObject = new User(DBCon.UserData.Find(UserID));
+            Board SelectedBoard;
 
             if (ID == null)
-                return View(UserObject.HomeBoard);
+                SelectedBoard = UserObject.HomeBoard;
+            else
+                SelectedBoard = UserObject.Boards.Single(board => board.ID == ID);
 
-            return View(UserObject.Boards.Single(board => board.ID == ID));
+            return View(SelectedBoard);
         }
     }
 }
