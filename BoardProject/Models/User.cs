@@ -13,7 +13,7 @@ namespace BoardProject.Models
         public string PasswordHash { get; set; } // SHA512 Password Hash <=> sha512(password+salt)
         public string PasswordSalt { get; set; } // Password salt
         public bool IsPrimary { get; set; }      // Is the user is the primary user? (SuperUser)
-        public bool IsAdmin { get; set; }        // Is the current user is an administrator?
+        public bool IsManager { get; set; }      // Is the current user is an manager?
         public string Language { get; set; }     // Selected User language
         public string Font { get; set; }         // Selected font name
         public double FontSize { get; set; }     // Selected font size
@@ -34,7 +34,7 @@ namespace BoardProject.Models
             PasswordHash    = userBase.PasswordHash;
             PasswordSalt    = userBase.PasswordSalt;
             IsPrimary       = userBase.IsPrimary;
-            IsAdmin         = userBase.IsAdmin;
+            IsManager       = userBase.IsManager;
             Language        = userBase.Language;
             Font            = userBase.Font;        
             FontSize        = userBase.FontSize;
@@ -48,8 +48,8 @@ namespace BoardProject.Models
     public class UserData : UserBase
     {
         public string BoardIDs { get; set; }     // ; delimited id numbers (ID1;ID2;ID3;...)
-        public string HomeBoardID { get; set; }  // Primary board identifier
-
+        public string HomeBoardID { get; set; }// Primary board identifier
+        public string ManagedUsersIDs { get; set; }
         public UserData()
         {
         }
@@ -60,9 +60,16 @@ namespace BoardProject.Models
             HomeBoardID = user.HomeBoard.ID.ToString();
 
             BoardIDs = string.Empty;
+            ManagedUsersIDs = string.Empty;
 
             foreach (Board board in user.Boards)
                 BoardIDs += board.ID.ToString() + ";";
+
+            if (IsManager)
+            {
+                foreach (User _user in user.ManagedUsers)
+                    ManagedUsersIDs += _user.ID + ";";
+            }
         }
     }
     /* Logical Representation of the User model */
@@ -70,6 +77,7 @@ namespace BoardProject.Models
     {
         public List<Board> Boards; // Board objects associated with the User object
         public Board HomeBoard;    // HomeBoard object associated with the User object
+        public List<User> ManagedUsers;
 
         public User(UserData userData)
             : base(userData)
@@ -77,7 +85,7 @@ namespace BoardProject.Models
             // Convert IDs to Board objects
             using var DbCon = new DataContext();
 
-            if (userData.BoardIDs != null)
+            if (!string.IsNullOrEmpty(userData.BoardIDs))
             {
                 string[] BoardIDs = userData.BoardIDs.Split(';');
 
@@ -85,10 +93,18 @@ namespace BoardProject.Models
                     Boards.Add(new Board(DbCon.BoardData.Single(board => board.ID == int.Parse(Id))));
             }
 
-            if (userData.HomeBoardID != null)
+            if (!string.IsNullOrEmpty(userData.HomeBoardID))
                 HomeBoard = new Board(DbCon.BoardData.Single(board => board.ID == int.Parse(userData.HomeBoardID)));
             else if (Boards.Count > 0)
                 HomeBoard = Boards[0];
+
+            if (IsManager && !string.IsNullOrEmpty(userData.ManagedUsersIDs))
+            {
+                string[] UserIDs = userData.ManagedUsersIDs.Split(';');
+
+                foreach (string UserID in UserIDs)
+                    ManagedUsers.Add(new User(DbCon.UserData.Single(user => user.ID == int.Parse(UserID))));
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ namespace BoardProject.Migrations
                     PasswordHash = table.Column<string>(nullable: false),
                     PasswordSalt = table.Column<string>(nullable: false),
                     IsPrimary = table.Column<bool>(nullable: false),
-                    IsAdmin = table.Column<bool>(nullable: false),
+                    IsManager = table.Column<bool>(nullable: false),
                     Language = table.Column<string>(nullable: true),
                     Font = table.Column<string>(nullable: true),
                     FontSize = table.Column<double>(nullable: true),
@@ -25,7 +25,8 @@ namespace BoardProject.Migrations
                     HighContrast = table.Column<bool>(nullable: true),
                     DPI = table.Column<int>(nullable: true),
                     BoardIDs = table.Column<string>(nullable: true),
-                    HomeBoardID = table.Column<string>(nullable: true)
+                    HomeBoardID = table.Column<string>(nullable: true),
+                    ManagedUsersIDs = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

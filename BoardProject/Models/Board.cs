@@ -51,7 +51,7 @@ namespace BoardProject.Models
             : base(boardData)
         {
             // Convert IDs to Tile objects
-            if (boardData.TileIDs != null)
+            if (!string.IsNullOrEmpty(boardData.TileIDs))
             {
                 using var DbCon = new DataContext();
 
