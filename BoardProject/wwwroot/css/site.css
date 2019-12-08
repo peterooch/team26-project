@@ -69,3 +69,9 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.tile_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

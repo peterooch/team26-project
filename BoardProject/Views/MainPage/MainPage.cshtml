@@ -13,7 +13,7 @@
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                         @foreach (var item in Model.Boards)
                         {
-                            <a id="@item.ID" href="#">@item.BoardName</a>
+                            <a id="@item.ID" onclick="document.getElementById('boardView').src='/BoardView/@item.ID'">@item.BoardName</a>
                         }
                     </div>
                     <button type="button" class="btn btn-secondary" style="margin-right: 10px;"><img src="https://img.icons8.com/ios/50/000000/gear.png"></button>
@@ -27,7 +27,7 @@
             </div>
         </nav>
     </header>
-    <iframe src="/BoardView/" style="height: 75vh; width: 75vw;">
+    <iframe id="boardView" src="/BoardView/" style="height: 80vh; width: 100vw;">
         No iframe support
     </iframe>
     <footer>
