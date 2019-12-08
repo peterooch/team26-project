@@ -22,6 +22,7 @@ namespace BoardProject.Controllers
         // GET /
         public IActionResult Index()
         {
+            SeedData.PutTestData();
             return View();
         }
         // GET /Home/Debug
