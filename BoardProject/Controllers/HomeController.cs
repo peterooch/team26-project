@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BoardProject.Models;
 using BoardProject.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace BoardProject.Controllers
 {
@@ -22,7 +23,9 @@ namespace BoardProject.Controllers
         // GET /
         public IActionResult Index()
         {
+            /* DEBUG: Seed and pick user no. 1 */
             SeedData.PutTestData();
+            HttpContext.Session.SetInt32("SelectedUser", 1);
             return View();
         }
         // GET /Home/Debug

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BoardProject.Models;
 using BoardProject.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace BoardProject.Controllers
 {
@@ -16,8 +17,18 @@ namespace BoardProject.Controllers
 
         public IActionResult MainPage()
         {
-            User Currentuser = new User();
-            return View();
+            int SelectedUser = 1;
+            byte[] TestValue;
+
+            using DataContext DBCon = new DataContext();
+
+            if (HttpContext.Session.TryGetValue("SelectedUser", out TestValue))
+            {
+                SelectedUser = (int)HttpContext.Session.GetInt32("SelectedUser");
+            }
+
+            User SelectedUserObject = new User(DBCon.UserData.Find(SelectedUser));
+            return View(SelectedUserObject);
         }
     }
 }

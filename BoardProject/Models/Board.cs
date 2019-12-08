@@ -56,9 +56,13 @@ namespace BoardProject.Models
                 using var DbCon = new DataContext();
 
                 string[] TileIDs = boardData.TileIDs.Split(';');
+                Tiles = new List<Tile>();
 
                 foreach (string Id in TileIDs)
-                    Tiles.Add(new Tile(DbCon.TileData.Single(tile => tile.ID == int.Parse(Id))));
+                {
+                    if (!string.IsNullOrEmpty(Id))
+                        Tiles.Add(new Tile(DbCon.TileData.Single(tile => tile.ID == int.Parse(Id))));
+                }
             }
         }
     }
