@@ -1,0 +1,15 @@
+﻿@model Board
+@{
+    ViewData["Title"] = "BoardViewer";
+}
+
+<!--<div style="background-color: @Model.BackgroundColor; color: @Model.TextColor; font-size: @Model.FontSize;"> -->
+    @foreach(Tile tile in Model.Tiles)
+    {
+        <div style="background-color: #@tile.BackgroundColor.ToString("X6");">
+            @tile.TileName<br/>
+        <img src="@tile.Source.Source" alt="@tile.Source.ImageName" />
+        </div>
+        <br/>
+    }
+

@@ -26,6 +26,7 @@ namespace BoardProject.Controllers
             /* DEBUG: Seed and pick user no. 1 */
             SeedData.PutTestData();
             HttpContext.Session.SetInt32("SelectedUser", 1);
+            /* END DEBUG */
             return View();
         }
         // GET /Home/Debug

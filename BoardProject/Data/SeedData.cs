@@ -49,12 +49,12 @@ namespace BoardProject.Data
             DBConnection.TileData.AddRange(TestTiles);
             List<Image> TestImages = new List<Image>
             {
-                new Image { Source = "/images/1.jpg", ImageName = "TestImage1", Category = "No Category", ReferenceCount = 0},
-                new Image { Source = "/images/2.gif", ImageName = "TestImage2", Category = "No Category", ReferenceCount = 0},
-                new Image { Source = "/images/3.jpg", ImageName = "TestImage3", Category = "No Category", ReferenceCount = 0},
-                new Image { Source = "/images/4.jpg", ImageName = "TestImage4", Category = "No Category", ReferenceCount = 0},
-                new Image { Source = "/images/5.jpg", ImageName = "TestImage5", Category = "No Category", ReferenceCount = 0},
-                new Image { Source = "/images/6.jpg", ImageName = "TestImage6", Category = "No Category", ReferenceCount = 0}
+                new Image { Source = "/images/test1.jpg", ImageName = "TestImage1", Category = "No Category", ReferenceCount = 0},
+                new Image { Source = "/images/test2.gif", ImageName = "TestImage2", Category = "No Category", ReferenceCount = 0},
+                new Image { Source = "/images/test3.jpg", ImageName = "TestImage3", Category = "No Category", ReferenceCount = 0},
+                new Image { Source = "/images/test4.jpg", ImageName = "TestImage4", Category = "No Category", ReferenceCount = 0},
+                new Image { Source = "/images/test5.jpg", ImageName = "TestImage5", Category = "No Category", ReferenceCount = 0},
+                new Image { Source = "/images/test6.jpg", ImageName = "TestImage6", Category = "No Category", ReferenceCount = 0}
             };
             DBConnection.Image.AddRange(TestImages);
             DBConnection.SaveChanges();
