@@ -13,6 +13,19 @@ namespace BoardProject.Controllers
 {
     public class MainPageController : Controller
     {
+        public string CSS()
+        {
+            string ColorChanger = "white";
+            int BackgroungChange = 0;
+            string Font = "ariel";
+            double FontSize = 0.0;
+            return @$"body {{
+                        color: {ColorChanger};
+                        background-color: {BackgroungChange};
+                        font-family: {Font};
+                        font-size: {FontSize}%;
+                        }};";
+        }
         // GET MainPage/MainPage
 
         public IActionResult MainPage()
