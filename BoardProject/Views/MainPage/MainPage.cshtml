@@ -1,4 +1,5 @@
 ﻿
+@model User
 @{
     ViewData["Title"] = "MainPageControllder";
 }
@@ -21,8 +22,10 @@
                         Boards
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a class="dropdown-item" href="#">One 1</a>
-                        <a class="dropdown-item" href="#">Two 2</a>
+                        @foreach (var item in Model.Boards)
+                        {
+                            <a id="@item.ID" href="#">@item.BoardName</a>
+                        }
                     </div>
                     <button type="button" class="btn btn-secondary" style="margin-right: 10px;"><img src="https://img.icons8.com/ios/50/000000/gear.png"></button>
                     <button type="button" class="btn btn-secondary"><img src="https://img.icons8.com/windows/50/000000/add.png"></button>

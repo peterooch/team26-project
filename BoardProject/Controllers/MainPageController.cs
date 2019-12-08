@@ -16,6 +16,7 @@ namespace BoardProject.Controllers
 
         public IActionResult MainPage()
         {
+            User Currentuser = new User();
             return View();
         }
     }
