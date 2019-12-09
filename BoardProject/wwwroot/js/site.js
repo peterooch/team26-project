@@ -8,3 +8,7 @@ function SetFontSize(change) {
     current_font_size += change;
     document.getElementById("page_body").style.fontSize = current_font_size + "%";
 }
+function UpdateBoard(id, name) {
+    document.getElementById("boardName").innerHTML = name;
+    document.getElementById("boardView").src = "/BoardView/Index/" + id;
+}

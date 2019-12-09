@@ -13,19 +13,14 @@ namespace BoardProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         // GET /
         public IActionResult Index()
         {
-            /* DEBUG: Seed and pick user no. 1 */
+            /* DEBUG: Seed and pick user no. 1 and redirect to MainPage */
             SeedData.PutTestData();
             HttpContext.Session.SetInt32("SelectedUser", 1);
+            Response.Redirect("/MainPage/MainPage");
+            /* TODO: Migrate MainPage controller to Home controller */
             /* END DEBUG */
             return View();
         }
