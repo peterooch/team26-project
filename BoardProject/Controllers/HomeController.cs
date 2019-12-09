@@ -37,6 +37,11 @@ namespace BoardProject.Controllers
             return View(debugLists);
         }
 
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
