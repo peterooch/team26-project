@@ -3,6 +3,8 @@
 
     // Write your JavaScript code.
 
+current_font_size = 100;
 function SetFontSize(change) {
-    document.getElementById("page_body").style.fontSize = "x-large";
+    current_font_size += change;
+    document.getElementById("page_body").style.fontSize = current_font_size + "%";
 }
