@@ -6,7 +6,10 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" type="text/css" href="~/css/AdminLoginStyle.css">
+    @if (ViewData["CustomStyle"] != null)
+    {
+        <link rel="stylesheet" href="@ViewData["CustomStyle"]">
+    }
 </head>
 <body id="page_body">
         <main role="main" class="pb-3">
