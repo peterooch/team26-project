@@ -47,13 +47,6 @@ namespace Tests
             Assert.NotNull(result);
         }
         [Fact]
-        public void TestMainPageController_MainPage()
-        {
-            MainPageController controller = new MainPageController();
-            ViewResult result = controller.MainPage() as ViewResult;
-            Assert.NotNull(result);
-        }
-        [Fact]
         public void TestMIController_MI()
         {
             MIController controller = new MIController();

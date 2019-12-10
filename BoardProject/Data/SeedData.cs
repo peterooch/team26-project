@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using BoardProject.Models;
 
 namespace BoardProject.Data
@@ -9,10 +10,10 @@ namespace BoardProject.Data
         {
             using DataContext DBConnection = new DataContext();
 
-            if (DBConnection.UserData.Find(1) != null ||
-                DBConnection.BoardData.Find(1) != null ||
-                DBConnection.TileData.Find(1) != null ||
-                DBConnection.Image.Find(1) != null)
+            if (DBConnection.UserData.Any() ||
+                DBConnection.BoardData.Any() ||
+                DBConnection.TileData.Any() ||
+                DBConnection.Image.Any())
             {
                 return;
             }
