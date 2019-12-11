@@ -20,7 +20,6 @@ namespace Tests
         [Fact]
         public void TestHomeController_Debug()
         {
-            /* FIXME: Fix issues with DataContext not finding the tables */
             HomeController controller = new HomeController();
             ViewResult result = controller.Debug() as ViewResult;
             Assert.NotNull(result);
