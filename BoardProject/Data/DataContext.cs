@@ -14,6 +14,12 @@ namespace BoardProject.Data
         protected override void OnConfiguring(DbContextOptionsBuilder options) =>
             options.UseSqlite("Data Source=data.db");
 
+        public DataContext()
+        {
+            /* Auto-create database if data.db doesn't exists */
+            Database.Migrate();
+        }
+
         public DbSet<UserData> UserData { get; set; }
         public DbSet<BoardData> BoardData { get; set; }
         public DbSet<TileData> TileData { get; set; }
