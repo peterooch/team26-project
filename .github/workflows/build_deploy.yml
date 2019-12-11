@@ -1,4 +1,4 @@
-name: CI
+name: Azure Deploy
 
 on: [push]
 
@@ -16,7 +16,7 @@ jobs:
         run: dotnet build --configuration Debug
       - name: dotnet publish
         run: |
-          dotnet publish --configuration Debug -o ${{env.DOTNET_ROOT}}/myapp
+          dotnet publish --configuration Debug -o ${{env.DOTNET_ROOT}}/myapp /p:EnvironmentName=Development
       - name: Azure WebApp
         uses: azure/webapps-deploy@v1
         with: 
