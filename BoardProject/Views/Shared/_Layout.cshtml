@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="@ViewData["CustomStyle"]">
     }
 </head>
-<body id="page_body">
+<body style="text-align: @(ViewData["align"] ?? "left") !important;" dir="@(ViewData["dir"] ?? "ltr")"  id="page_body" >
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
