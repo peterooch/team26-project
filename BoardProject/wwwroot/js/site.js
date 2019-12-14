@@ -12,3 +12,22 @@ function UpdateBoard(id, name) {
     document.getElementById("boardName").innerHTML = name;
     document.getElementById("boardView").src = "/BoardView/Index/" + id;
 }
+/* A tile Click function to be used with interactive tiles */
+function TileOnClick(type, context, tileid) {
+    switch (type) {
+        case "PlayGif":
+            /* Change tile image source to specified resource */
+            document.getElementById(tileid).src = context;
+            break;
+        case "ExternalLink":
+            /* Open an external link in a new tab/window */
+            window.open(context, "ExternalTileLink");
+            break;
+        case "SwitchBoard":
+            /* Switch to differently identified board */
+            window.location.href = "/BoardView/Index/" + context;
+            break;
+        default:
+            break;
+    }
+}

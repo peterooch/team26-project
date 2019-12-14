@@ -11,9 +11,9 @@
     </script>
     @foreach(Tile tile in Model.Tiles)
     {
-        <div style="background-color: #@tile.BackgroundColor.ToString("X6");">
+        <div style="background-color: #@tile.BackgroundColor.ToString("X6");" onclick="TileOnClick('@tile.ActionType','@tile.ActionContext','@tile.ID');">
             @tile.TileText<br/>
-        <img src="@tile.Source.Source" alt="@tile.Source.ImageName" style="width: 20vw; height: 30vh;" />
+        <img id="@tile.ID" src="@tile.Source.Source" alt="@tile.Source.ImageName" style="width: 20vw; height: 30vh;" />
         </div>
         <br/>
     }
