@@ -14,15 +14,23 @@ namespace BoardProject.Controllers
         // GET /BoardView/id
         public IActionResult Index(int? ID)
         {
-            int UserID = (int)HttpContext.Session.GetInt32("SelectedUser");
+            int UserID = HttpContext.Session.GetInt32("SelectedUser") ?? default;
             using var DBCon = new DataContext();
-            User UserObject = new User(DBCon.UserData.Find(UserID));
+            User UserObject;
             Board SelectedBoard;
+
+            if (UserID == default)
+                return View(null);
+            else
+                UserObject = new User(DBCon.UserData.Find(UserID));
+
+            if (UserObject == null)
+                return View(null);
 
             if (ID == null)
                 SelectedBoard = UserObject.HomeBoard;
             else
-                SelectedBoard = UserObject.Boards.Single(board => board.ID == ID);
+                SelectedBoard = UserObject.Boards.Find(board => board.ID == ID);
 
             return View(SelectedBoard);
         }
