@@ -27,5 +27,32 @@ namespace BoardProject.Controllers
             
             return View(UserObject);
         }
+
+        [Route("/UserPref")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult PostIndex()
+        {
+            int UserID = HttpContext.Session.GetInt32("SelectedUser") ?? default;
+            using var DBCon = new DataContext();
+            UserData userData;
+
+            if (UserID != default)
+            {
+                userData = DBCon.UserData.Find(UserID);
+
+                if (userData != null)
+                {
+                    userData.Font = Request.Form["font_pick"];
+                    userData.BackgroundColor = int.Parse(Request.Form["bg_color"],System.Globalization.NumberStyles.HexNumber);
+                    userData.TextColor = int.Parse(Request.Form["tx_color"], System.Globalization.NumberStyles.HexNumber);
+                    userData.DPI = int.Parse(Request.Form["dpi"]);
+                    userData.FontSize = double.Parse(Request.Form["font_size"]);
+
+                    DBCon.SaveChanges();
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
