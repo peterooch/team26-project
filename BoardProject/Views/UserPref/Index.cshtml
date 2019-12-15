@@ -1,20 +1,27 @@
 ﻿
+@model User
 @{
     ViewData["Title"] = "User prefrences";
+    ViewData["CustomStyle"] = "/css/Userpref.css";
 }
+<main style="margin-left: 40vw">
+<form action="/UserPref/Index" method="post">
  Language:
     <select name="lang_pick">
         <option id="en">English</option>
     </select><br/>
     Font:
-    <input name="font_pick" type="text"/><br/>
+    <input name="font_pick" type="text" value="@Model.Font"/><br/>
     Background color:
-    <input name="bg_color" class="jscolor" value="ab2567"><br/>
+    <input name="bg_color" class="jscolor" value="@Model.BackgroundColor.ToString("X6")" ><br/>
     Text color:
-    <input name="tx_color" class="jscolor" value="ab2567"><br/>
+    <input name="tx_color" class="jscolor" value="@Model.TextColor.ToString("X6")" ><br/>
     High contrast:
-    <input type="checkbox" name="high_contrast" value=""> <br/>
+    <input type="checkbox" name="high_contrast" @(Model.HighContrast ? "checked" : "unchecked")> <br/>
     Dots per inch:
-    <input name="dpi" type="number"/>%<br/>
+    <input name="dpi" type="number" value="@Model.DPI"/>%<br/>
     Font size:
-    <input name="font_size" type="number"/>%<br/>
+    <input name="font_size" type="number" value="@((int)Model.FontSize)"/>%<br/>
+    <input type="submit" value="Save Prefrences" />
+</form>
+</main>
