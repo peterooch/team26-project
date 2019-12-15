@@ -67,4 +67,21 @@ namespace Tests
             Assert.NotNull(result);
         }
     }
+
+    public class TestModels
+    {
+        [Theory]
+        [InlineData("1234")]
+        [InlineData("$Hello world$")]
+        [InlineData("ah!4e$2!d1-2 13t31")]
+        public void User_VerifyPassword(string str)
+        {
+            UserData UnitTestUser = new UserData();
+
+            /* Use supplied password to test hashing algorithm */
+            UnitTestUser.StorePassword(str);
+
+            Assert.True(UnitTestUser.VerifyPassword(str));
+        }
+    }
 }

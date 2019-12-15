@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BoardProject.Models
@@ -42,6 +44,34 @@ namespace BoardProject.Models
             TextColor       = userBase.TextColor;
             HighContrast    = userBase.HighContrast;   
             DPI             = userBase.DPI;         
+        }
+        public bool VerifyPassword(string password)
+        {
+            using SHA512Managed HashObject = new SHA512Managed();
+            /* Get bytes for combined string */
+            byte[] BytesToHash = Encoding.UTF8.GetBytes(password + PasswordSalt);
+            /* Get hash result for combined string*/
+            string HashString = Encoding.UTF8.GetString(HashObject.ComputeHash(BytesToHash));
+
+            /* Now check if it matches the stored hashed password */
+            if (HashString == PasswordHash)
+                return true;
+
+            return false;
+        }
+        public void StorePassword(string password)
+        {
+            using SHA512Managed HashObject = new SHA512Managed();
+            using RNGCryptoServiceProvider rngObject = new RNGCryptoServiceProvider();
+            byte[] rngBytes = new byte[64];
+
+            /* Generate new salt */
+            rngObject.GetBytes(rngBytes);
+            PasswordSalt = Encoding.UTF8.GetString(rngBytes);
+
+            /* Hash password with salt and store result */
+            byte[] BytesToHash = Encoding.UTF8.GetBytes(password + PasswordSalt);
+            PasswordHash = Encoding.UTF8.GetString(HashObject.ComputeHash(BytesToHash));
         }
     }
     /* Database Representation of the User model */

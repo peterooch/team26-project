@@ -19,8 +19,6 @@ namespace BoardProject.Data
             }
             UserData TestUser = new UserData {
                 Username = "TestUser",
-                PasswordHash = "1111",
-                PasswordSalt = "1111",
                 IsPrimary = true,
                 IsManager = false,
                 Font = "Comic Sans",
@@ -31,6 +29,7 @@ namespace BoardProject.Data
                 BoardIDs = "1;2;3;",
                 HomeBoardID = "1"
             };
+            TestUser.StorePassword("1234");
             DBConnection.UserData.Add(TestUser);
             BoardData TestBoard = new BoardData {
                 BoardName = "TestBoard",

@@ -1,6 +1,9 @@
 ﻿@model Board
 @{
-    ViewData["Title"] = "BoardViewer";
+    if (Model != null && !string.IsNullOrEmpty(Model.BoardName))
+        ViewData["Title"] = Model.BoardName;
+    else
+        ViewData["Title"] = "No board title";
 }
 <script>
     /* Correct page width and height */

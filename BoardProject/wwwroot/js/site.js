@@ -6,11 +6,16 @@
 current_font_size = 100;
 function SetFontSize(change) {
     current_font_size += change;
+    /* Update parent window / header font size */
     document.getElementById("page_body").style.fontSize = current_font_size + "%";
+    /* Update BoardView iframe font size */
+    document.getElementById("boardView").contentDocument.body.style.fontSize = current_font_size + "%";
 }
+bBoardNameUpdate = false;
 function UpdateBoard(id, name) {
     document.getElementById("boardName").innerHTML = name;
     document.getElementById("boardView").src = "/BoardView/Index/" + id;
+    bBoardNameUpdate = false;
 }
 /* A tile Click function to be used with interactive tiles */
 function TileOnClick(type, context, tileid) {
@@ -29,5 +34,13 @@ function TileOnClick(type, context, tileid) {
             break;
         default:
             break;
+    }
+}
+document.getElementById("boardView").onload = function() {
+    if (bBoardNameUpdate == true) {
+        document.getElementById("boardName").innerHTML = document.getElementById("boardView").contentDocument.title;
+    }
+    else {
+        bBoardNameUpdate = true;
     }
 }
