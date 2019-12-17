@@ -11,6 +11,11 @@ namespace BoardProject.Controllers
 {
     public class BoardViewController : Controller
     {
+        private readonly Localizer localizer;
+        public BoardViewController(Localizer localizer)
+        {
+            this.localizer = localizer;
+        }
         // GET /BoardView/id
         public IActionResult Index(int? ID)
         {
@@ -26,6 +31,8 @@ namespace BoardProject.Controllers
 
             if (UserObject == null)
                 return View(null);
+
+            localizer.SetLocale(UserObject);
 
             if (ID == null)
                 SelectedBoard = UserObject.HomeBoard;

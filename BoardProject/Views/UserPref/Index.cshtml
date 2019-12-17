@@ -1,29 +1,44 @@
 ﻿
 @model User
+@inject Localizer locale
 @{
-    ViewData["Title"] = "User prefrences";
+    ViewData["Title"] = locale["User prefrences"];
     ViewData["CustomStyle"] = "/css/Userpref.css";
 }
 <main style="margin-left: 40vw">
-<form asp-action="Index">
- Language:
-    <select name="lang_pick">
-        <option id="en">English</option>
-    </select><br/>
-    Font:
-    <input name="font_pick" type="text" value="@Model.Font"/><br/>
-    Background color:
-    <input name="bg_color" class="jscolor" value="@Model.BackgroundColor.ToString("X6")" ><br/>
-    Text color:
-    <input name="tx_color" class="jscolor" value="@Model.TextColor.ToString("X6")" ><br/>
-    High contrast:
-    <input type="checkbox" name="high_contrast" @(Model.HighContrast ? "checked" : "unchecked")> <br/>
-    Dots per inch:
-    <input name="dpi" type="number" value="@Model.DPI"/>%<br/>
-    Font size:
-    <input name="font_size" type="number" value="@((int)Model.FontSize)"/>%<br/>
-    <input type="submit" value="Save Prefrences" />
-</form>
+    <form asp-action="Index">
+        @locale["Language:"]
+        <select name="lang_pick">
+            @foreach (string lang in Localizer.Translations.AvailableTranslations)
+            {
+                @if (Model.Language != lang)
+                {
+                    <option value="@lang">
+                        @Localizer.Translations.GetString(lang, "lang-native") / @Localizer.Translations.GetString(lang, "lang-en")
+                    </option>
+                }
+                else
+                {
+                    <option value="@lang" selected>
+                        @Localizer.Translations.GetString(lang, "lang-native") / @Localizer.Translations.GetString(lang, "lang-en")
+                    </option>
+                }
+            }
+        </select><br />
+        @locale["Font:"]
+        <input name="font_pick" type="text" value="@Model.Font" /><br />
+        @locale["Background color:"]
+        <input name="bg_color" class="jscolor" value="@Model.BackgroundColor.ToString("X6")"><br />
+        @locale["Text color:"]
+        <input name="tx_color" class="jscolor" value="@Model.TextColor.ToString("X6")"><br />
+        @locale["High contrast:"]
+        <input type="checkbox" name="high_contrast" @(Model.HighContrast ? "checked" : "unchecked")> <br />
+        @locale["Dots per inch:"]
+        <input name="dpi" type="number" value="@Model.DPI" />%<br />
+        @locale["Font size:"]
+        <input name="font_size" type="number" value="@((int)Model.FontSize)" />%<br />
+        <input type="submit" value="@locale["Save Prefrences"]" />
+    </form>
 </main>
 
 @section Scripts {

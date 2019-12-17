@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject Localizer locale
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -12,7 +13,7 @@
         <link rel="stylesheet" href="@ViewData["CustomStyle"]">
     }
 </head>
-<body style="text-align: @(ViewData["align"] ?? "left") !important;" dir="@(ViewData["dir"] ?? "ltr")"  id="page_body" >
+<body style="text-align: @locale["align"] !important;" dir="@locale["dir"]"  id="page_body" >
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

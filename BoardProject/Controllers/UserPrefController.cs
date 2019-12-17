@@ -12,6 +12,12 @@ namespace BoardProject.Controllers
     public class UserPrefController : Controller
     {
         // GET: /<controller>/
+        private readonly Localizer localizer;
+        
+        public UserPrefController(Localizer localizer)
+        {
+            this.localizer = localizer;
+        }
         public IActionResult Index()
         {
             int UserID = HttpContext.Session.GetInt32("SelectedUser") ?? default;
@@ -24,7 +30,9 @@ namespace BoardProject.Controllers
 
             if (UserObject == null)
                 return View(null);
-            
+
+            localizer.SetLocale(UserObject);
+
             return View(UserObject);
         }
 
@@ -43,6 +51,7 @@ namespace BoardProject.Controllers
 
                 if (userData != null)
                 {
+                    userData.Language = Request.Form["lang_pick"];
                     userData.Font = Request.Form["font_pick"];
                     userData.BackgroundColor = int.Parse(Request.Form["bg_color"],System.Globalization.NumberStyles.HexNumber);
                     userData.TextColor = int.Parse(Request.Form["tx_color"], System.Globalization.NumberStyles.HexNumber);

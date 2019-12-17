@@ -1,0 +1,38 @@
+{
+  "lang-en": "Hebrew",
+  "lang-native": "עברית",
+  "dir": "rtl",
+  "align": "right",
+  // BoardView/Index
+  "No board title": "אין כותרת לוח",
+  "There isn't a board defined or the requested board cannot be accessed by the current user.": "לא מוגדר לוח או שהלוח שנדרש אינו לזמין למשתמש הנוכחי",
+  // Home/Contact
+  "Contact Us": "צור קשר",
+  "This system was brought to you by Team 26.": "המערכת הובאה אליך על-ידי צוות 26.",
+  "To send us Email.": "לשליחת מייל לצוות",
+  // Home/Index
+  "Main Page": "עמוד ראשי",
+  "Click to contact the developers": "לחץ כדי ליצור קשר עם המפתחים",
+  "Exit": "יציאה",
+  "No iframe support": "אין תמיכה ב-iframe",
+  "Boards": "לוחות",
+  // Login/Index
+  "Login Page": "עמוד התחברות",
+  "UserName:": "שם משתמש:",
+  "Enter your user name": "הקלד שם משתמש",
+  "Invalid Username!": "שם משתמש שגוי!",
+  "Password:": "סיסמה:",
+  "Enter your password": "הקלד סיסמה",
+  "Invalid Password!": "סיסמה שגויה!",
+  "Login": "התחברות",
+  // UserPref/Index
+  "User prefrences": "העדפות משתמש",
+  "Language:": "שפה:",
+  "Font:": "גופן:",
+  "Background color:": "צבע רקע:",
+  "Text color:": "צבע טקסט:",
+  "High contrast:": "ניגודיות גבוהה:",
+  "Dots per inch:": "DPI:",
+  "Font size:": "גודל גופן:",
+  "Save Prefrences": "שמירת העדפות"
+}

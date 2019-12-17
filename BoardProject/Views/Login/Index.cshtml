@@ -1,4 +1,5 @@
 ﻿@model LoginError
+@inject Localizer locale
 @{
     ViewData["Title"] = "Login Page";
     ViewData["CustomStyle"] = "/css/AdminLoginStyle.css";
@@ -7,19 +8,19 @@
 <header><h1>Login</h1></header>
 <article>
     <form asp-action="UserLogin">
-        UserName:
-        <input type="text" name="username" placeholder="Enter your user name" @if (Model != null && Model.password_error) @Html.Encode($"value ={Model.username}")  class="styleinput" /> <br />
+        @locale["UserName:"]
+        <input type="text" name="username" placeholder="@locale["Enter your user name"]" @if (Model != null && Model.password_error) @Html.Encode($"value ={Model.username}")  class="styleinput" /> <br />
         @if (Model != null && Model.username_error)
         {
-            <span style="color: red;">Invalid Username!</span><br />
+            <span style="color: red;">@locale["Invalid Username!"]</span><br />
         }
-        Password:
-        <input type="password" name="password" placeholder="Enter your password" class="styleinput" /> <br />
+        @locale["Password:"]
+        <input type="password" name="password" placeholder="@locale["Enter your password"]" class="styleinput" /> <br />
         @if (Model != null && Model.password_error)
         {
-            <span style="color: red;">Invalid Password!</span><br />
+            <span style="color: red;">@locale["Invalid Password!"]</span><br />
         }
-        <input type="submit" name="submit" value="Login" class="styleinput" />
+        <input type="submit" name="submit" value="@locale["Login"]" class="styleinput" />
     </form>
 </article>
 

@@ -1,10 +1,11 @@
+@inject Localizer locale
 @{
-    ViewData["Title"] = "Contact Us";
+    ViewData["Title"] = @locale["Contact Us"];
 }
 
 <div class="d-flex justify-content-center">
         <p style="text-align: center; font-weight: bold;">
-            This system was brought to you by Team 26. <br/>
-            <a href="mailto:team262019@gmail.com">To send us Email.</a>
+            @locale["This system was brought to you by Team 26."] <br/>
+            <a href="mailto:team262019@gmail.com">@locale["To send us Email."]</a>
         </p>
 </div>

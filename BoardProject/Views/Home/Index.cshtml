@@ -1,14 +1,15 @@
 ﻿
 @model User
+@inject Localizer locale
 @{
-    ViewData["Title"] = "Main Page";
+    ViewData["Title"] = locale["Main Page"];
 }
     <header>
         <nav class="navbar navbar-light" style="background-color: #497b9e; padding-top: 15px;">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <div class="btn-group d-flex justify-content-start" role="group">
                     <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
-                        Boards
+                        @locale["Boards"]
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                         @foreach (var item in Model.Boards)
@@ -17,7 +18,7 @@
                             <br />
                         }
                     </div>
-                    <button type="button" class="btn btn-secondary" style="margin-right: 10px;"><a href="/UserPref/"><img src="~/images/gear.png"></a></button>
+                    <a href="/UserPref/" class="btn btn-secondary" style="margin-right: 10px;"><img src="~/images/gear.png"></a>
                     <button type="button" class="btn btn-secondary"><img src="~/images/add.png"></button>
                 </div>
             </div>
@@ -26,13 +27,13 @@
                 <button type="button" onclick="SetFontSize(10)" class="btn btn-outline-dark">A+</button>
                 <button type="button" onclick="SetFontSize(-10)" class="btn btn-outline-dark">A-</button>
             </div>
-            <a href="/Home/Contact"><font color="black">Click to contact the developers</font></a>
+            <a href="/Home/Contact"><font color="black">@locale["Click to contact the developers"]</font></a>
             <div>
-                <button type="button" class="btn btn-danger d-flex justify-content-end">Exit</button>
+                <button type="button" class="btn btn-danger d-flex justify-content-end">@locale["Exit"]</button>
             </div>
         </nav>
     </header>
     <iframe id="boardView" src="/BoardView/" style="height: 80vh; width: 100vw;">
-        No iframe support
+        @locale["No iframe support"]
     </iframe>
 

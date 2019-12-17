@@ -13,6 +13,11 @@ namespace BoardProject.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly Localizer localizer;
+        public HomeController(Localizer localizer)
+        {
+            this.localizer = localizer;
+        }
         // GET /
         public IActionResult Index()
         {
@@ -50,6 +55,7 @@ namespace BoardProject.Controllers
 
             /* Fetch the relevant User object from the database */
             User SelectedUserObject = new User(DBCon.UserData.Find(SelectedUser));
+            localizer.SetLocale(SelectedUserObject, this);
             /* Pass the User object to View */
             return View(SelectedUserObject);
         }
@@ -77,6 +83,7 @@ namespace BoardProject.Controllers
         // GET /Home/Contact
         public IActionResult Contact()
         {
+            localizer.SetLocale(HttpContext.Session.GetString("Language"));
             return View();
         }
 

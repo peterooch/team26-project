@@ -1,0 +1,38 @@
+{
+  "lang-en": "English",
+  "lang-native": "English",
+  "dir": "ltr",
+  "align": "left",
+  // BoardView/Index
+  "No board title": "No board title",
+  "There isn't a board defined or the requested board cannot be accessed by the current user.": "There isn't a board defined or the requested board cannot be accessed by the current user.",
+  // Home/Contact
+  "Contact Us": "Contact Us",
+  "This system was brought to you by Team 26.": "This system was brought to you by Team 26.",
+  "To send us Email.": "To send us Email.",
+  // Home/Index
+  "Main Page": "Main Page",
+  "Click to contact the developers": "Click to contact the developers",
+  "Exit": "Exit",
+  "No iframe support": "No iframe support",
+  "Boards":  "Boards",
+  // Login/Index
+  "Login Page": "Login Page",
+  "UserName:": "UserName:",
+  "Enter your user name": "Enter your user name",
+  "Invalid Username!": "Invalid Username!",
+  "Password:": "Password:",
+  "Enter your password": "Enter your password",
+  "Invalid Password!": "Invalid Password!",
+  "Login": "Login",
+  // UserPref/Index
+  "User prefrences": "User prefrences",
+  "Language:": "Language:",
+  "Font:": "Font:",
+  "Background color:": "Background color:",
+  "Text color:": "Text color:",
+  "High contrast:": "High contrast:",
+  "Dots per inch:": "Dots per inch:",
+  "Font size:": "Font size:",
+  "Save Prefrences": "Save Prefrences"
+}

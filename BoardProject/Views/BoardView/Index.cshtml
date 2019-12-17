@@ -1,9 +1,10 @@
 ﻿@model Board
+@inject Localizer locale
 @{
     if (Model != null && !string.IsNullOrEmpty(Model.BoardName))
         ViewData["Title"] = Model.BoardName;
     else
-        ViewData["Title"] = "No board title";
+        ViewData["Title"] = locale["No board title"];
 }
 <script>
     /* Correct page width and height */
@@ -32,5 +33,5 @@
 }
 else
 {
-    <h1>There isn't a board defined or the requested board cannot be accessed by the current user.</h1>
+    <h1>@locale["There isn't a board defined or the requested board cannot be accessed by the current user."]</h1>
 }

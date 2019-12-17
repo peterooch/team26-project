@@ -14,6 +14,11 @@ namespace BoardProject.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly Localizer localizer;
+        public LoginController(Localizer localizer)
+        {
+            this.localizer = localizer;
+        }
         public IActionResult Index()
         {
             LoginError model;
@@ -32,6 +37,7 @@ namespace BoardProject.Controllers
             {
                 model = null;
             }
+            localizer.SetLocale(HttpContext.Session.GetString("Language"));
             return View(model);
         }
 
