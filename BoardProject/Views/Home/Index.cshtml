@@ -14,7 +14,7 @@
                         @foreach (var item in Model.Boards)
                         {
                             <a onclick="UpdateBoard(@item.ID,'@item.BoardName')">@item.BoardName</a>
-                            <br/>
+                            <br />
                         }
                     </div>
                     <button type="button" class="btn btn-secondary" style="margin-right: 10px;"><a href="/UserPref/"><img src="~/images/gear.png"></a></button>
@@ -22,8 +22,10 @@
                 </div>
             </div>
             <div class="p-3 mb-2 bg-light text-dark d-flex justify-content-center" id="boardName">@Model.HomeBoard.BoardName</div>
-            <button type="button" onclick="SetFontSize(10)">A+</button>
-            <button type="button" onclick="SetFontSize(-10)">A-</button>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" onclick="SetFontSize(10)" class="btn btn-outline-dark">A+</button>
+                <button type="button" onclick="SetFontSize(-10)" class="btn btn-outline-dark">A-</button>
+            </div>
             <a href="/Home/Contact"><font color="black">Click to contact the developers</font></a>
             <div>
                 <button type="button" class="btn btn-danger d-flex justify-content-end">Exit</button>
