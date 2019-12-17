@@ -41,7 +41,7 @@ namespace Tests
         [Fact]
         public void TestLoginPageController_LoginPage()
         {
-            LoginPageController controller = new LoginPageController();
+            LoginController controller = new LoginController();
             ViewResult result = controller.LoginPage() as ViewResult;
             Assert.NotNull(result);
         }

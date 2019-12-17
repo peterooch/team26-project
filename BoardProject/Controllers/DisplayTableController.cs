@@ -12,11 +12,12 @@ namespace BoardProject.Controllers
 {
     public class DisplayTableController : Controller
     {
-        // GET /DisplayTable/DisplayTable
+        // GET /DisplayTable
 
-        public IActionResult DisplayTable()
+        public IActionResult Index()
         {
             return View();
         }
+
     }
 }
