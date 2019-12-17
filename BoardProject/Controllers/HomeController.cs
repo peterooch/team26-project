@@ -18,9 +18,8 @@ namespace BoardProject.Controllers
         {
             /* DEBUG: Seed and pick user no. 1 and redirect to MainPage */
             SeedData.PutTestData();
-            HttpContext.Session.SetInt32("SelectedUser", 1);
             /* END DEBUG */
-            int SelectedUser = 0;
+            int SelectedUser;
             bool FoundUser = false;
 
             /* Open a database connection */
@@ -30,12 +29,23 @@ namespace BoardProject.Controllers
             SelectedUser = HttpContext.Session.GetInt32("SelectedUser") ?? default;
 
             if (SelectedUser != default)
+            {
                 FoundUser = true;
+            }
+            else
+            {
+                if (Request.Cookies.TryGetValue("LoggedUser", out string cookieID))
+                {
+                    SelectedUser = int.Parse(cookieID);
+                    HttpContext.Session.SetInt32("SelectedUser", SelectedUser);
+                    FoundUser = true;
+                }
+            }
 
             if (!FoundUser)
             {
                 /* Redirect to login page to  */
-                return RedirectToAction("LoginPage", "LoginPage");
+                return RedirectToAction("Index", "Login");
             }
 
             /* Fetch the relevant User object from the database */
