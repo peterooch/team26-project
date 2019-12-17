@@ -42,7 +42,7 @@ namespace Tests
         public void TestLoginPageController_LoginPage()
         {
             LoginController controller = new LoginController();
-            ViewResult result = controller.LoginPage() as ViewResult;
+            ViewResult result = controller.Index() as ViewResult;
             Assert.NotNull(result);
         }
         [Fact]
@@ -63,7 +63,7 @@ namespace Tests
         public void TestDisplayTableController_DisplayTable()
         {
             DisplayTableController controller = new DisplayTableController();
-            ViewResult result = controller.DisplayTable() as ViewResult;
+            ViewResult result = controller.Index() as ViewResult;
             Assert.NotNull(result);
         }
     }
