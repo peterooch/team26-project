@@ -63,5 +63,26 @@ namespace BoardProject.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+        /* Directly update user preferences without need to use the form */
+        [HttpPost]
+        public string AjaxUpdate()
+        {
+            int UserID = HttpContext.Session.GetInt32("SelectedUser") ?? default;
+
+            if (UserID != default)
+            {
+                using var DBCon = new DataContext();
+                UserData user = DBCon.UserData.Find(UserID);
+
+                if (user != null)
+                {
+                    if (!string.IsNullOrEmpty(Request.Form["FontSize"]))
+                        user.FontSize = double.Parse(Request.Form["FontSize"]);
+
+                    DBCon.SaveChanges();
+                }
+            }
+            return "OK";
+        }
     }
 }

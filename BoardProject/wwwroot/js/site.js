@@ -3,19 +3,44 @@
 
     // Write your JavaScript code.
 
-current_font_size = 100;
+var current_font_size = 100;
+var boardView = document.getElementById("boardView");
+var boardName = document.getElementById("boardName");
+var bBoardNameUpdate = false;
 function SetFontSize(change) {
     current_font_size += change;
     /* Update parent window / header font size */
     document.getElementById("page_body").style.fontSize = current_font_size + "%";
     /* Update BoardView iframe font size */
-    document.getElementById("boardView").contentDocument.body.style.fontSize = current_font_size + "%";
+    boardView.contentDocument.body.style.fontSize = current_font_size + "%";
+
+    /* Post updated font size info to update user preference */
+    var ajax_query = new XMLHttpRequest();
+    ajax_query.open("POST", "/UserPref/AjaxUpdate");
+    ajax_query.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    ajax_query.send("FontSize=" + current_font_size);
 }
-bBoardNameUpdate = false;
 function UpdateBoard(id, name) {
-    document.getElementById("boardName").innerHTML = name;
-    document.getElementById("boardView").src = "/BoardView/Index/" + id;
+    boardName.innerHTML = name;
+    boardView.src = "/BoardView/Index/" + id;
     bBoardNameUpdate = false;
+}
+document.getElementById("page_body").onload = function () {
+    /* Pull current font size from style data */
+    var font_size = document.getElementById("page_body").style.fontSize;
+    current_font_size = Number(font_size.substr(0, font_size.indexOf("%")));
+    if (boardView != null)
+        boardView.contentDocument.body.style.fontSize = font_size;
+}
+if (boardView != null) {
+    boardView.onload = function () {
+        if (bBoardNameUpdate == true) {
+            boardName.innerHTML = boardView.contentDocument.title;
+        }
+        else {
+            bBoardNameUpdate = true;
+        }
+    }
 }
 /* A tile Click function to be used with interactive tiles */
 function TileOnClick(type, context, tileid) {
@@ -34,13 +59,5 @@ function TileOnClick(type, context, tileid) {
             break;
         default:
             break;
-    }
-}
-document.getElementById("boardView").onload = function() {
-    if (bBoardNameUpdate == true) {
-        document.getElementById("boardName").innerHTML = document.getElementById("boardView").contentDocument.title;
-    }
-    else {
-        bBoardNameUpdate = true;
     }
 }
