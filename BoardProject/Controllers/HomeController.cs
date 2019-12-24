@@ -59,19 +59,6 @@ namespace BoardProject.Controllers
             /* Pass the User object to View */
             return View(SelectedUserObject);
         }
-        public string CSS()
-        {
-            string ColorChanger = "white";
-            int BackgroungChange = 0;
-            string Font = "ariel";
-            double FontSize = 0.0;
-            return @$"body {{
-                        color: {ColorChanger};
-                        background-color: {BackgroungChange};
-                        font-family: {Font};
-                        font-size: {FontSize}%;
-                        }};";
-        }
         // GET /Home/Debug
         public IActionResult Debug()
         {

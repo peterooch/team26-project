@@ -1,10 +1,8 @@
 ﻿using BoardProject.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BoardProject.Models
 { 
@@ -72,6 +70,18 @@ namespace BoardProject.Models
             /* Hash password with salt and store result */
             byte[] BytesToHash = Encoding.UTF8.GetBytes(password + PasswordSalt);
             PasswordHash = Encoding.UTF8.GetString(HashObject.ComputeHash(BytesToHash));
+        }
+
+        public string GenerateStyle()
+        {
+            StringBuilder style = new StringBuilder();
+
+            style.Append($"font-family:\"{Font}\"; ");
+            style.Append($"font-size:{FontSize.ToString()}%; ");
+            style.Append($"background-color: #{BackgroundColor.ToString("x6")}; ");
+            style.Append($"color: #{TextColor.ToString("x6")};");
+
+            return style.ToString();
         }
     }
     /* Database Representation of the User model */

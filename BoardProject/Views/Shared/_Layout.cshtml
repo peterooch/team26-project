@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="@ViewData["CustomStyle"]">
     }
 </head>
-<body style="text-align: @locale["align"] !important;" dir="@locale["dir"]"  id="page_body" >
+<body style="@("text-align: " + locale["align"] + "!important;" + ViewData["AdditionalStyle"] ?? "")" dir="@locale["dir"]"  id="page_body" >
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

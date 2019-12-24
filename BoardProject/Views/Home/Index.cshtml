@@ -3,6 +3,7 @@
 @inject Localizer locale
 @{
     ViewData["Title"] = locale["Main Page"];
+    ViewData["AdditionalStyle"] = Model.GenerateStyle();
 }
     <header>
         <nav class="navbar navbar-light" style="background-color: #497b9e; padding-top: 15px;">
@@ -23,7 +24,7 @@
                 </div>
             </div>
             <div class="p-3 mb-2 bg-light text-dark d-flex justify-content-center" id="boardName">@Model.HomeBoard.BoardName</div>
-            <div class="btn-group" role="group" aria-label="Basic example">
+            <div class="btn-group" role="group" aria-label="Basic example" dir="ltr">
                 <button type="button" onclick="SetFontSize(10)" class="btn btn-outline-dark">A+</button>
                 <button type="button" onclick="SetFontSize(-10)" class="btn btn-outline-dark">A-</button>
             </div>
