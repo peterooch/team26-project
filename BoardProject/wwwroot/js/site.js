@@ -60,4 +60,10 @@ function TileOnClick(type, context, tileid) {
         default:
             break;
     }
+
+    /* Post tile click info to log click */
+    var ajax_query = new XMLHttpRequest();
+    ajax_query.open("POST", "/BoardView/LogTileClick");
+    ajax_query.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    ajax_query.send("TileID=" + tileid);
 }

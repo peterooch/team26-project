@@ -23,6 +23,7 @@ namespace BoardProject
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /* Enable Localizer object use */
             services.AddScoped<Models.Localizer>();
             services.AddControllersWithViews();
             services.AddDistributedMemoryCache();

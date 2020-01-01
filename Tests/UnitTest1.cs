@@ -14,35 +14,35 @@ namespace Tests
         [Fact]
         public void TestHomeController_Index()
         {
-            HomeController controller = new HomeController(test_localizer);
+            HomeController controller = new HomeController(test_localizer,true);
             ViewResult result = controller.Index() as ViewResult;
             Assert.NotNull(result);
         }
         [Fact]
         public void TestHomeController_Debug()
         {
-            HomeController controller = new HomeController(test_localizer);
+            HomeController controller = new HomeController(test_localizer,true);
             ViewResult result = controller.Debug() as ViewResult;
             Assert.NotNull(result);
         }
         [Fact]
         public void TestHomeController_Contact()
         {
-            HomeController controller = new HomeController(test_localizer);
+            HomeController controller = new HomeController(test_localizer,true);
             ViewResult result = controller.Contact() as ViewResult;
             Assert.NotNull(result);
         }
         [Fact]
         public void TestBoardViewController_Index()
         {
-            BoardViewController controller = new BoardViewController(test_localizer);
+            BoardViewController controller = new BoardViewController(test_localizer, true);
             ViewResult result = controller.Index(null) as ViewResult;
             Assert.NotNull(result);
         }
         [Fact]
         public void TestLoginPageController_LoginPage()
         {
-            LoginController controller = new LoginController(test_localizer);
+            LoginController controller = new LoginController(test_localizer,true);
             ViewResult result = controller.Index() as ViewResult;
             Assert.NotNull(result);
         }

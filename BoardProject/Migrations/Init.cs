@@ -84,6 +84,15 @@ namespace BoardProject.Migrations
                 {
                     table.PrimaryKey("PK_Image", x => x.ID);
                 });
+            migrationBuilder.CreateTable(
+                name: "ActivityLogs",
+                columns: table => new
+                {
+                    TimeStamp = table.Column<ulong>(nullable: false),
+                    UserID = table.Column<int>(nullable: false),
+                    ActivityType = table.Column<int>(nullable: false),
+                    ActivityDescription = table.Column<string>(nullable: false)
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -96,6 +105,8 @@ namespace BoardProject.Migrations
                 name: "TileData");
             migrationBuilder.DropTable(
                 name: "Image");
+            migrationBuilder.DropTable(
+                name: "ActivityLogs");
         }
     }
 }

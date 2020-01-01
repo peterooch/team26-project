@@ -14,9 +14,12 @@ namespace BoardProject.Controllers
     public class HomeController : Controller
     {
         private readonly Localizer localizer;
-        public HomeController(Localizer localizer)
+        private readonly bool UnitTest;
+
+        public HomeController(Localizer localizer, bool UnitTest = false)
         {
             this.localizer = localizer;
+            this.UnitTest = UnitTest;
         }
         // GET /
         public IActionResult Index()
@@ -25,51 +28,53 @@ namespace BoardProject.Controllers
             SeedData.PutTestData();
             /* END DEBUG */
             int SelectedUser;
-            bool FoundUser = false;
 
             /* Open a database connection */
             using DataContext DBCon = new DataContext();
 
-            /* Try to find the ID of currently selected User */
-            SelectedUser = HttpContext.Session.GetInt32("SelectedUser") ?? default;
-
-            if (SelectedUser != default)
-            {
-                FoundUser = true;
-            }
+            /* Try to find the ID of currently logged in User */
+            if (!UnitTest)
+                SelectedUser = HttpContext.Session.GetInt32("SelectedUser") ?? default;
             else
+                SelectedUser = 1;
+
+            User SelectedUserObject = null;
+            if (SelectedUser == default)
             {
-                if (Request.Cookies.TryGetValue("LoggedUser", out string cookieID))
-                {
-                    SelectedUser = int.Parse(cookieID);
-                    HttpContext.Session.SetInt32("SelectedUser", SelectedUser);
-                    FoundUser = true;
-                }
+                /* Check if there is a cookie */
+                if (!Request.Cookies.TryGetValue("LoggedUser", out string cookieID))
+                    return RedirectToAction("Index", "Login");
+
+                /* Preload user object for logging */
+                SelectedUser = int.Parse(cookieID);
+                SelectedUserObject = new User(DBCon.UserData.Find(SelectedUser));
+
+                /* Bogus ID, redirect back to login */
+                if (SelectedUserObject == null)
+                    return RedirectToAction("Index", "Login");
+
+                HttpContext.Session.SetInt32("SelectedUser", SelectedUser);
+
+                DBCon.ActivityLogs.Add(new ActivtyLog(ActivtyLog.ActType.Entry,
+                                                     SelectedUserObject, $"User {SelectedUserObject.Username} (ID:{SelectedUserObject.ID}) has entered the system"));
+                DBCon.SaveChanges();
             }
 
-            if (!FoundUser)
-            {
-                /* Redirect to login page to  */
-                return RedirectToAction("Index", "Login");
-            }
-
-            /* Fetch the relevant User object from the database */
-            User SelectedUserObject = new User(DBCon.UserData.Find(SelectedUser));
+            /* Fetch the relevant User object from the database if not already loaded */
+            if (SelectedUserObject == null)
+                SelectedUserObject = new User(DBCon.UserData.Find(SelectedUser));
+            /* Set system localization */
             localizer.SetLocale(SelectedUserObject, this);
             /* Pass the User object to View */
             return View(SelectedUserObject);
         }
-        // GET /Home/Debug
-        public IActionResult Debug()
-        {
-            DebugLists debugLists = new DebugLists();
-
-            return View(debugLists);
-        }
-
         // GET /Home/Contact
         public IActionResult Contact()
         {
+            if (UnitTest)
+                return View();
+
+            /* Get system localization from session variable */
             localizer.SetLocale(HttpContext.Session.GetString("Language"));
             return View();
         }
@@ -79,5 +84,24 @@ namespace BoardProject.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        #region DebugCode
+        // GET /Home/Debug
+        public IActionResult Debug()
+        {
+            DebugLists debugLists = new DebugLists();
+
+            return View(debugLists);
+        }
+        
+        public string Logs()
+        {
+            string result = string.Empty;
+            using DataContext dataContext = new DataContext();
+
+            foreach (var log in dataContext.ActivityLogs)
+                result += $"{log.UserID};{log.TimeStamp};{log.ActivityType};{log.ActivityDescription}\n";
+            return result;
+        }
+        #endregion
     }
 }

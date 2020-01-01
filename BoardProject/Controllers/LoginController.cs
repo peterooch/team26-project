@@ -15,13 +15,20 @@ namespace BoardProject.Controllers
     public class LoginController : Controller
     {
         private readonly Localizer localizer;
-        public LoginController(Localizer localizer)
+        private readonly bool UnitTest;
+
+        public LoginController(Localizer localizer, bool UnitTest = false)
         {
             this.localizer = localizer;
+            this.UnitTest = UnitTest;
         }
         public IActionResult Index()
         {
+            if (UnitTest)
+                return View(null);
+
             LoginError model;
+            /* Check for failed login attempt*/
             if (HttpContext.Session.TryGetValue("LoginError", out _))
             {
                 string[] values = HttpContext.Session.GetString("LoginError").Split(";");
@@ -62,16 +69,26 @@ namespace BoardProject.Controllers
 
             if (!userData.VerifyPassword(password))
             {
+                /* Record login attempt */
+                DBCon.ActivityLogs.Add(new ActivtyLog(ActivtyLog.ActType.AttemptedLogin,
+                                                     userData, $"User {userData.Username} (ID:{userData.ID}) has tried to log in but with incorrect password"));
+                DBCon.SaveChanges();
+
                 HttpContext.Session.SetString("LoginError", string.Join(";", username, false, true));
                 return RedirectToAction("Index","Login");
             }
 
+            /* Set session variable and cookie for a week */
             HttpContext.Session.SetInt32("SelectedUser", userData.ID);
 
             Response.Cookies.Append("LoggedUser",
                                      userData.ID.ToString(),
                                      new CookieOptions { Expires =  new DateTimeOffset(DateTime.Now.AddDays(7)) });
-            
+            /* Record login success */
+            DBCon.ActivityLogs.Add(new ActivtyLog(ActivtyLog.ActType.LoggedIn,
+                                                 userData, $"User {userData.Username} (ID:{userData.ID}) has successfully logged in"));
+            DBCon.SaveChanges();
+
             return RedirectToAction("Index", "Home");
         }
     }
