@@ -2,7 +2,7 @@ name: Azure Deploy
 
 on:
   push:
-    branches: 
+    branches:
       - master
 
 jobs:
@@ -14,7 +14,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.0.100
+          dotnet-version: 3.1.100
       - name: Build with dotnet
         run: dotnet build --configuration Debug
       - name: dotnet publish
