@@ -28,7 +28,7 @@
                 <button type="button" onclick="SetFontSize(10)" class="btn btn-outline-dark">A+</button>
                 <button type="button" onclick="SetFontSize(-10)" class="btn btn-outline-dark">A-</button>
             </div>
-            <a class="btn btn-outline-primary" href="/Home/" role="button"><img src="~/images/Home.png"></a>
+            <a class="btn btn-outline-primary" onclick="UpdateBoard('@Model.HomeBoard.ID','@Model.HomeBoard.BoardName')" role="button"><img src="~/images/Home.png"></a>
             <a href="/Home/Contact"><font color="black">@locale["Click to contact the developers"]</font></a>
             <div>
                 <button type="button" class="btn btn-danger d-flex justify-content-end">@locale["Exit"]</button>
