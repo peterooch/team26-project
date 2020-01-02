@@ -53,6 +53,9 @@ namespace BoardProject.Models
     {
         public Image Source; // Image object associated with the Tile object
 
+        public Tile()
+        {
+        }
         public Tile(TileData tileData)
             : base(tileData)
         {
