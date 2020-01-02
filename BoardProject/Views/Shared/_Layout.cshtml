@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="~/js/jscolor.js" asp-append-version="true"></script>
+    @if (ViewData["CustomScript"] != null)
+    {
+        <script src="@ViewData["CustomScript"]"></script>
+    }
     @if (ViewData["CustomStyle"] != null)
     {
         <link rel="stylesheet" href="@ViewData["CustomStyle"]">

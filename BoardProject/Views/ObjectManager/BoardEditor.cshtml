@@ -2,6 +2,7 @@
 @inject Localizer locale
 @{
     ViewData["Title"] = locale["Board Editor"];
+    ViewData["CustomScript"] = "/js/draggable.js";
 }
 
 <div class="input-group mb-3">
@@ -34,14 +35,22 @@
 <div class="tile_container" style="color: #@Model.TextColor.ToString("x6"); background-color: #@Model.BackgroundColor.ToString("x6");">
     @foreach (Tile tile in Model.Tiles)
     {
+        <div style="padding: @Model.Spacing.ToString() %;">
         <div class="tiles" id="@tile.ID" style="background-color: #@tile.BackgroundColor.ToString("X6");">
             @tile.TileText<br />
             <img src="@tile.Source.Source" alt="@tile.Source.ImageName" style="width: 15vw; height:26.25vh" />
         </div>
-        <br />
+        </div>
     }
 </div>
 <script>
-    // Add draggable stuff here
-    //https://shopify.github.io/draggable/examples/flexbox.html
+    const container = document.querySelector('.tile_container');
+
+    const swappable = new Draggable.Swappable(container, {
+        draggable: '.tiles',
+    });
+
+    swappable.on('swappable:start', () => console.log('swappable:start'));
+    swappable.on('swappable:swapped', () => console.log('swappable:swapped'));
+    swappable.on('swappable:stop', () => console.log('swappable:stop'));
 </script>
