@@ -47,6 +47,9 @@ namespace BoardProject.Models
     {
         public List<Tile> Tiles; // Tile objects associated with the Board object
 
+        public Board()
+        {
+        }
         public Board(BoardData boardData)
             : base(boardData)
         {

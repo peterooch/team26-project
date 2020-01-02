@@ -1,0 +1,47 @@
+﻿@model Board
+@inject Localizer locale
+@{
+    ViewData["Title"] = locale["Board Editor"];
+}
+
+<div class="input-group mb-3">
+    <!-- General Board information such as namings and styling -->
+    <div class="input-group-prepend">
+        <span class="input-group-text">@locale["Board Name"]</span>
+    </div>
+    <input type="text" name="board_name" class="form-control" value="@Model.BoardName" />
+    <div class="input-group-prepend">
+        <span class="input-group-text">@locale["Board Header"]</span>
+    </div>
+    <input type="text" name="board_header" class="form-control" value="@Model.BoardHeader" />
+    <div class="input-group-prepend">
+        <span class="input-group-text">@locale["Background Color"]</span>
+    </div>
+    <input type="text" name="bg_color" class="jscolor form-control" value="@Model.BackgroundColor.ToString("X6")" />
+    <div class="input-group-prepend">
+        <span class="input-group-text">@locale["Text Color"]</span>
+    </div>
+    <input type="text" name="bg_color" class="jscolor form-control" value="@Model.TextColor.ToString("X6")" />
+    <div class="input-group-prepend">
+        <span class="input-group-text">@locale["Font Size"]</span>
+    </div>
+    <input type="number" name="font_size" class="form-control" value="@Model.FontSize.ToString()" />
+    <div class="input-group-prepend">
+        <span class="input-group-text">@locale["Spacing"]</span>
+    </div>
+    <input type="number" name="spacing" class="form-control" value="@Model.Spacing.ToString()" />
+</div>
+<div class="tile_container" style="color: #@Model.TextColor.ToString("x6"); background-color: #@Model.BackgroundColor.ToString("x6");">
+    @foreach (Tile tile in Model.Tiles)
+    {
+        <div class="tiles" id="@tile.ID" style="background-color: #@tile.BackgroundColor.ToString("X6");">
+            @tile.TileText<br />
+            <img src="@tile.Source.Source" alt="@tile.Source.ImageName" style="width: 15vw; height:26.25vh" />
+        </div>
+        <br />
+    }
+</div>
+<script>
+    // Add draggable stuff here
+    //https://shopify.github.io/draggable/examples/flexbox.html
+</script>
