@@ -52,6 +52,7 @@ namespace BoardProject.Controllers
             }
             return View(model);
         }
+        /* Return a JSON string of a requested tile object to simplify manipulation in JS */
         public string TileJSON(int? ID)
         {
             using var DBCon = new DataContext();
@@ -74,9 +75,9 @@ namespace BoardProject.Controllers
             {
                 tile = new Tile(DBCon.TileData.Find(ID));
             }
-
             return JsonConvert.SerializeObject(tile);
         }
+        /* Return a JSON string of a requested image object to simplify manipulation in JS */
         public string ImageJSON(int? ID)
         {
             Image image;
@@ -98,6 +99,78 @@ namespace BoardProject.Controllers
                 image = DBCon.Image.Find(ID);
             }
             return JsonConvert.SerializeObject(image);
+        }
+        /* Receives a JSON string of a BoardData object,
+         * convert back into a BoardData object,
+         * and save said object
+         * */
+        [HttpPost]
+        public string UpdateBoard()
+        {
+            BoardData board = JsonConvert.DeserializeObject<BoardData>(Request.Form["Model"]);
+            int UserID = HttpContext.Session.GetInt32("SelectedUser") ?? default;
+
+            /* Check if we have something to work with */
+            if (board != null)
+            {
+                using var DBCon = new DataContext();
+                /* This is VERY^3 wrong, concurrent use will cause overwriting of boards *shrug* */
+                if (board.ID <= DBCon.BoardData.Max(b => b.ID))
+                {
+                    /* Current board is *probably* a updated one */
+                    DBCon.BoardData.Update(board);
+                }
+                else
+                {
+                    /* Current board is *probably* a new one */
+                    DBCon.BoardData.Add(board);
+
+                    UserData user = DBCon.UserData.Find(UserID);
+
+                    /* Associate new board with the user */
+                    if (user != null)
+                        user.BoardIDs += board.ID.ToString() + ";";
+                }
+                DBCon.SaveChanges();
+            }
+            return "OK";
+        }
+        /* Removes a board that has the same value as the ID POST parameter*/
+        [HttpPost]
+        public string RemoveBoard()
+        {
+            int UserID = HttpContext.Session.GetInt32("SelectedUser") ?? default;
+
+            if (UserID != default)
+            {
+                using var DBCon = new DataContext();
+                UserData user = DBCon.UserData.Find(UserID);
+
+                if (user != null)
+                {
+                    /* Remove association from board list */
+                    user.BoardIDs = user.BoardIDs.Replace(Request.Form["ID"], "");
+                    
+                    /* Check if its the Homeboard, if so remove it and assign first board in BoardIDs */
+                    if (user.HomeBoardID == Request.Form["ID"])
+                        user.HomeBoardID = user.BoardIDs.Split(";")[0] ?? string.Empty;
+                    DBCon.SaveChanges();
+                    return "OK";
+                }
+            }
+            return "ERROR";
+        }
+        [HttpPost]
+        public string UpdateTile()
+        {
+            Tile tile = JsonConvert.DeserializeObject<Tile>(Request.Form["Model"]);
+            return "OK";
+        }
+        [HttpPost]
+        public string UpdateImage()
+        {
+            Image image = JsonConvert.DeserializeObject<Image>(Request.Form["Model"]);
+            return "OK";
         }
     }
 }

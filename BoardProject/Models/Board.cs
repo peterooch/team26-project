@@ -53,13 +53,13 @@ namespace BoardProject.Models
         public Board(BoardData boardData)
             : base(boardData)
         {
+            Tiles = new List<Tile>();
             // Convert IDs to Tile objects
             if (!string.IsNullOrEmpty(boardData.TileIDs))
             {
                 using var DbCon = new DataContext();
 
                 string[] TileIDs = boardData.TileIDs.Split(';');
-                Tiles = new List<Tile>();
 
                 foreach (string Id in TileIDs)
                 {
