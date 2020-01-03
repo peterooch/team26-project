@@ -5,10 +5,11 @@
     ViewData["CustomScript"] = "/js/draggable.js";
 }
 <script>
+    var padding = "@Model.Spacing.ToString()%";
     function AddTile(tileid, bg_color, tile_text, image_src, image_name) {
         var tile_container = document.querySelector(".tile_container");
         var outerdiv = document.createElement("DIV");
-        outerdiv.style.padding = "@Model.Spacing.ToString()%";
+        outerdiv.style.padding = padding;
         var innerdiv = document.createElement("DIV");
         innerdiv.className = "tiles";
         innerdiv.id = tileid;
@@ -41,43 +42,97 @@
         document.getElementById(tileid).parentElement.remove();
     }
 </script>
-<div class="input-group mb-3">
+<div class="input-group">
     <!-- General Board information such as namings and styling -->
     <div class="input-group-prepend">
         <span class="input-group-text">@locale["Board Name"]</span>
     </div>
-    <input type="text" name="board_name" class="form-control" value="@Model.BoardName" />
+    <input type="text" name="board_name" class="form-control mr-2" value="@Model.BoardName" />
     <div class="input-group-prepend">
         <span class="input-group-text">@locale["Board Header"]</span>
     </div>
-    <input type="text" name="board_header" class="form-control" value="@Model.BoardHeader" />
+    <input type="text" name="board_header" class="form-control mr-2" value="@Model.BoardHeader" />
     <div class="input-group-prepend">
         <span class="input-group-text">@locale["Background Color"]</span>
     </div>
-    <input type="text" name="bg_color" class="jscolor form-control" value="@Model.BackgroundColor.ToString("X6")" />
+    <input type="text" name="bg_color" class="jscolor form-control mr-2" value="@Model.BackgroundColor.ToString("X6")" />
     <div class="input-group-prepend">
         <span class="input-group-text">@locale["Text Color"]</span>
     </div>
-    <input type="text" name="bg_color" class="jscolor form-control" value="@Model.TextColor.ToString("X6")" />
+    <input type="text" name="bg_color" class="jscolor form-control mr-2" value="@Model.TextColor.ToString("X6")" />
     <div class="input-group-prepend">
         <span class="input-group-text">@locale["Font Size"]</span>
     </div>
     <input type="number" name="font_size" class="form-control" value="@Model.FontSize.ToString()" />
+    <div class="input-group-append mr-2">
+        <span class="input-group-text">%</span>
+    </div>
     <div class="input-group-prepend">
         <span class="input-group-text">@locale["Spacing"]</span>
     </div>
     <input type="number" name="spacing" class="form-control" value="@Model.Spacing.ToString()" />
+    <div class="input-group-append">
+        <span class="input-group-text">%</span>
+    </div>
 </div>
+<!-- Debug code start -->
+<div class="input-group mb-3">
+    <button type="button" class="btn btn-success" onclick="$('#tileModal').modal('show');">Open Tile Modal</button>
+    <button type="button" class="btn btn-primary" onclick="$('#imageModal').modal('show');">Open Image Modal</button>
+</div>
+<!-- Debug code end -->
 <div class="tile_container" style="color: #@Model.TextColor.ToString("x6"); background-color: #@Model.BackgroundColor.ToString("x6");">
     @foreach (Tile tile in Model.Tiles)
     {
-        <div style="padding: @Model.Spacing.ToString() %;">
+        <div class="tile_outer_container" style="padding: @Model.Spacing.ToString() %;">
             <div class="tiles" id="@tile.ID" style="background-color: #@tile.BackgroundColor.ToString("X6");">
-                @tile.TileText <img src="~/images/edit.png" /><img src="~/images/delete.png" onclick="RemoveTile('@tile.ID');"/><br />
+                @tile.TileText <img src="~/images/edit.png" /><img src="~/images/delete.png" onclick="RemoveTile('@tile.ID');" /><br />
                 <img src="@tile.Source.Source" alt="@tile.Source.ImageName" style="width: 15vw; height:26.25vh" />
             </div>
         </div>
     }
+    <div class="tile_outer_container" style="text-align: center; order: 99; padding: @Model.Spacing.ToString() %; width: 15vw; height:26.25vh; border: solid black 3px;">
+        @locale["Add Tile"]
+    </div>
+</div>
+<!-- Modal Boxes for Tile and Image menus, shamelessly copied from bootstrap docs -->
+<div class="modal" id="tileModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="TileModalBox" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tileModalTitle"><!-- JavaScript selected title if new or current tile --></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">@locale["Save Tile"]</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@locale["Cancel"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="imageModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ImageModalBox" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalTitle"><!-- JavaScript selected title if new or current image --></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">@locale["Save Image"]</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@locale["Cancel"]</button>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     const container = document.querySelector('.tile_container');
