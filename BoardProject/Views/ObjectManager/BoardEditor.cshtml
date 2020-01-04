@@ -77,12 +77,49 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">@locale["Save Tile"]</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">@locale["Cancel"]</button>
+            <div class="TileModal">
+                <div class="form-group">
+                    <label class="modal-body">Tile name:</label>
+                    <input type="text" name="tilename">
+                </div>
+                <label class="modal-body">Background color:</label>
+                <input type="text" name="bg_color" class="jscolor" value="@Model.BackgroundColor.ToString("X6")" /><br />
+                <label class="modal-body">Tile action's:</label>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="nothing-tab" data-toggle="tab" href="#nothing" role="tab" aria-controls="nothing" aria-selected="true">Nothing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="gif-tab" data-toggle="tab" href="#gif" role="tab" aria-controls="gif" aria-selected="false">Gif</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="link-tab" data-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="false">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="anotherboard-tab" data-toggle="tab" href="#anotherboard" role="tab" aria-controls="anotherboard" aria-selected="false">Anotherboard</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade" id="nothing" role="tabpanel" aria-labelledby="nothing-tab">Just a picture</div>
+                    <div class="tab-pane fade" id="gif" role="tabpanel" aria-labelledby="gif-tab">
+                        <label class="modal-body">Gif:</label>
+                        <button>Gif</button>
+                        <hr />
+                    </div>
+                    <div class="tab-pane fade" id="link" role="tabpanel" aria-labelledby="link-tab">
+                        <label class="modal-body">Enter url:</label>
+                        <input type="text" name="url">
+                    </div>
+                    <div class="tab-pane fade" id="anotherboard" role="tabpanel" aria-labelledby="anotherboard-tab">...</div>
+                </div>
+                <hr />
+                <div class="tile_outer_container" style="text-align: center; order: 99; padding: @Model.Spacing.ToString() %; width: 15vw; height:26.25vh; border: solid black 3px;">
+                    @locale["Tile Preview"]
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">@locale["Save Tile"]</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@locale["Cancel"]</button>
+                </div>
             </div>
         </div>
     </div>
@@ -96,8 +133,24 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                ...
+            <div class="imageModal">
+                <form>
+                    <div>
+                        <label class="modal-body">Category:</label>
+                        <select>
+                            <option value="nothing">Nothing</option>
+                        </select>
+                        <label class="modal-body">Existing images:</label>
+                        <button>Exist</button>
+                        <hr/>
+                        <label class="modal-body">Upload a new image:</label>
+                        <button>Open</button><br/>
+                        <label class="modal-body">New image category:</label>
+                        <select>
+                            <option value="nothing">Nothing</option>
+                        </select><br />
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">@locale["Save Image"]</button>
