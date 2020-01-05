@@ -1,16 +1,16 @@
-﻿/************************************************************
+﻿/********************************************************************
  * BoardEditor JavaScript side, written to make the process
  * of adding, editing and removing* Boards/Tiles/Images as
  * seamless to make this the best possible experience.
  * Also practice in AJAX/JSON/JS sorcery
  * (*) Object refrences are being removed, not the objects
- ************************************************************/
-/******************* GLOBALS ********************************/
+ *******************************************************************/
+/******************* GLOBALS ***************************************/
 /* These variables work like this:
  * DB -> C# Object -> JSON -> JavaScript Object -> JSON -> C# Object -> DB */
 var currentTileObject = null;
 var currentImageObject = null;
-/******************* FUNCTIONS ******************************/
+/******************* FUNCTIONS *************************************/
 /* Multipurpose AJAX message dispatcher */
 function AjaxDispatcher(method, target, callback_fn, payload) {
     var message = new XMLHttpRequest();
@@ -24,6 +24,7 @@ function AjaxDispatcher(method, target, callback_fn, payload) {
         message.send();
     }
 }
+/************** Board Editor functions ******************************/
 /* Add a brand new tile into the board editor tile container,
    new tile behavior is identical to currently showed tiles */
 function AddTile(tileid, bg_color, tile_text, image_src, image_name) {
@@ -40,7 +41,7 @@ function AddTile(tileid, bg_color, tile_text, image_src, image_name) {
     center.appendChild(image_text);
     var span = document.createElement("span");
     span.style.backgroundColor = "white";
-    var edit = document.createElement("div");
+    var edit = document.createElement("img");
     edit.src = "/images/edit.png";
     edit.onclick = function (e) {
         GetTileData(e.target.parentElement.parentElement.parentElement.id);
@@ -54,12 +55,12 @@ function AddTile(tileid, bg_color, tile_text, image_src, image_name) {
     span.appendChild(del);
     center.appendChild(span);
     innerdiv.appendChild(center);
-    innerdiv.appendChild(document.createElement("br"));
     var img = document.createElement("img");
+    img.className="dragme";
     img.src = image_src;
     img.alt = image_name;
-    img.width = "24vw";
-    img.height = "35vh";
+    img.style.width = "24vw";
+    img.style.height = "35vh";
     innerdiv.appendChild(img);
     outerdiv.appendChild(innerdiv);
     tile_container.appendChild(outerdiv);
@@ -110,20 +111,50 @@ function RefreshEditor() {
         tile.style.padding = padding
     );
 }
+/************** Tile Modal functions *******************************/
 /* Set current tile object to one retreived from the server identified by tileid */
 function GetTileData(tileid) {
     var callback = function () {
-        if (this.readyState == this.DONE && this.status == 200){
-            if (currentTileObject == null || currentTileObject.ID != Number(tileid)) {
-                currentTileObject = JSON.parse(this.responseText);
-                currentImageObject = currentImageObject.Source;
-                /* Update Tile Modal info */
+        if (this.readyState == this.DONE && this.status == 200) {
+            currentTileObject = JSON.parse(this.responseText);
+            currentImageObject = currentTileObject.Source;
+            document.getElementById("tilename").value = currentTileObject.TileName;
+            var colorStr = ("000000" + currentTileObject.BackgroundColor.toString(16).toUpperCase()).substr(-6);
+            document.getElementById("tile_color").value = colorStr;
+            document.getElementById("tile_color").style.backgroundColor = "#" + colorStr;
+            document.getElementById("tile_text").value = currentTileObject.TileText;
+            document.getElementById("tile_preview").style.backgroundColor = "#" + colorStr;
+            document.getElementById("tile_text_disp").innerHTML = currentTileObject.TileText;
+            if (currentImageObject != null) {
+                document.getElementById("tile_image_file").src = currentImageObject.Source;
+                document.getElementById("tile_image_file").style.display = "initial";
             }
             $("#tileModal").modal("show");
         }
     }
     AjaxDispatcher("GET", "/ObjectManager/TileJSON/" + tileid, callback);
 }
+/* Send the current tile object to the server */
+function PostTileData() {
+    currentTileObject.TileName = document.getElementById("tilename").value;
+    currentTileObject.BackgroundColor = parseInt(document.getElementById("tile_color").value,16)
+    currentTileObject.TileText = document.getElementById("tile_text").value;
+    var callback = function () {
+        if (this.readyState == this.DONE && this.status == 200) {
+            var tile = document.getElementById(currentTileObject.ID.toString());
+            if (tile != null)
+                RemoveTile(tile.id);
+            AddTile(tile.id.toString(), 
+                    document.getElementById("tile_color").value,
+                    currentTileObject.TileText,
+                    currentTileObject.Source.Source,
+                    currentTileObject.Source.ImageName);
+            $("#tileModal").modal("hide");
+        }
+    }
+    AjaxDispatcher("POST", "/ObjectManager/UpdateTile/", callback, "Model=" + JSON.stringify(currentTileObject));
+}
+/************* Image Modal functions *******************************/
 /* Set current image object to one retreived from the server identified by imageid */
 function GetImageData(imageid) {
     var callback = function () {
@@ -135,15 +166,6 @@ function GetImageData(imageid) {
         }
     }
     AjaxDispatcher("GET", "/ObjectManager/ImageJSON/" + imageid, callback);
-}
-/* Send the current tile object to the server */
-function PostTileData() {
-    var callback = function () {
-        if (this.readyState == this.DONE && this.status == 200) {
-
-        }
-    }
-    AjaxDispatcher("POST", "/ObjectManager/UpdateTile/", callback, "Model=" + JSON.stringify(currentTileObject));
 }
 /* Send the current image object to server */
 function PostImageData() {

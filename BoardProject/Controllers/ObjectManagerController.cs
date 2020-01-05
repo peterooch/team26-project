@@ -114,15 +114,12 @@ namespace BoardProject.Controllers
             if (board != null)
             {
                 using var DBCon = new DataContext();
-                /* This is VERY^3 wrong, concurrent use will cause overwriting of boards *shrug* */
-                if (board.ID <= DBCon.BoardData.Max(b => b.ID))
+                if (DBCon.BoardData.Any(b => b.ID == board.ID))
                 {
-                    /* Current board is *probably* a updated one */
                     DBCon.BoardData.Update(board);
                 }
                 else
                 {
-                    /* Current board is *probably* a new one */
                     DBCon.BoardData.Add(board);
 
                     UserData user = DBCon.UserData.Find(UserID);
@@ -171,7 +168,7 @@ namespace BoardProject.Controllers
             TileData data = new TileData(tile);
 
             using var DBCon = new DataContext();
-            if (tile.ID <= DBCon.TileData.Max(t => t.ID))
+            if (DBCon.TileData.Any(t => t.ID == data.ID))
             {
                 DBCon.TileData.Update(data);
             }
@@ -179,6 +176,7 @@ namespace BoardProject.Controllers
             {
                 DBCon.TileData.Add(data);
             }
+            DBCon.SaveChanges();
             return "OK";
         }
         [HttpPost]
@@ -190,7 +188,7 @@ namespace BoardProject.Controllers
                 return "ERROR";
 
             using var DBCon = new DataContext();
-            if (image.ID <= DBCon.Image.Max(i => i.ID))
+            if (DBCon.Image.Any(i => i.ID == image.ID))
             {
                 DBCon.Image.Update(image);
             }
@@ -198,6 +196,7 @@ namespace BoardProject.Controllers
             {
                 DBCon.Image.Add(image);
             }
+            DBCon.SaveChanges();
             return "OK";
         }
         public class FormUploadModel

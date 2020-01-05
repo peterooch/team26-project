@@ -66,7 +66,7 @@
                         <img src="~/images/delete.png" onclick="RemoveTile('@tile.ID');" />
                     </span>
                 </center>
-                <img src="@tile.Source.Source" alt="@tile.Source.ImageName" style="width: 24vw; height:35vh" />
+                <img class="dragme" src="@tile.Source.Source" alt="@tile.Source.ImageName" style="width: 24vw; height:35vh" />
             </div>
         </div>
     }
@@ -169,12 +169,12 @@
                 </div>
                 <hr />
                 @locale["Tile Preview"]
-                <div id="tile_preview" style="text-align: center; width: 15vw; height:26.25vh; border: solid black 3px; justify-content: center;">
+                <div id="tile_preview" style="text-align: center; border: solid black 3px; justify-content: center;">
                     <span id="tile_text_disp"></span><br />
-                    <img id="tile_image_file" style="display: none;" />
+                    <img id="tile_image_file" style="display: none; width: 15vw; height:26.25vh" />
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">@locale["Save Tile"]</button>
+                    <button type="button" class="btn btn-primary" onclick="PostTileData();">@locale["Save Tile"]</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">@locale["Cancel"]</button>
                 </div>
             </div>
@@ -221,6 +221,7 @@
 
     const swappable = new Draggable.Swappable(container, {
         draggable: '.tiles',
+        handle: '.dragme'
     });
 
     swappable.on('swappable:start', () => console.log('swappable:start'));
