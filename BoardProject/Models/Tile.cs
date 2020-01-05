@@ -47,6 +47,10 @@ namespace BoardProject.Models
         public TileData()
         {
         }
+        public TileData(Tile tile) : base(tile)
+        {
+            SourceID = tile.Source?.ID ?? 0;
+        }
     }
     /* Logical Representation of the User model */
     public class Tile : TileBase

@@ -150,10 +150,10 @@ namespace BoardProject.Controllers
                 {
                     /* Remove association from board list */
                     user.BoardIDs = user.BoardIDs.Replace(Request.Form["ID"], "");
-                    
+
                     /* Check if its the Homeboard, if so remove it and assign first board in BoardIDs */
                     if (user.HomeBoardID == Request.Form["ID"])
-                        user.HomeBoardID = user.BoardIDs.Split(";")[0] ?? string.Empty;
+                        user.HomeBoardID = user.BoardIDs.Split(";")?[0] ?? string.Empty;
                     DBCon.SaveChanges();
                     return "OK";
                 }
@@ -164,13 +164,60 @@ namespace BoardProject.Controllers
         public string UpdateTile()
         {
             Tile tile = JsonConvert.DeserializeObject<Tile>(Request.Form["Model"]);
+
+            if (tile == null)
+                return "ERROR";
+
+            TileData data = new TileData(tile);
+
+            using var DBCon = new DataContext();
+            if (tile.ID <= DBCon.TileData.Max(t => t.ID))
+            {
+                DBCon.TileData.Update(data);
+            }
+            else
+            {
+                DBCon.TileData.Add(data);
+            }
             return "OK";
         }
         [HttpPost]
         public string UpdateImage()
         {
             Image image = JsonConvert.DeserializeObject<Image>(Request.Form["Model"]);
+
+            if (image == null)
+                return "ERROR";
+
+            using var DBCon = new DataContext();
+            if (image.ID <= DBCon.Image.Max(i => i.ID))
+            {
+                DBCon.Image.Update(image);
+            }
+            else
+            {
+                DBCon.Image.Add(image);
+            }
             return "OK";
+        }
+        public class FormUploadModel
+        {
+            [FromForm(Name="id")]
+            public string ID { get; set; }
+            [FromForm(Name="file")]
+            public IFormFile File { get; set; }
+        }
+        [HttpPost]
+        public string FileUpload([FromForm]FormUploadModel upload)
+        {
+            var FileName = System.IO.Path.GetExtension(upload.File.FileName);
+
+            using var DestFile = System.IO.File.OpenWrite("wwwroot/images/" + upload.ID + "_" + FileName);
+            using var UploadStream = upload.File.OpenReadStream();
+
+            UploadStream.CopyTo(DestFile);
+
+            return "/images/" + upload.ID + "_" + FileName;
         }
     }
 }

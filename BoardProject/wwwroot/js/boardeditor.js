@@ -12,9 +12,9 @@ var currentTileObject = null;
 var currentImageObject = null;
 /******************* FUNCTIONS ******************************/
 /* Multipurpose AJAX message dispatcher */
-function AjaxDispatcher(method, target, callback, payload) {
+function AjaxDispatcher(method, target, callback_fn, payload) {
     var message = new XMLHttpRequest();
-    message.onreadystatechange = callback;
+    message.onreadystatechange = callback_fn;
     message.open(method, target);
     if (method === "POST") {
         message.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -28,32 +28,38 @@ function AjaxDispatcher(method, target, callback, payload) {
    new tile behavior is identical to currently showed tiles */
 function AddTile(tileid, bg_color, tile_text, image_src, image_name) {
     var tile_container = document.querySelector(".tile_container");
-    var outerdiv = document.createElement("DIV");
+    var outerdiv = document.createElement("div");
     outerdiv.style.padding = padding;
-    var innerdiv = document.createElement("DIV");
+    outerdiv.className = "tile_outer_container";
+    var innerdiv = document.createElement("div");
     innerdiv.className = "tiles";
     innerdiv.id = tileid;
     innerdiv.style.backgroundColor = "#" + bg_color;
+    var center = document.createElement("center");
     var image_text = document.createTextNode(tile_text);
-    innerdiv.appendChild(image_text);
-    var edit = document.createElement("IMG");
+    center.appendChild(image_text);
+    var span = document.createElement("span");
+    span.style.backgroundColor = "white";
+    var edit = document.createElement("div");
     edit.src = "/images/edit.png";
     edit.onclick = function (e) {
-        EditTile(e.target.parentElement.id);
+        GetTileData(e.target.parentElement.parentElement.parentElement.id);
     };
-    innerdiv.appendChild(edit);
-    var del = document.createElement("IMG");
+    span.appendChild(edit);
+    var del = document.createElement("img");
     del.src = "/images/delete.png";
     del.onclick = function (e) {
-        RemoveTile(e.target.parentElement.id);
+        RemoveTile(e.target.parentElement.parentElement.parentElement.id);
     };
-    innerdiv.appendChild(del);
-    innerdiv.appendChild(document.createElement("BR"));
-    var img = document.createElement("IMG");
+    span.appendChild(del);
+    center.appendChild(span);
+    innerdiv.appendChild(center);
+    innerdiv.appendChild(document.createElement("br"));
+    var img = document.createElement("img");
     img.src = image_src;
     img.alt = image_name;
-    img.style.width = "15vw";
-    img.style.height = "26.25vh";
+    img.width = "24vw";
+    img.height = "35vh";
     innerdiv.appendChild(img);
     outerdiv.appendChild(innerdiv);
     tile_container.appendChild(outerdiv);
@@ -94,16 +100,26 @@ function RemoveBoard() {
     }
     AjaxDispatcher("POST", "/ObjectManager/RemoveBoard/", callback, "ID=" + document.getElementById("board_id").value);
 }
+function RefreshEditor() {
+    var container = document.querySelector(".tile_container");
+    container.style.backgroundColor = "#" + document.getElementById("bg_color").value;
+    container.style.color = "#" + document.getElementById("tx_color").value;
+    container.style.fontSize = document.getElementById("font_size").value + "%";
+    padding = document.getElementById("spacing").value + "%";
+    document.querySelectorAll(".tile_outer_container").forEach(tile =>
+        tile.style.padding = padding
+    );
+}
 /* Set current tile object to one retreived from the server identified by tileid */
 function GetTileData(tileid) {
-
     var callback = function () {
-        if (this.readyState != this.DONE || this.status != 200)
-            return;
-
-        if (currentTileObject == null || currentTileObject.ID != Number(imageid)) {
-            currentTileObject = JSON.parse(this.responseText);
-            /* Update Tile Modal info */
+        if (this.readyState == this.DONE && this.status == 200){
+            if (currentTileObject == null || currentTileObject.ID != Number(tileid)) {
+                currentTileObject = JSON.parse(this.responseText);
+                currentImageObject = currentImageObject.Source;
+                /* Update Tile Modal info */
+            }
+            $("#tileModal").modal("show");
         }
     }
     AjaxDispatcher("GET", "/ObjectManager/TileJSON/" + tileid, callback);
@@ -124,7 +140,7 @@ function GetImageData(imageid) {
 function PostTileData() {
     var callback = function () {
         if (this.readyState == this.DONE && this.status == 200) {
-            /* Close Tile Modal */
+
         }
     }
     AjaxDispatcher("POST", "/ObjectManager/UpdateTile/", callback, "Model=" + JSON.stringify(currentTileObject));
@@ -137,4 +153,13 @@ function PostImageData() {
         }
     }
     AjaxDispatcher("POST", "/ObjectManager/UpdateImage/", callback, "Model=" + JSON.stringify(currentImageObject));
+}
+function ImageUpload() {
+    var callback = function()
+    {
+        if (this.status == 200 && this.readyState == this.DONE) {
+            /* responseText contains address for uploaded file */
+        }
+    }
+    AjaxDispatcher("POST", "/ObjectManager/FileUpload", callback, new FormData(document.getElementById("image_form")));
 }

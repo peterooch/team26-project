@@ -42,11 +42,13 @@ namespace BoardProject.Controllers
             else
                 SelectedBoard = UserObject.Boards.Find(board => board.ID == ID);
 
-            /* Record board access*/
-            DBCon.ActivityLogs.Add(new ActivtyLog(ActivtyLog.ActType.DisplayBoard, UserObject,
-                $"User {UserObject.Username} (ID:{UserObject.ID}) has selected board \"{SelectedBoard.BoardName}\"(ID:{SelectedBoard.ID})"));
-            DBCon.SaveChanges();
-
+            if (SelectedBoard != null)
+            {
+                /* Record board access*/
+                DBCon.ActivityLogs.Add(new ActivtyLog(ActivtyLog.ActType.DisplayBoard, UserObject,
+                    $"User {UserObject.Username} (ID:{UserObject.ID}) has selected board \"{SelectedBoard.BoardName}\"(ID:{SelectedBoard.ID})"));
+                DBCon.SaveChanges();
+            }
             return View(SelectedBoard);
         }
         /* Receive AJAX requests from TileOnClick for logging purposes */

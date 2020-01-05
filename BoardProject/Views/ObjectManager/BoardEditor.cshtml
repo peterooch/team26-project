@@ -14,37 +14,38 @@
     <div class="input-group-prepend">
         <span class="input-group-text">@locale["Board Name"]</span>
     </div>
-    <input type="text" id="board_name" class="form-control mr-2" value="@Model.BoardName" />
+    <input onchange="RefreshEditor();" type="text" id="board_name" class="form-control mr-2" value="@Model.BoardName" />
     <div class="input-group-prepend">
         <span class="input-group-text">@locale["Board Header"]</span>
     </div>
-    <input type="text" id="board_header" class="form-control mr-2" value="@Model.BoardHeader" />
+    <input onchange="RefreshEditor();" type="text" id="board_header" class="form-control mr-2" value="@Model.BoardHeader" />
     <div class="input-group-prepend">
         <span class="input-group-text">@locale["Background Color"]</span>
     </div>
-    <input type="text" id="bg_color" class="jscolor form-control mr-2" value="@Model.BackgroundColor.ToString("X6")" />
+    <input onchange="RefreshEditor();" type="text" id="bg_color" class="jscolor form-control mr-2" value="@Model.BackgroundColor.ToString("X6")" />
     <div class="input-group-prepend">
         <span class="input-group-text">@locale["Text Color"]</span>
     </div>
-    <input type="text" id="tx_color" class="jscolor form-control mr-2" value="@Model.TextColor.ToString("X6")" />
+    <input onchange="RefreshEditor();" type="text" id="tx_color" class="jscolor form-control mr-2" value="@Model.TextColor.ToString("X6")" />
     <div class="input-group-prepend">
         <span class="input-group-text">@locale["Font Size"]</span>
     </div>
-    <input type="number" id="font_size" class="form-control" value="@Model.FontSize.ToString()" />
+    <input onchange="RefreshEditor();" type="number" id="font_size" class="form-control" value="@Model.FontSize.ToString()" />
     <div class="input-group-append mr-2">
         <span class="input-group-text">%</span>
     </div>
     <div class="input-group-prepend">
         <span class="input-group-text">@locale["Spacing"]</span>
     </div>
-    <input type="number" id="spacing" class="form-control" value="@Model.Spacing.ToString()" />
+    <input onchange="RefreshEditor();" type="number" id="spacing" class="form-control" value="@Model.Spacing.ToString()" />
     <div class="input-group-append">
         <span class="input-group-text">%</span>
     </div>
 </div>
 <div class="input-group" style="justify-content: center">
-    <input type="hidden" id="board_id" value="@Model.ID"/>
+    <input type="hidden" id="board_id" value="@Model.ID" />
     <button type="button" class="btn btn-primary mr-2" onclick="SaveBoard();">@locale["Save Board"]</button>
+    <button type="button" class="btn btn-secondary mr-2" onclick="window.location.href='/Home/';">@locale["Quit without making changes"]</button>
     <button type="button" class="btn btn-danger" onclick="RemoveBoard();">@locale["Remove Board"]</button>
 </div>
 <!-- Debug code start -->
@@ -53,17 +54,23 @@
     <button type="button" class="btn btn-primary" onclick="$('#imageModal').modal('show');">Open Image Modal</button>
 </div>
 <!-- Debug code end -->
-<div class="tile_container" style="color: #@Model.TextColor.ToString("x6"); background-color: #@Model.BackgroundColor.ToString("x6");">
+<div class="tile_container" style="color: #@Model.TextColor.ToString("x6"); background-color: #@Model.BackgroundColor.ToString("x6"); font-size: @Model.FontSize.ToString()%;">
     @foreach (Tile tile in Model.Tiles)
     {
-        <div class="tile_outer_container" style="padding: @Model.Spacing.ToString() %;">
-            <div class="tiles" id="@tile.ID" style="background-color: #@tile.BackgroundColor.ToString("X6");">
-                @tile.TileText <img src="~/images/edit.png" /><img src="~/images/delete.png" onclick="RemoveTile('@tile.ID');" /><br />
-                <img src="@tile.Source.Source" alt="@tile.Source.ImageName" style="width: 15vw; height:26.25vh" />
+        <div class="tile_outer_container" style="padding: @Model.Spacing.ToString()%;">
+            <div class="tiles" id="@tile.ID" style="background-color: #@tile.BackgroundColor.ToString("X6")">
+                <center>
+                    @tile.TileText
+                    <span style="background-color: white;">
+                        <img src="~/images/edit.png" onclick="GetTileData('@tile.ID');" />
+                        <img src="~/images/delete.png" onclick="RemoveTile('@tile.ID');" />
+                    </span>
+                </center>
+                <img src="@tile.Source.Source" alt="@tile.Source.ImageName" style="width: 24vw; height:35vh" />
             </div>
         </div>
     }
-    <div class="tile_outer_container" style="text-align: center; order: 99; padding: @Model.Spacing.ToString() %; width: 15vw; height:26.25vh; border: solid black 3px;">
+    <div onclick="GetTileData('');" class="tile_outer_container" style="text-align: center; order: 99; padding: @Model.Spacing.ToString()%; width: 24vw; height:35vh;">
         @locale["Add Tile"]
     </div>
 </div>

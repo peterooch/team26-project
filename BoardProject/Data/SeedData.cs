@@ -77,9 +77,15 @@ namespace BoardProject.Data
 
                 /* Probe for specifics */
                 if (image.Source.Contains("pictograms"))
+                {
                     image.ImageName = "ARASAAC: " + image.ImageName;
+                    image.Category = "Pictograms";
+                }
                 else if (image.Source.Contains("gif_parrots"))
+                {
                     image.ImageName = "Party Parrot GIF: " + image.ImageName;
+                    image.Category = "Party Parrot GIF";
+                }
 
                 NewTiles.Last().TileName = image.ImageName;
             }
