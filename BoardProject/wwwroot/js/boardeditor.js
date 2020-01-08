@@ -11,6 +11,9 @@
 var currentTileObject = null;
 var currentImageObject = null;
 /******************* FUNCTIONS *************************************/
+$(document).ready(function () {
+    PopulateLists();
+});
 /* Multipurpose AJAX message dispatcher */
 function AjaxDispatcher(method, target, callback_fn, payload) {
     var message = new XMLHttpRequest();
@@ -56,7 +59,7 @@ function AddTile(tileid, bg_color, tile_text, image_src, image_name) {
     center.appendChild(span);
     innerdiv.appendChild(center);
     var img = document.createElement("img");
-    img.className="dragme";
+    img.className = "dragme";
     img.src = image_src;
     img.alt = image_name;
     img.style.width = "24vw";
@@ -114,7 +117,7 @@ function RefreshEditor() {
 /************** Tile Modal functions *******************************/
 /* Set current tile object to one retreived from the server identified by tileid */
 function GetTileData(tileid) {
-    var callback = function () {
+    var modal_callback = function () {
         if (this.readyState == this.DONE && this.status == 200) {
             currentTileObject = JSON.parse(this.responseText);
             currentImageObject = currentTileObject.Source;
@@ -129,26 +132,149 @@ function GetTileData(tileid) {
                 document.getElementById("tile_image_file").src = currentImageObject.Source;
                 document.getElementById("tile_image_file").style.display = "initial";
             }
+            if (currentTileObject.Source != null)
+                $("#tile_image").val(currentTileObject.Source.ID.toString());
+            switch (currentTileObject.ActionType) {
+                case 1:
+                    $("#tile_gif").val(currentTileObject.ActionContext);
+                    $('#actionTab a[href="#gif"]').tab("show");
+                    break;
+                case 2:
+                    $("#tile_url").val(currentTileObject.ActionContext);
+                    $('#actionTab a[href="#link"]').tab("show");
+                    break;
+                case 3:
+                    $("#tile_board").val(currentTileObject.ActionContext);
+                    $('#actionTab a[href="#anotherboard"]').tab("show");
+                    break;
+                case 0:
+                default:
+                    $('#actionTab a[href="#nothing"]').tab("show");
+                    break;
+            }
             $("#tileModal").modal("show");
         }
     }
-    AjaxDispatcher("GET", "/ObjectManager/TileJSON/" + tileid, callback);
+    AjaxDispatcher("GET", "/ObjectManager/TileJSON/" + tileid, modal_callback);
+}
+function RefreshModalPreview(){
+    document.getElementById("tile_preview").style.backgroundColor = "#" + $("#tile_color").val();
+    document.getElementById("tile_text_disp").innerHTML = $("#tile_text").val();
+    var callback = function() {
+        if (this.readyState == this.DONE && this.status == 200) {
+            imageObject = JSON.parse(this.responseText);
+
+            if (imageObject != null) {
+                document.getElementById("tile_image_file").src = imageObject.Source;
+                document.getElementById("tile_image_file").style.display = "initial";
+            }
+        }
+    }
+    AjaxDispatcher("GET","/ObjectManager/ImageJSON/" + $("#tile_image").val(), callback);
+}
+function PickActionType(type) {
+    if (currentTileObject != null)
+        currentTileObject.ActionType = type;
+}
+function PopulateLists() {
+    var boardlist_callback = function () {
+        if (this.readyState == this.DONE && this.status == 200) {
+            if (this.responseText === "null")
+                return;
+            var boardlist = JSON.parse(this.responseText);
+            var boardselect = document.getElementById("tile_board");
+            var prompt = document.importNode(boardselect.firstElementChild, true);
+            boardselect.innerHTML = "";
+            boardselect.appendChild(prompt);
+            for (var entry in boardlist) {
+                boardselect.innerHTML += '<option value="' + entry + '">' + boardlist[entry] + '</option>';
+            }
+        }
+    }
+    var catlist_callback = function () {
+        if (this.readyState == this.DONE && this.status == 200) {
+            var catlist = JSON.parse(this.responseText);
+            var elements = document.querySelectorAll(".image-cat");
+
+            for (var i = 0; i < elements.length; i++) {
+                var prompt = document.importNode(elements[i].firstElementChild, true);
+                elements[i].innerHTML = "";
+                elements[i].appendChild(prompt);
+                for (var entry in catlist) {
+                    elements[i].innerHTML += '<option value="' + catlist[entry] + '">' + catlist[entry] + '</option>';
+                }
+            }
+        }
+    }
+    AjaxDispatcher("GET", "/ObjectManager/GetBoardList", boardlist_callback);
+    AjaxDispatcher("GET", "/ObjectManager/GetImageCategories", catlist_callback);
+    PickImagesByCategory("");
+}
+/* Use caching to reduce parsing */
+var imagelist = null;
+function PickImagesByCategory(category) {
+    var callback = function () {
+        if (this.readyState == this.DONE && this.status == 200) {
+            if (imagelist == null)
+                imagelist = JSON.parse(this.responseText);
+        }
+        /* Check if the list is cached */
+        if (imagelist == null)
+            return;
+        var elements = document.querySelectorAll(".image-list");
+
+        for (var i = 0; i < elements.length; i++) {
+            var prompt = document.importNode(elements[i].firstElementChild, true);
+            elements[i].innerHTML = "";
+            elements[i].appendChild(prompt);
+            /* This bit is kinda slow and janky */
+            for (var entry in imagelist) {
+                elements[i].innerHTML += '<option value="' + entry + '">' + imagelist[entry] + '</option>';
+            }
+        }
+    }
+    AjaxDispatcher("GET", "/ObjectManager/GetImageList/" + category, callback);
 }
 /* Send the current tile object to the server */
 function PostTileData() {
     currentTileObject.TileName = document.getElementById("tilename").value;
-    currentTileObject.BackgroundColor = parseInt(document.getElementById("tile_color").value,16)
+    currentTileObject.BackgroundColor = parseInt(document.getElementById("tile_color").value, 16)
     currentTileObject.TileText = document.getElementById("tile_text").value;
+    switch (currentTileObject.ActionType) {
+        case 1:
+            if ($("#tile_gif").val() != "0") {
+                currentTileObject.ActionContext = $("#tile_gif").val();
+                break;
+            }
+        case 2:
+            if ($("#tile_url").val() != "") {
+                currentTileObject.ActionContext = $("#tile_url").val();
+                break;
+            }
+        case 3:
+            if ($("#tile_board").val() != "0") {
+                currentTileObject.ActionContext = $("#tile_board").val();
+                break;
+            }
+        case 0:
+        default:
+            currentTileObject.ActionType = 0;
+            currentTileObject.ActionContext = "";
+        break;
+    }
+    currentTileObject.SourceID = $("#tile_image").val();
+    GetImageData(currentTileObject.SourceID.toString());
     var callback = function () {
         if (this.readyState == this.DONE && this.status == 200) {
             var tile = document.getElementById(currentTileObject.ID.toString());
             if (tile != null)
                 RemoveTile(tile.id);
-            AddTile(tile.id.toString(), 
-                    document.getElementById("tile_color").value,
-                    currentTileObject.TileText,
-                    currentTileObject.Source.Source,
-                    currentTileObject.Source.ImageName);
+            AddTile(currentTileObject.ID.toString(),
+                document.getElementById("tile_color").value,
+                currentTileObject.TileText,
+                currentTileObject.Source.Source,
+                currentTileObject.Source.ImageName);
+            /* We are done, close modal */
             $("#tileModal").modal("hide");
         }
     }
@@ -177,8 +303,7 @@ function PostImageData() {
     AjaxDispatcher("POST", "/ObjectManager/UpdateImage/", callback, "Model=" + JSON.stringify(currentImageObject));
 }
 function ImageUpload() {
-    var callback = function()
-    {
+    var callback = function () {
         if (this.status == 200 && this.readyState == this.DONE) {
             /* responseText contains address for uploaded file */
         }

@@ -75,6 +75,11 @@ namespace BoardProject.Controllers
             {
                 tile = new Tile(DBCon.TileData.Find(ID));
             }
+
+            if (tile.ActionType == TileBase.ActionID.PlayGif)
+            {
+                tile.ActionContext = DBCon.Image.Single(i => i.Source == tile.ActionContext).ID.ToString();
+            }
             return JsonConvert.SerializeObject(tile);
         }
         /* Return a JSON string of a requested image object to simplify manipulation in JS */
@@ -160,21 +165,23 @@ namespace BoardProject.Controllers
         [HttpPost]
         public string UpdateTile()
         {
-            Tile tile = JsonConvert.DeserializeObject<Tile>(Request.Form["Model"]);
+            TileData tile = JsonConvert.DeserializeObject<TileData>(Request.Form["Model"]);
 
             if (tile == null)
                 return "ERROR";
 
-            TileData data = new TileData(tile);
-
             using var DBCon = new DataContext();
-            if (DBCon.TileData.Any(t => t.ID == data.ID))
+            if (tile.ActionType == TileBase.ActionID.PlayGif)
             {
-                DBCon.TileData.Update(data);
+                tile.ActionContext = DBCon.Image.Single(i => i.ID == int.Parse(tile.ActionContext)).Source;
+            }
+            if (DBCon.TileData.Any(t => t.ID == tile.ID))
+            {
+                DBCon.TileData.Update(tile);
             }
             else
             {
-                DBCon.TileData.Add(data);
+                DBCon.TileData.Add(tile);
             }
             DBCon.SaveChanges();
             return "OK";
@@ -217,6 +224,60 @@ namespace BoardProject.Controllers
             UploadStream.CopyTo(DestFile);
 
             return "/images/" + upload.ID + "_" + FileName;
+        }
+        public string GetBoardList()
+        {
+            int UserID = HttpContext.Session.GetInt32("SelectedUser") ?? default;
+
+            if (UserID == default)
+                return "null";
+
+            using var DBCon = new DataContext();
+
+            User user = new User(DBCon.UserData.Find(UserID));
+            Dictionary<string, string> boardList = new Dictionary<string, string>();
+
+            foreach (Board board in user.Boards)
+                boardList.Add(board.ID.ToString(), board.BoardName);
+
+            return JsonConvert.SerializeObject(boardList);
+        }
+        public string GetTileList()
+        {
+            using var DBCon = new DataContext();
+            Dictionary<string,string> tileList = new Dictionary<string, string>();
+
+            foreach (TileData tile in DBCon.TileData)
+                tileList.Add(tile.ID.ToString(),tile.TileName);
+
+            return JsonConvert.SerializeObject(tileList);
+        }
+#nullable enable
+        public string GetImageList(string? category)
+        {
+            using var DBCon = new DataContext();
+            Dictionary<string,string> imageList = new Dictionary<string, string>();
+
+            foreach (Image image in DBCon.Image)
+            {
+                if (string.IsNullOrEmpty(category) || (image.Category == category))
+                    imageList.Add(image.ID.ToString(), image.ImageName);
+            }
+
+            return JsonConvert.SerializeObject(imageList);
+        }
+#nullable disable
+        public string GetImageCategories()
+        {
+            using var DBCon = new DataContext();
+            List<string> categories = new List<string>();
+
+            foreach (Image image in DBCon.Image)
+            {
+                if (!categories.Contains(image.Category))
+                    categories.Add(image.Category);
+            }
+            return JsonConvert.SerializeObject(categories);
         }
     }
 }
