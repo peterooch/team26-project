@@ -94,13 +94,13 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">@locale["Tile Color:"]</span>
                     </div>
-                    <input id="tile_color" type="text" class="jscolor form-control" value="FFFFFF" />
+                    <input onchange="RefreshModalPreview();" id="tile_color" type="text" class="jscolor form-control" value="FFFFFF" />
                 </div>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">@locale["Tile Description:"]</span>
                     </div>
-                    <input id="tile_text" type="text" class="form-control" />
+                    <input onchange="RefreshModalPreview();" id="tile_text" type="text" class="form-control" />
                 </div>
                 <label>@locale["Image:"]</label>
                 <ul class="nav nav-tabs" id="sourceTab" role="tablist">
@@ -116,7 +116,7 @@
                         <option value="0" selected>@locale["All Categories"]</option>
                         <!-- Auto populate -->
                     </select><br />
-                    <select id="tile_image" class="custom-select image-list">
+                    <select onchange="RefreshModalPreview();" id="tile_image" class="custom-select image-list">
                         <option value="0" selected>@locale["Select a Image"]</option>
                         <!-- Auto populate -->
                     </select>
@@ -129,16 +129,16 @@
                 <label>Tile action:</label>
                 <ul class="nav nav-tabs" id="actionTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="nothing-tab" data-toggle="tab" href="#nothing" role="tab" aria-controls="nothing" aria-selected="true">@locale["No Action"]</a>
+                        <a onclick="PickActionType(0);" class="nav-link active" id="nothing-tab" data-toggle="tab" href="#nothing" role="tab" aria-controls="nothing" aria-selected="true">@locale["No Action"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="gif-tab" data-toggle="tab" href="#gif" role="tab" aria-controls="gif" aria-selected="false">@locale["GIF"]</a>
+                        <a onclick="PickActionType(1);" class="nav-link" id="gif-tab" data-toggle="tab" href="#gif" role="tab" aria-controls="gif" aria-selected="false">@locale["GIF"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="link-tab" data-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="false">@locale["Hyperlink"]</a>
+                        <a onclick="PickActionType(2);" class="nav-link" id="link-tab" data-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="false">@locale["Hyperlink"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="anotherboard-tab" data-toggle="tab" href="#anotherboard" role="tab" aria-controls="anotherboard" aria-selected="false">@locale["Board Switch"]</a>
+                        <a onclick="PickActionType(3);" class="nav-link" id="anotherboard-tab" data-toggle="tab" href="#anotherboard" role="tab" aria-controls="anotherboard" aria-selected="false">@locale["Board Switch"]</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">

@@ -165,25 +165,23 @@ namespace BoardProject.Controllers
         [HttpPost]
         public string UpdateTile()
         {
-            Tile tile = JsonConvert.DeserializeObject<Tile>(Request.Form["Model"]);
+            TileData tile = JsonConvert.DeserializeObject<TileData>(Request.Form["Model"]);
 
             if (tile == null)
                 return "ERROR";
 
-            TileData data = new TileData(tile);
-
             using var DBCon = new DataContext();
-            if (data.ActionType == TileBase.ActionID.PlayGif)
+            if (tile.ActionType == TileBase.ActionID.PlayGif)
             {
-                data.ActionContext = DBCon.Image.Single(i => i.ID == int.Parse(data.ActionContext)).Source;
+                tile.ActionContext = DBCon.Image.Single(i => i.ID == int.Parse(tile.ActionContext)).Source;
             }
-            if (DBCon.TileData.Any(t => t.ID == data.ID))
+            if (DBCon.TileData.Any(t => t.ID == tile.ID))
             {
-                DBCon.TileData.Update(data);
+                DBCon.TileData.Update(tile);
             }
             else
             {
-                DBCon.TileData.Add(data);
+                DBCon.TileData.Add(tile);
             }
             DBCon.SaveChanges();
             return "OK";
