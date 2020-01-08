@@ -7,13 +7,28 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BoardProject.Data;
 using BoardProject.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace BoardProject.Controllers
 {
     public class UserDatasController : Controller
     {
         private readonly DataContext _context;
+        private bool IsUserValid(out UserData user)
+        {
+            user = null;
+            int userID = HttpContext.Session.GetInt32("SelectedUser") ?? default;
 
+            if (userID == default)
+                return false;
+
+            user = _context.UserData.Find(userID);
+
+            if (user != null && (user.IsPrimary || user.IsManager))
+                return true;
+
+            return false;
+        }
         public UserDatasController(DataContext context)
         {
             _context = context;
@@ -22,7 +37,12 @@ namespace BoardProject.Controllers
         // GET: UserDatas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UserData.ToListAsync());
+            if (!IsUserValid(out UserData user))
+                return RedirectToAction("Index", "Home");
+            if (user.IsPrimary)
+                return View(await _context.UserData.ToListAsync());
+            else
+                return View(new User(user).ManagedUsers);
         }
 
         // GET: UserDatas/Details/5
