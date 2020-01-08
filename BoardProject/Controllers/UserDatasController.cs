@@ -76,8 +76,10 @@ namespace BoardProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("BoardIDs,HomeBoardID,ManagedUsersIDs,ID,Username,PasswordHash,PasswordSalt,IsPrimary,IsManager,Language,Font,FontSize,BackgroundColor,TextColor,HighContrast,DPI")] UserData userData)
         {
+            //var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
+                userData.StorePassword(userData.PasswordSalt);
                 _context.Add(userData);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

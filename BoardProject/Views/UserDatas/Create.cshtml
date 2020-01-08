@@ -33,7 +33,8 @@
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PasswordSalt" class="control-label"></label>
+                Password:
+                <label for="PasswordSalt" class="control-label"></label>
                 <input asp-for="PasswordSalt" class="form-control" />
                 <span asp-validation-for="PasswordSalt" class="text-danger"></span>
             </div>
@@ -47,54 +48,27 @@
                     <input class="form-check-input" asp-for="IsManager" /> @Html.DisplayNameFor(model => model.IsManager)
                 </label>
             </div>
-            <div class="form-group">
-                <label asp-for="Language" class="control-label"></label>
-                <input asp-for="Language" class="form-control" />
-                <span asp-validation-for="Language" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Font" class="control-label"></label>
-                <input asp-for="Font" class="form-control" />
-                <span asp-validation-for="Font" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FontSize" class="control-label"></label>
-                <input asp-for="FontSize" class="form-control" />
-                <span asp-validation-for="FontSize" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BackgroundColor" class="control-label"></label>
-                <input asp-for="BackgroundColor" class="form-control" />
-                <span asp-validation-for="BackgroundColor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TextColor" class="control-label"></label>
-                <input asp-for="TextColor" class="form-control" />
-                <span asp-validation-for="TextColor" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
+            <div class="form-group form-check" style="display:none;">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="HighContrast" /> @Html.DisplayNameFor(model => model.HighContrast)
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="DPI" class="control-label"></label>
-                <input asp-for="DPI" class="form-control" />
-                <span asp-validation-for="DPI" class="text-danger"></span>
+                <input asp-for="PasswordHash" value="0" type="hidden" class="form-control" />
+                <input asp-for="TextColor" value="0" type="hidden" class="form-control" />
+                <input asp-for="DPI" value="0" type="hidden" class="form-control" />
+                <input asp-for="BackgroundColor" value="16777215" type="hidden" class="form-control" />
+                <input asp-for="FontSize" value="100" type="hidden" class="form-control" />
+                <input asp-for="Font" value="Sans-serif" type="hidden" class="form-control" />
+                <input asp-for="Language" value="en" type="hidden" class="form-control" />
             </div>
-            <div class="form-group">
-                <input asp-for="PasswordHash" type="hidden" class="form-control" />
-
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div>
+                <input type="submit" value="Create new user" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
