@@ -33,14 +33,14 @@
                 <input asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display: none">
                 <label asp-for="PasswordHash" class="control-label"></label>
                 <input asp-for="PasswordHash" class="form-control" />
                 <span asp-validation-for="PasswordHash" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PasswordSalt" class="control-label"></label>
-                <input asp-for="PasswordSalt" class="form-control" />
+                Password
+                <input asp-for="PasswordSalt" class="form-control" value="" />
                 <span asp-validation-for="PasswordSalt" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -53,37 +53,37 @@
                     <input class="form-check-input" asp-for="IsManager" /> @Html.DisplayNameFor(model => model.IsManager)
                 </label>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display: none">
                 <label asp-for="Language" class="control-label"></label>
                 <input asp-for="Language" class="form-control" />
                 <span asp-validation-for="Language" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display: none">
                 <label asp-for="Font" class="control-label"></label>
                 <input asp-for="Font" class="form-control" />
                 <span asp-validation-for="Font" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display: none">
                 <label asp-for="FontSize" class="control-label"></label>
                 <input asp-for="FontSize" class="form-control" />
                 <span asp-validation-for="FontSize" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display: none">
                 <label asp-for="BackgroundColor" class="control-label"></label>
                 <input asp-for="BackgroundColor" class="form-control" />
                 <span asp-validation-for="BackgroundColor" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display: none">
                 <label asp-for="TextColor" class="control-label"></label>
                 <input asp-for="TextColor" class="form-control" />
                 <span asp-validation-for="TextColor" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
+            <div class="form-group form-check" style="display: none">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="HighContrast" /> @Html.DisplayNameFor(model => model.HighContrast)
                 </label>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display: none">
                 <label asp-for="DPI" class="control-label"></label>
                 <input asp-for="DPI" class="form-control" />
                 <span asp-validation-for="DPI" class="text-danger"></span>

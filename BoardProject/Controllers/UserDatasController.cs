@@ -119,6 +119,7 @@ namespace BoardProject.Controllers
             {
                 try
                 {
+                    userData.StorePassword(userData.PasswordSalt);
                     _context.Update(userData);
                     await _context.SaveChangesAsync();
                 }
