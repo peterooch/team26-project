@@ -114,7 +114,7 @@ function RefreshEditor() {
 /************** Tile Modal functions *******************************/
 /* Set current tile object to one retreived from the server identified by tileid */
 function GetTileData(tileid) {
-    var callback = function () {
+    var modal_callback = function () {
         if (this.readyState == this.DONE && this.status == 200) {
             currentTileObject = JSON.parse(this.responseText);
             currentImageObject = currentTileObject.Source;
@@ -129,10 +129,88 @@ function GetTileData(tileid) {
                 document.getElementById("tile_image_file").src = currentImageObject.Source;
                 document.getElementById("tile_image_file").style.display = "initial";
             }
+            switch (currentTileObject.ActionType) {
+                case 1:
+                case 2:
+                case 3:
+                case 0:
+                default:
+                    break;
+            }
             $("#tileModal").modal("show");
         }
     }
-    AjaxDispatcher("GET", "/ObjectManager/TileJSON/" + tileid, callback);
+    var boardlist_callback = function () {
+        if (this.readyState == this.DONE && this.status == 200) {
+            if (this.responseText === "null")
+                return;
+            var boardlist = JSON.parse(this.responseText);
+            var boardselect = document.getElementById("tile_board");
+            var prompt = document.importNode(boardselect.firstElementChild, true);
+            boardselect.innerHTML = "";
+            boardselect.appendChild(prompt);
+            for (var entry in boardlist) {
+                if (currentTileObject != null &&
+                    currentTileObject.ActionType == 3 &&
+                    currentTileObject.ActionContext === entry) {
+                    boardselect.innerHTML += '<option value="'+ entry +'" selected>' + boardlist[entry] + '</option>';
+                }
+                else {
+                    boardselect.innerHTML += '<option value="'+ entry +'">' + boardlist[entry] + '</option>';
+                }
+            }
+        }
+    }
+    var catlist_callback = function() {
+        if (this.readyState == this.DONE && this.status == 200) {
+            var catlist = JSON.parse(this.responseText);
+            var elements = document.querySelectorAll(".image-cat");
+
+            for (var i = 0; i < elements.length; i++) {
+                var prompt = document.importNode(elements[i].firstElementChild,true);
+                elements[i].innerHTML = "";
+                elements[i].appendChild(prompt);
+                for (var entry in catlist) {
+                    elements[i].innerHTML += '<option value="' + catlist[entry] + '">' + catlist[entry] + '</option>';
+                }
+            }
+        }
+    }
+    AjaxDispatcher("GET", "/ObjectManager/TileJSON/" + tileid, modal_callback);
+    AjaxDispatcher("GET", "/ObjectManager/GetBoardList", boardlist_callback);
+    AjaxDispatcher("GET", "/ObjectManager/GetImageCategories", catlist_callback);
+    PickImagesByCategory("");
+}
+/* Use caching to reduce parsing */
+var imagelist = null;
+function PickImagesByCategory(category) {
+    var callback = function() {
+        if (this.readyState == this.DONE && this.status == 200) {
+            if (imagelist == null)
+                 imagelist = JSON.parse(this.responseText);
+        }
+        /* Check if the list is cached */
+        if (imagelist == null)
+            return;
+        var elements = document.querySelectorAll(".image-list");
+
+        for (var i = 0; i < elements.length; i++) {
+            var prompt = document.importNode(elements[i].firstElementChild, true);
+            elements[i].innerHTML = "";
+            elements[i].appendChild(prompt);
+            /* This bit is kinda slow and janky */
+            for (var entry in imagelist) {
+                if ((elements[i] == document.querySelector("#tile_image") && currentImageObject != null && currentImageObject.ID == entry) ||
+                    (elements[i] == document.querySelector("#tile_gif") && currentTileObject != null && currentTileObject.ActionType == 1 && currentTileObject.ActionContext == entry)) {
+                    elements[i].innerHTML += '<option value="' + entry + '" selected>' + imagelist[entry] + '</option>';
+                }
+                else {
+                    elements[i].innerHTML += '<option value="' + entry + '">' + imagelist[entry] + '</option>';
+                }
+            }
+        }
+    }
+    AjaxDispatcher("GET","/ObjectManager/GetImageList/" + category, callback);
 }
 /* Send the current tile object to the server */
 function PostTileData() {
