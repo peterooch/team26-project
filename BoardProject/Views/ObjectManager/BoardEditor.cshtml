@@ -190,24 +190,55 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="imageModal">
-                <form>
-                    <div>
-                        <label class="modal-body">Category:</label>
-                        <select>
-                            <option value="nothing">Nothing</option>
-                        </select>
-                        <label class="modal-body">Existing images:</label>
-                        <button>Exist</button>
-                        <hr />
-                        <label class="modal-body">Upload a new image:</label>
-                        <button>Open</button><br />
-                        <label class="modal-body">New image category:</label>
-                        <select>
-                            <option value="nothing">Nothing</option>
-                        </select><br />
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="newimage-tab" data-toggle="tab" href="#newimage" role="tab" aria-controls="newimage" aria-selected="true">@locale["NewImage"]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="editimage-tab" data-toggle="tab" href="#editimage" role="tab" aria-controls="editimage" aria-selected="false">@locale["Edit Image"]</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="newimage" role="tabpanel" aria-labelledby="newimage-tab">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@locale["Image Name:"]</span>
+                            </div>
+                            <input id="tile_text" type="text" class="form-control" />
+                        </div><br />
+                        <div>
+                            <select id="category3" class="custom-select image-cat">
+                                <option value="0" selected>@locale["All Categories"]</option>
+                            </select>
+                        </div><br />
+                        <div class="input-group" style="justify-content: center;">
+                            <button type="button" class="btn btn-primary">@locale["Upload Image"]</button>
+                        </div><br />
+                        @locale["Image Preview"]
+                        <div style="width: 200px; height: 200px; border: 2px solid black;">
+                        </div>
                     </div>
-                </form>
+                    <div class="tab-pane fade" id="editimage" role="tabpanel" aria-labelledby="editimage-tab">
+                        <div>
+                            <select id="imageslibrary" class="custom-select image-cat">
+                                <option value="0" selected>@locale["Images Library"]</option>
+                            </select>
+                        </div><br />
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@locale["Edit Image Name:"]</span>
+                            </div>
+                            <input id="tile_text" type="text" class="form-control" />
+                        </div><br />
+                        <label>@locale["Change Category:"]</label>
+                        <div>
+                            <select id="category3" class="custom-select image-cat">
+                                <option value="0" selected>@locale["All Categories"]</option>
+                            </select>
+                        </div><br />
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">@locale["Save Image"]</button>
