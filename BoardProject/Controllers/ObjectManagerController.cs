@@ -208,22 +208,22 @@ namespace BoardProject.Controllers
         }
         public class FormUploadModel
         {
-            [FromForm(Name="id")]
+            [FromForm(Name="image_id")]
             public string ID { get; set; }
-            [FromForm(Name="file")]
+            [FromForm(Name="image_file")]
             public IFormFile File { get; set; }
         }
         [HttpPost]
         public string FileUpload([FromForm]FormUploadModel upload)
         {
             var FileName = System.IO.Path.GetExtension(upload.File.FileName);
-
-            using var DestFile = System.IO.File.OpenWrite("wwwroot/images/" + upload.ID + "_" + FileName);
+            string ret = upload.ID + "_image" + FileName;
+            using var DestFile = System.IO.File.OpenWrite("wwwroot/images/" + ret);
             using var UploadStream = upload.File.OpenReadStream();
 
             UploadStream.CopyTo(DestFile);
 
-            return "/images/" + upload.ID + "_" + FileName;
+            return "/images/" + ret;
         }
         public string GetBoardList()
         {

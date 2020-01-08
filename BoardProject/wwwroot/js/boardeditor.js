@@ -212,7 +212,7 @@ function PopulateLists() {
 }
 /* Use caching to reduce parsing */
 var imagelist = null;
-function PickImagesByCategory(category) {
+function PickImagesByCategory(category, select_img_id = 0) {
     var callback = function () {
         if (this.readyState == this.DONE && this.status == 200) {
             if (imagelist == null)
@@ -231,6 +231,9 @@ function PickImagesByCategory(category) {
             for (var entry in imagelist) {
                 elements[i].innerHTML += '<option value="' + entry + '">' + imagelist[entry] + '</option>';
             }
+        }
+        if (select_img_id != 0) {
+            $("#tile_image").val(select_img_id);
         }
     }
     AjaxDispatcher("GET", "/ObjectManager/GetImageList/" + category, callback);
@@ -282,12 +285,21 @@ function PostTileData() {
 }
 /************* Image Modal functions *******************************/
 /* Set current image object to one retreived from the server identified by imageid */
+var ImageUpdateType = 1;
+var tModalWasOpen = false;
 function GetImageData(imageid) {
     var callback = function () {
         if (this.readyState == this.DONE && this.status == 200) {
             if (currentImageObject == null || currentImageObject.ID != Number(imageid)) {
                 currentImageObject = JSON.parse(this.responseText);
-                /* Update Image Modal info */
+                if (imageid === "") {
+                    ImageUpdateType = 1;
+                    $("#image_name").val(currentImageObject.ImageName);
+                    document.getElementsByName("image_id")[0].value = currentImageObject.ID.toString();
+                    $("#tileModal").modal("hide");
+                    tModalWasOpen = true;
+                    $("#imageModal").modal("show");
+                }
             }
         }
     }
@@ -295,18 +307,55 @@ function GetImageData(imageid) {
 }
 /* Send the current image object to server */
 function PostImageData() {
+    if (ImageUpdateType == 1)
+        currentImageObject.ImageName = $("#image_name").val();
+    else {
+        DuplictateImageWithNewName($("#edited_image_name").val(), currentImageObject.ID);
+        return;
+    }
     var callback = function () {
         if (this.readyState == this.DONE && this.status == 200) {
-            /* Close Image Modal */
+            $("#tileModal").modal("hide");
+            if (tModalWasOpen == true) {
+                imagelist = null;
+                PickImagesByCategory("", currentImageObject.ID)
+                tModalWasOpen = false;
+                $("#imageModal").modal("hide");
+                document.getElementById("img_preview").src = "";
+                document.getElementById("img_preview").style.display = "none";
+                $("#tileModal").modal("show");
+                $('#sourceTab a[href="#current-image"]').tab("show");
+                document.getElementById("tile_image_file").src = currentImageObject.Source;
+            }
         }
     }
     AjaxDispatcher("POST", "/ObjectManager/UpdateImage/", callback, "Model=" + JSON.stringify(currentImageObject));
 }
-function ImageUpload() {
+function DuplictateImageWithNewName(name, newid) {
+    $("#image_name").val(name);
     var callback = function () {
-        if (this.status == 200 && this.readyState == this.DONE) {
-            /* responseText contains address for uploaded file */
+        if (this.readyState == this.DONE && this.status == 200) {
+            imageObject = JSON.parse(this.responseText);
+
+            if (imageObject != null) {
+                currentImageObject.Source = imageObject.Source;
+                currentImageObject.ID = newid;
+                ImageUpdateType = 1;
+                PostImageData();
+            }
         }
     }
-    AjaxDispatcher("POST", "/ObjectManager/FileUpload", callback, new FormData(document.getElementById("image_form")));
+    AjaxDispatcher("GET", "/ObjectManager/ImageJSON/" + $("#image_library").val(), callback);
+}
+function ImageUpload() { 
+    var message = new XMLHttpRequest();
+    message.open("POST", "/ObjectManager/FileUpload");
+    message.onreadystatechange = function () {
+        if (this.status == 200 && this.readyState == this.DONE) {
+            currentImageObject.Source = this.responseText;
+            document.getElementById("img_preview").src = this.responseText;
+            document.getElementById("img_preview").style.display = "initial";
+        }
+    }
+    message.send(new FormData(document.getElementById("image_form")));
 }

@@ -123,7 +123,7 @@
                 </div>
                 <div class="tab-pane fade" id="new-image" role="tabpanel" aria-labelledby="new-image-tab">
                     <div class="input-group" style="justify-content: center;">
-                        <button type="button" class="btn btn-primary">@locale["Add a new image"]</button>
+                        <button onclick="GetImageData('');" type="button" class="btn btn-primary">@locale["Add a new image"]</button>
                     </div>
                 </div>
                 <label>Tile action:</label>
@@ -185,7 +185,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="imageModalTitle"><!-- JavaScript selected title if new or current image --></h5>
+                <h5 class="modal-title" id="imageModalTitle">@locale["New Image"]</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -193,10 +193,10 @@
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="newimage-tab" data-toggle="tab" href="#newimage" role="tab" aria-controls="newimage" aria-selected="true">@locale["NewImage"]</a>
+                        <a onclick="ImageUpdateType = 1;" class="nav-link active" id="newimage-tab" data-toggle="tab" href="#newimage" role="tab" aria-controls="newimage" aria-selected="true">@locale["New Image"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="editimage-tab" data-toggle="tab" href="#editimage" role="tab" aria-controls="editimage" aria-selected="false">@locale["Edit Image"]</a>
+                        <a onclick="ImageUpdateType = 2;" class="nav-link" id="editimage-tab" data-toggle="tab" href="#editimage" role="tab" aria-controls="editimage" aria-selected="false">@locale["Edit Image"]</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
@@ -205,31 +205,37 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">@locale["Image Name:"]</span>
                             </div>
-                            <input id="tile_text" type="text" class="form-control" />
+                            <input id="image_name" type="text" class="form-control" />
                         </div><br />
                         <div>
                             <select id="category3" class="custom-select image-cat">
                                 <option value="0" selected>@locale["All Categories"]</option>
                             </select>
                         </div><br />
-                        <div class="input-group" style="justify-content: center;">
-                            <button type="button" class="btn btn-primary">@locale["Upload Image"]</button>
-                        </div><br />
+                        <div class="custom-file">
+                        <form id="image_form" enctype="multipart/form-data">
+                            <input type="file" class="custom-file-input" name="image_file" onchange="ImageUpload();"/>
+                            <label class="custom-file-label" for="image_file">Choose file</label>
+                            <input type="hidden" name="image_id" value="0" />
+                        </form>
+                        </div>
+                        <br />
                         @locale["Image Preview"]
-                        <div style="width: 200px; height: 200px; border: 2px solid black;">
+                        <div style="width: 25vw; height: 35vh; border: 2px solid black; justify-content: center;">
+                        <img id="img_preview" style="display: none; width: 25vw; height: 35vh;" />
                         </div>
                     </div>
                     <div class="tab-pane fade" id="editimage" role="tabpanel" aria-labelledby="editimage-tab">
                         <div>
-                            <select id="imageslibrary" class="custom-select image-cat">
-                                <option value="0" selected>@locale["Images Library"]</option>
+                            <select id="image_library" class="custom-select image-list">
+                                <option value="0" selected>@locale["Image library"]</option>
                             </select>
                         </div><br />
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">@locale["Edit Image Name:"]</span>
+                                <span class="input-group-text">@locale["New Image Name:"]</span>
                             </div>
-                            <input id="tile_text" type="text" class="form-control" />
+                            <input id="edited_image_name" type="text" class="form-control" />
                         </div><br />
                         <label>@locale["Change Category:"]</label>
                         <div>
@@ -241,7 +247,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">@locale["Save Image"]</button>
+                <button type="button" class="btn btn-primary" onclick="PostImageData();">@locale["Save Image"]</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">@locale["Cancel"]</button>
             </div>
         </div>
