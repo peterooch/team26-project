@@ -15,12 +15,12 @@
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                         @foreach (var item in Model.Boards)
                         {
-                            <a onclick="UpdateBoard(@item.ID,'@item.BoardName')">@item.BoardName</a>
+                            <a href="#" onclick="UpdateBoard(@item.ID,'@item.BoardName')">@item.BoardName</a>
                             <br />
                         }
                     </div>
-                    <a href="/UserPref/" class="btn btn-secondary" style="margin-right: 10px;"><img src="~/images/gear.png"></a>
-                    <button type="button" class="btn btn-secondary"><img src="~/images/add.png"></button>
+                    <button type="button" class="btn btn-secondary ml-2 mr-2"><img src="~/images/add.png"></button>
+                    <a class="btn btn-secondary" onclick="UpdateBoard('@Model.HomeBoard.ID','@Model.HomeBoard.BoardName')" role="button"><img src="~/images/Home.png"></a>
                 </div>
             </div>
             <div class="p-3 mb-2 bg-light text-dark d-flex justify-content-center" id="boardName">@Model.HomeBoard.BoardName</div>
@@ -28,10 +28,14 @@
                 <button type="button" onclick="SetFontSize(10)" class="btn btn-outline-dark">A+</button>
                 <button type="button" onclick="SetFontSize(-10)" class="btn btn-outline-dark">A-</button>
             </div>
-            <a class="btn btn-outline-primary" onclick="UpdateBoard('@Model.HomeBoard.ID','@Model.HomeBoard.BoardName')" role="button"><img src="~/images/Home.png"></a>
-            <a href="/Home/Contact"><font color="black">@locale["Click to contact the developers"]</font></a>
+            @if (Model.IsManager || Model.IsPrimary)
+            {
+                <a href="/UserDatas" class="btn btn-warning">@locale["Manage"]</a>
+            }
+            <a href="/Home/Contact" class="btn btn-info"><font color="black">@locale["Contact Us"]</font></a>
+            <a href="/UserPref/" class="btn btn-secondary">@locale["Settings"]</a>
             <div>
-                <button type="button" class="btn btn-danger d-flex justify-content-end">@locale["Exit"]</button>
+                <button type="button" class="btn btn-danger d-flex justify-content-end">@locale["Logout"]</button>
             </div>
         </nav>
     </header>
