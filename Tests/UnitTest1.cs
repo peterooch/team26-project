@@ -46,27 +46,6 @@ namespace Tests
             ViewResult result = controller.Index() as ViewResult;
             Assert.NotNull(result);
         }
-        [Fact]
-        public void TestMIController_MI()
-        {
-            MIController controller = new MIController();
-            ViewResult result = controller.MI() as ViewResult;
-            Assert.NotNull(result);
-        }
-        [Fact]
-        public void TestTileController_AddTile()
-        {
-            TileController controller = new TileController();
-            ViewResult result = controller.AddTile() as ViewResult;
-            Assert.NotNull(result);
-        }
-        [Fact]
-        public void TestDisplayTableController_DisplayTable()
-        {
-            DisplayTableController controller = new DisplayTableController();
-            ViewResult result = controller.Index() as ViewResult;
-            Assert.NotNull(result);
-        }
     }
 
     public class TestModels
