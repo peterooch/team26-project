@@ -49,10 +49,10 @@
     <button type="button" class="btn btn-danger" onclick="RemoveBoard();">@locale["Remove Board"]</button>
 </div>
 <!-- Debug code start -->
-<div class="input-group mb-3">
+<!--<div class="input-group mb-3">
     <button type="button" class="btn btn-success" onclick="$('#tileModal').modal('show');">Open Tile Modal</button>
     <button type="button" class="btn btn-primary" onclick="$('#imageModal').modal('show');">Open Image Modal</button>
-</div>
+</div>-->
 <!-- Debug code end -->
 <div class="tile_container" style="color: #@Model.TextColor.ToString("x6"); background-color: #@Model.BackgroundColor.ToString("x6"); font-size: @Model.FontSize.ToString()%;">
     @foreach (Tile tile in Model.Tiles)
@@ -126,7 +126,7 @@
                         <button onclick="GetImageData('');" type="button" class="btn btn-primary">@locale["Add a new image"]</button>
                     </div>
                 </div>
-                <label>Tile action:</label>
+                <label>@locale["Tile action"]:</label>
                 <ul class="nav nav-tabs" id="actionTab" role="tablist">
                     <li class="nav-item">
                         <a onclick="PickActionType(0);" class="nav-link active" id="nothing-tab" data-toggle="tab" href="#nothing" role="tab" aria-controls="nothing" aria-selected="true">@locale["No Action"]</a>
@@ -213,16 +213,16 @@
                             </select>
                         </div><br />
                         <div class="custom-file">
-                        <form id="image_form" enctype="multipart/form-data">
-                            <input type="file" class="custom-file-input" name="image_file" onchange="ImageUpload();"/>
-                            <label class="custom-file-label" for="image_file">Choose file</label>
-                            <input type="hidden" name="image_id" value="0" />
-                        </form>
+                            <form id="image_form" enctype="multipart/form-data">
+                                <input type="file" class="custom-file-input" name="image_file" onchange="ImageUpload();" />
+                                <label class="custom-file-label" for="image_file">@locale["Choose file"]</label>
+                                <input type="hidden" name="image_id" value="0" />
+                            </form>
                         </div>
                         <br />
                         @locale["Image Preview"]
                         <div style="width: 25vw; height: 35vh; border: 2px solid black; justify-content: center;">
-                        <img id="img_preview" style="display: none; width: 25vw; height: 35vh;" />
+                            <img id="img_preview" style="display: none; width: 25vw; height: 35vh;" />
                         </div>
                     </div>
                     <div class="tab-pane fade" id="editimage" role="tabpanel" aria-labelledby="editimage-tab">
