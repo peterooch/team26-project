@@ -19,7 +19,7 @@
     line-height: 75px;
     font-size: 30px;
 }
-
+/*Instead of the design that suggests bootstrap */
 .arc {
     display: flex;
     justify-content: center !important;

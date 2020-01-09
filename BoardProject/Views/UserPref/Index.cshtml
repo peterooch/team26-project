@@ -25,20 +25,36 @@
                 }
             }
         </select><br />
-        @locale["Font:"]
-        <input name="font_pick" type="text" value="@Model.Font" /><br />
-        @locale["Background color:"]
-        <input name="bg_color" class="jscolor" value="@Model.BackgroundColor.ToString("X6")"><br />
-        @locale["Text color:"]
-        <input name="tx_color" class="jscolor" value="@Model.TextColor.ToString("X6")"><br />
-        @locale["High contrast:"]
-        <input type="checkbox" name="high_contrast" @(Model.HighContrast ? "checked" : "unchecked")> <br />
-        @locale["Dots per inch:"]
-        <input name="dpi" type="number" value="@Model.DPI" />%<br />
-        @locale["Font size:"]
-        <input name="font_size" type="number" value="@((int)Model.FontSize)" />%<br />
-        <input type="submit" value="@locale["Save Prefrences"]" />
-    </form>
+                 <div class="d-flex flex-column bd-highlight mb-3">
+                     <div class="p-2 bd-highlight">
+                         @locale["Font:"]
+                         <input name="font_pick" type="text" value="@Model.Font" />
+                     </div>
+                     <div class="p-2 bd-highlight">
+                         @locale["Background color:"]
+                         <input name="bg_color" class="jscolor" value="@Model.BackgroundColor.ToString("X6")">
+                     </div>
+                     <div class="p-2 bd-highlight">
+                         @locale["Text color:"]
+                         <input name="tx_color" class="jscolor" value="@Model.TextColor.ToString("X6")">
+                     </div>
+                     <div class="p-2 bd-highlight">
+                         @locale["High contrast:"]
+                         <input type="checkbox" name="high_contrast" @(Model.HighContrast ? "checked" : "unchecked")>
+                     </div>
+                     <div class="p-2 bd-highlight">
+                         @locale["Dots per inch:"]
+                         <input name="dpi" type="number" value="@Model.DPI" />%
+                     </div>
+                     <div class="p-2 bd-highlight">
+                         @locale["Font size:"]
+                         <input name="font_size" type="number" value="@((int)Model.FontSize)" />%
+                     </div>
+                     <div class="p-2 bd-highlight">
+                         <input type="submit" value="@locale["Save Prefrences"]" />
+                     </div>
+                 </div>
+</form>
 </main>
 
 @section Scripts {
