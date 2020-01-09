@@ -162,10 +162,10 @@ function RefreshModalPreview(){
     document.getElementById("tile_text_disp").innerHTML = $("#tile_text").val();
     var callback = function() {
         if (this.readyState == this.DONE && this.status == 200) {
-            imageObject = JSON.parse(this.responseText);
-
-            if (imageObject != null) {
-                document.getElementById("tile_image_file").src = imageObject.Source;
+            currentImageObject = JSON.parse(this.responseText);
+            currentTileObject.Source = currentImageObject;
+            if (currentImageObject != null) {
+                document.getElementById("tile_image_file").src = currentImageObject.Source;
                 document.getElementById("tile_image_file").style.display = "initial";
             }
         }
@@ -275,8 +275,8 @@ function PostTileData() {
             AddTile(currentTileObject.ID.toString(),
                 document.getElementById("tile_color").value,
                 currentTileObject.TileText,
-                currentTileObject.Source.Source,
-                currentTileObject.Source.ImageName);
+                currentImageObject.Source,
+                currentImageObject.ImageName);
             /* We are done, close modal */
             $("#tileModal").modal("hide");
         }
@@ -323,9 +323,11 @@ function PostImageData() {
                 $("#imageModal").modal("hide");
                 document.getElementById("img_preview").src = "";
                 document.getElementById("img_preview").style.display = "none";
-                $("#tileModal").modal("show");
-                $('#sourceTab a[href="#current-image"]').tab("show");
                 document.getElementById("tile_image_file").src = currentImageObject.Source;
+                document.getElementById("tile_image_file").style.display = "initial";
+                currentTileObject.Source = currentImageObject;
+                $('#sourceTab a[href="#current-image"]').tab("show");
+                $("#tileModal").modal("show");
             }
         }
     }
