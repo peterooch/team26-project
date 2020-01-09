@@ -5,37 +5,53 @@
     ViewData["Title"] = locale["Main Page"];
     ViewData["AdditionalStyle"] = Model.GenerateStyle();
 }
-    <header>
-        <nav class="navbar navbar-light" style="background-color: #497b9e; padding-top: 15px;">
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <div class="btn-group d-flex justify-content-start" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
-                        @locale["Boards"]
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        @foreach (var item in Model.Boards)
-                        {
-                            <a onclick="UpdateBoard(@item.ID,'@item.BoardName')">@item.BoardName</a>
-                            <br />
-                        }
-                    </div>
-                    <a href="/UserPref/" class="btn btn-secondary" style="margin-right: 10px;"><img src="~/images/gear.png"></a>
-                    <button type="button" class="btn btn-secondary"><img src="~/images/add.png"></button>
+<header>
+    <nav class="navbar navbar-light" style="background-color: #497b9e; padding-top: 15px;">
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <div class="btn-group d-flex justify-content-start" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
+                    @locale["Boards"]
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    @foreach (var item in Model.Boards)
+                    {
+                        <a onclick="UpdateBoard(@item.ID,'@item.BoardName')">@item.BoardName</a>
+                        <br />
+                    }
                 </div>
+                <a href="/UserPref/" class="btn btn-secondary" style="margin-right: 10px;"><img src="~/images/gear.png"></a>
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target=".board-modal"><img src="~/images/add.png"></button>
             </div>
-            <div class="p-3 mb-2 bg-light text-dark d-flex justify-content-center" id="boardName">@Model.HomeBoard.BoardName</div>
-            <div class="btn-group" role="group" aria-label="Basic example" dir="ltr">
-                <button type="button" onclick="SetFontSize(10)" class="btn btn-outline-dark">A+</button>
-                <button type="button" onclick="SetFontSize(-10)" class="btn btn-outline-dark">A-</button>
+        </div>
+        <div class="p-3 mb-2 bg-light text-dark d-flex justify-content-center" id="boardName">@Model.HomeBoard.BoardName</div>
+        <div class="btn-group" role="group" aria-label="Basic example" dir="ltr">
+            <button type="button" onclick="SetFontSize(10)" class="btn btn-outline-dark">A+</button>
+            <button type="button" onclick="SetFontSize(-10)" class="btn btn-outline-dark">A-</button>
+        </div>
+        <a class="btn btn-outline-primary" onclick="UpdateBoard('@Model.HomeBoard.ID','@Model.HomeBoard.BoardName')" role="button"><img src="~/images/Home.png"></a>
+        <a href="/Home/Contact"><font color="black">@locale["Click to contact the developers"]</font></a>
+        <div>
+            <button type="button" class="btn btn-danger d-flex justify-content-end">@locale["Exit"]</button>
+        </div>
+    </nav>
+</header>
+<iframe id="boardView" src="/BoardView/" style="height: 80vh; width: 100vw;">
+    @locale["No iframe support"]
+</iframe>
+<div class="modal fade board-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@locale["Edit Board"]</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <a class="btn btn-outline-primary" onclick="UpdateBoard('@Model.HomeBoard.ID','@Model.HomeBoard.BoardName')" role="button"><img src="~/images/Home.png"></a>
-            <a href="/Home/Contact"><font color="black">@locale["Click to contact the developers"]</font></a>
-            <div>
-                <button type="button" class="btn btn-danger d-flex justify-content-end">@locale["Exit"]</button>
+            <div class="modal-body">
+                <button type="button" class="btn btn-primary" onclick="OpenEditor(true);">@locale["New Board"]</button>
+                <button type="button" class="btn btn-primary" onclick="OpenEditor(false,'@Model.HomeBoard.ID');">@locale["This Board"]</button>
             </div>
-        </nav>
-    </header>
-    <iframe id="boardView" src="/BoardView/" style="height: 80vh; width: 100vw;">
-        @locale["No iframe support"]
-    </iframe>
+        </div>
+    </div>
+</div>
 

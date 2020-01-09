@@ -1,0 +1,267 @@
+﻿@model Board
+@inject Localizer locale
+@{
+    ViewData["Title"] = locale["Board Editor"];
+}
+<script src="~/js/draggable.js"></script>
+<script>
+    /* Some variables for boardeditor.js stuff */
+    var padding = "@Model.Spacing.ToString()%";
+</script>
+<script src="~/js/boardeditor.js"></script>
+<div class="input-group">
+    <!-- General Board information such as namings and styling -->
+    <div class="input-group-prepend">
+        <span class="input-group-text">@locale["Board Name"]</span>
+    </div>
+    <input onchange="RefreshEditor();" type="text" id="board_name" class="form-control mr-2" value="@Model.BoardName" />
+    <div class="input-group-prepend">
+        <span class="input-group-text">@locale["Board Header"]</span>
+    </div>
+    <input onchange="RefreshEditor();" type="text" id="board_header" class="form-control mr-2" value="@Model.BoardHeader" />
+    <div class="input-group-prepend">
+        <span class="input-group-text">@locale["Background Color"]</span>
+    </div>
+    <input onchange="RefreshEditor();" type="text" id="bg_color" class="jscolor form-control mr-2" value="@Model.BackgroundColor.ToString("X6")" />
+    <div class="input-group-prepend">
+        <span class="input-group-text">@locale["Text Color"]</span>
+    </div>
+    <input onchange="RefreshEditor();" type="text" id="tx_color" class="jscolor form-control mr-2" value="@Model.TextColor.ToString("X6")" />
+    <div class="input-group-prepend">
+        <span class="input-group-text">@locale["Font Size"]</span>
+    </div>
+    <input onchange="RefreshEditor();" type="number" id="font_size" class="form-control" value="@Model.FontSize.ToString()" />
+    <div class="input-group-append mr-2">
+        <span class="input-group-text">%</span>
+    </div>
+    <div class="input-group-prepend">
+        <span class="input-group-text">@locale["Spacing"]</span>
+    </div>
+    <input onchange="RefreshEditor();" type="number" id="spacing" class="form-control" value="@Model.Spacing.ToString()" />
+    <div class="input-group-append">
+        <span class="input-group-text">%</span>
+    </div>
+</div>
+<div class="input-group" style="justify-content: center">
+    <input type="hidden" id="board_id" value="@Model.ID" />
+    <button type="button" class="btn btn-primary mr-2" onclick="SaveBoard();">@locale["Save Board"]</button>
+    <button type="button" class="btn btn-secondary mr-2" onclick="window.location.href='/Home/';">@locale["Quit without making changes"]</button>
+    <button type="button" class="btn btn-danger" onclick="RemoveBoard();">@locale["Remove Board"]</button>
+</div>
+<!-- Debug code start -->
+<!--<div class="input-group mb-3">
+    <button type="button" class="btn btn-success" onclick="$('#tileModal').modal('show');">Open Tile Modal</button>
+    <button type="button" class="btn btn-primary" onclick="$('#imageModal').modal('show');">Open Image Modal</button>
+</div>-->
+<!-- Debug code end -->
+<div class="tile_container" style="color: #@Model.TextColor.ToString("x6"); background-color: #@Model.BackgroundColor.ToString("x6"); font-size: @Model.FontSize.ToString()%;">
+    @foreach (Tile tile in Model.Tiles)
+    {
+        <div class="tile_outer_container" style="padding: @Model.Spacing.ToString()%;">
+            <div class="tiles" id="@tile.ID" style="background-color: #@tile.BackgroundColor.ToString("X6")">
+                <center>
+                    @tile.TileText
+                    <span style="background-color: white;">
+                        <img src="~/images/edit.png" onclick="GetTileData('@tile.ID');" />
+                        <img src="~/images/delete.png" onclick="RemoveTile('@tile.ID');" />
+                    </span>
+                </center>
+                <img class="dragme" src="@tile.Source.Source" alt="@tile.Source.ImageName" style="width: 24vw; height:35vh" />
+            </div>
+        </div>
+    }
+    <div onclick="GetTileData('');" class="tile_outer_container" style="text-align: center; order: 99; padding: @Model.Spacing.ToString()%; width: 24vw; height:35vh;">
+        @locale["Add Tile"]
+    </div>
+</div>
+<!-- Modal Boxes for Tile and Image menus, shamelessly copied from bootstrap docs -->
+<div class="modal" id="tileModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="TileModalBox" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="input-group" style="justify-content: center">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@locale["Tile Name"]:</span>
+                    </div>
+                    <input id="tilename" type="text" class="form-control" />
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@locale["Tile Color:"]</span>
+                    </div>
+                    <input onchange="RefreshModalPreview();" id="tile_color" type="text" class="jscolor form-control" value="FFFFFF" />
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@locale["Tile Description:"]</span>
+                    </div>
+                    <input onchange="RefreshModalPreview();" id="tile_text" type="text" class="form-control" />
+                </div>
+                <label>@locale["Image:"]</label>
+                <ul class="nav nav-tabs" id="sourceTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="current-image-tab" data-toggle="tab" href="#current-image" role="tab" aria-controls="current-image" aria-selected="true">@locale["Existing Image"]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="new-image-tab" data-toggle="tab" href="#new-image" role="tab" aria-controls="new-image" aria-selected="false">@locale["Add Image"]</a>
+                    </li>
+                </ul>
+                <div class="tab-pane fade show active" id="current-image" role="tabpanel" aria-labelledby="current-image-tab">
+                    <select id="category1" class="custom-select image-cat">
+                        <option value="0" selected>@locale["All Categories"]</option>
+                        <!-- Auto populate -->
+                    </select><br />
+                    <select onchange="RefreshModalPreview();" id="tile_image" class="custom-select image-list">
+                        <option value="0" selected>@locale["Select a Image"]</option>
+                        <!-- Auto populate -->
+                    </select>
+                </div>
+                <div class="tab-pane fade" id="new-image" role="tabpanel" aria-labelledby="new-image-tab">
+                    <div class="input-group" style="justify-content: center;">
+                        <button onclick="GetImageData('');" type="button" class="btn btn-primary">@locale["Add a new image"]</button>
+                    </div>
+                </div>
+                <label>@locale["Tile action"]:</label>
+                <ul class="nav nav-tabs" id="actionTab" role="tablist">
+                    <li class="nav-item">
+                        <a onclick="PickActionType(0);" class="nav-link active" id="nothing-tab" data-toggle="tab" href="#nothing" role="tab" aria-controls="nothing" aria-selected="true">@locale["No Action"]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a onclick="PickActionType(1);" class="nav-link" id="gif-tab" data-toggle="tab" href="#gif" role="tab" aria-controls="gif" aria-selected="false">@locale["GIF"]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a onclick="PickActionType(2);" class="nav-link" id="link-tab" data-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="false">@locale["Hyperlink"]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a onclick="PickActionType(3);" class="nav-link" id="anotherboard-tab" data-toggle="tab" href="#anotherboard" role="tab" aria-controls="anotherboard" aria-selected="false">@locale["Board Switch"]</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="nothing" role="tabpanel" aria-labelledby="nothing-tab">
+                        @locale["No Action"]
+                    </div>
+                    <div class="tab-pane fade" id="gif" role="tabpanel" aria-labelledby="gif-tab">
+                        <label class="modal-body">@locale["GIF Image:"]</label><br />
+                        <select id="category2" class="custom-select image-cat">
+                            <option value="0" selected>@locale["All Categories"]</option>
+                            <!-- Auto populate -->
+                        </select><br />
+                        <select id="tile_gif" class="custom-select image-list">
+                            <option value="0" selected>@locale["Select a GIF"]</option>
+                            <!-- Auto populate -->
+                        </select>
+                    </div>
+                    <div class="tab-pane fade" id="link" role="tabpanel" aria-labelledby="link-tab">
+                        <label class="modal-body">@locale["Enter URL:"]</label>
+                        <input type="text" id="tile_url" class="form-control" />
+                    </div>
+                    <div class="tab-pane fade" id="anotherboard" role="tabpanel" aria-labelledby="anotherboard-tab">
+                        <select id="tile_board" class="custom-select">
+                            <option value="0" selected>@locale["Select a Board"]</option>
+                            <!-- Auto populate -->
+                        </select>
+                    </div>
+                </div>
+                <hr />
+                @locale["Tile Preview"]
+                <div id="tile_preview" style="text-align: center; border: solid black 3px; justify-content: center;">
+                    <span id="tile_text_disp"></span><br />
+                    <img id="tile_image_file" style="display: none; width: 15vw; height:26.25vh" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="PostTileData();">@locale["Save Tile"]</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@locale["Cancel"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="imageModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ImageModalBox" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalTitle">@locale["New Image"]</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a onclick="ImageUpdateType = 1;" class="nav-link active" id="newimage-tab" data-toggle="tab" href="#newimage" role="tab" aria-controls="newimage" aria-selected="true">@locale["New Image"]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a onclick="ImageUpdateType = 2;" class="nav-link" id="editimage-tab" data-toggle="tab" href="#editimage" role="tab" aria-controls="editimage" aria-selected="false">@locale["Edit Image"]</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="newimage" role="tabpanel" aria-labelledby="newimage-tab">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@locale["Image Name:"]</span>
+                            </div>
+                            <input id="image_name" type="text" class="form-control" />
+                        </div><br />
+                        <div>
+                            <select id="category3" class="custom-select image-cat">
+                                <option value="0" selected>@locale["All Categories"]</option>
+                            </select>
+                        </div><br />
+                        <div class="custom-file">
+                            <form id="image_form" enctype="multipart/form-data">
+                                <input type="file" class="custom-file-input" name="image_file" onchange="ImageUpload();" />
+                                <label class="custom-file-label" for="image_file">@locale["Choose file"]</label>
+                                <input type="hidden" name="image_id" value="0" />
+                            </form>
+                        </div>
+                        <br />
+                        @locale["Image Preview"]
+                        <div style="width: 25vw; height: 35vh; border: 2px solid black; justify-content: center;">
+                            <img id="img_preview" style="display: none; width: 25vw; height: 35vh;" />
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="editimage" role="tabpanel" aria-labelledby="editimage-tab">
+                        <div>
+                            <select id="image_library" class="custom-select image-list">
+                                <option value="0" selected>@locale["Image library"]</option>
+                            </select>
+                        </div><br />
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@locale["New Image Name:"]</span>
+                            </div>
+                            <input id="edited_image_name" type="text" class="form-control" />
+                        </div><br />
+                        <label>@locale["Change Category:"]</label>
+                        <div>
+                            <select id="category3" class="custom-select image-cat">
+                                <option value="0" selected>@locale["All Categories"]</option>
+                            </select>
+                        </div><br />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="PostImageData();">@locale["Save Image"]</button>
+                <button type="button" class="btn btn-secondary" onclick="tModalWasOpen = false; $('#imageModal').modal('hide'); $('#tileModal').modal('show');">@locale["Cancel"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const container = document.querySelector('.tile_container');
+
+    const swappable = new Draggable.Swappable(container, {
+        draggable: '.tiles',
+        handle: '.dragme'
+    });
+
+    swappable.on('swappable:start', () => console.log('swappable:start'));
+    swappable.on('swappable:swapped', () => console.log('swappable:swapped'));
+    swappable.on('swappable:stop', () => console.log('swappable:stop'));
+</script>

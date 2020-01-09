@@ -47,12 +47,19 @@ namespace BoardProject.Models
         public TileData()
         {
         }
+        public TileData(Tile tile) : base(tile)
+        {
+            SourceID = tile.Source?.ID ?? 0;
+        }
     }
     /* Logical Representation of the User model */
     public class Tile : TileBase
     {
         public Image Source; // Image object associated with the Tile object
 
+        public Tile()
+        {
+        }
         public Tile(TileData tileData)
             : base(tileData)
         {

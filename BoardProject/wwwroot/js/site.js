@@ -67,3 +67,13 @@ function TileOnClick(type, context, tileid) {
     ajax_query.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     ajax_query.send("TileID=" + tileid);
 }
+function OpenEditor(new_board, home_ident) {
+    if (new_board === true)
+        window.location.href = "/ObjectManager/BoardEditor";
+    else {
+        var identifier = boardView.src.substr(boardView.src.lastIndexOf("/")+1);
+        if (identifier === "")
+            identifier = home_ident;
+        window.location.href = "/ObjectManager/BoardEditor/" + identifier;
+    }
+}
