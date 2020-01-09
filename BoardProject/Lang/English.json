@@ -21,7 +21,7 @@
   "This Board": "This Board",
   // Login/Index
   "Login Page": "Login Page",
-  "UserName:": "UserName:",
+  "UserName:": "Username:",
   "Enter your user name": "Enter your user name",
   "Invalid Username!": "Invalid Username!",
   "Password:": "Password:",
@@ -63,7 +63,7 @@
   "Board Switch": "Board Switch",
   "GIF Image:": "GIF Image:",
   "Select a GIF": "Select a GIF",
-  "Enter URL:": "Enter URL::",
+  "Enter URL:": "Enter URL:",
   "Select a Board": "Select a Board",
   "Tile Preview": "Tile Preview",
   "Save Tile": "Save Tile",
