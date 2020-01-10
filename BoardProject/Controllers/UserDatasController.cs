@@ -25,8 +25,10 @@ namespace BoardProject.Controllers
             user = _context.UserData.Find(userID);
 
             if (user != null && (user.IsPrimary || user.IsManager))
+            { 
+                if (user.IsManager) { ViewBag.box = "yes"; }
                 return true;
-
+            }
             return false;
         }
         public UserDatasController(DataContext context)
