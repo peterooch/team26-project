@@ -125,11 +125,12 @@ namespace BoardProject.Models
             // Convert IDs to Board objects
             using var DbCon = new DataContext();
 
+            Boards = new List<Board>();
+            ManagedUsers = new List<User>();
             if (!string.IsNullOrEmpty(userData.BoardIDs))
             {
                 string[] BoardIDs = userData.BoardIDs.Split(';');
 
-                Boards = new List<Board>();
 
                 foreach (string Id in BoardIDs)
                 {

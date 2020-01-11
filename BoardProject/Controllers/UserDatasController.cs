@@ -42,10 +42,22 @@ namespace BoardProject.Controllers
         {
             if (!IsUserValid(out UserData user))
                 return RedirectToAction("Index", "Home");
+
             if (user.IsPrimary)
                 return View(await _context.UserData.ToListAsync());
-            else
-                return View(new User(user).ManagedUsers);
+            
+            List<UserData> ManagedUsers = new List<UserData>();
+            if (!string.IsNullOrEmpty(user.ManagedUsersIDs))
+            {
+                string[] UserIDs = user.ManagedUsersIDs.Split(';');
+
+                foreach (string UserID in UserIDs)
+                {
+                    if (!string.IsNullOrEmpty(UserID))
+                        ManagedUsers.Add(_context.UserData.Single(user => user.ID == int.Parse(UserID)));
+                }
+            }
+            return View(ManagedUsers);
         }
 
         // GET: UserDatas/Details/5
@@ -69,6 +81,8 @@ namespace BoardProject.Controllers
         // GET: UserDatas/Create
         public IActionResult Create()
         {
+            if (!IsUserValid(out _))
+                return RedirectToAction("Index", "Home");
             return View();
         }
 
@@ -93,6 +107,9 @@ namespace BoardProject.Controllers
         // GET: UserDatas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!IsUserValid(out _))
+                return RedirectToAction("Index", "Home");
+
             if (id == null)
             {
                 return NotFound();
