@@ -26,7 +26,7 @@ namespace BoardProject.Controllers
 
             if (user != null && (user.IsPrimary || user.IsManager))
             { 
-                if (user.IsManager) { ViewBag.box = "yes"; }
+                if (user.IsManager) { ViewBag.box = "yes"; } //test if user is coordinator.
                 return true;
             }
             return false;
