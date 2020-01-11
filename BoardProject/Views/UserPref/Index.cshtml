@@ -44,7 +44,7 @@
             </div>
             <div class="p-2 bd-highlight">
                 @locale["High contrast:"]
-                <input type="checkbox" name="high_contrast" id="customControlValidation1" class="" @(Model.HighContrast ? "checked" : "unchecked")>
+                <input type="checkbox" name="high_contrast" @(Model.HighContrast ? "checked" : "unchecked")>
             </div>
             <div class="p-2 bd-highlight">
                 @locale["Dots per inch:"] (%)
