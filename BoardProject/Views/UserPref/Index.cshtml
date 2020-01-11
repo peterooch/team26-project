@@ -11,7 +11,7 @@
         <div class="d-flex flex-column bd-highlight mb-3 border-right border-bottom border-left shadow p-3 mb-5 bg-white rounded">
             <div class="p-2 bd-highlight">
                 @locale["Language:"]
-                <select name="lang_pick">
+                <select name="lang_pick" class="custom-select">
                     @foreach (string lang in Localizer.Translations.AvailableTranslations)
                     {
                         @if (Model.Language != lang)
@@ -32,27 +32,27 @@
 
             <div class="p-2 bd-highlight">
                 @locale["Font:"]
-                <input name="font_pick" type="text" value="@Model.Font" />
+                <input name="font_pick" type="text" value="@Model.Font" class="form-control" />
             </div>
             <div class="p-2 bd-highlight">
                 @locale["Background color:"]
-                <input name="bg_color" class="jscolor" value="@Model.BackgroundColor.ToString("X6")">
+                <input name="bg_color" class="jscolor form-control" value="@Model.BackgroundColor.ToString("X6")">
             </div>
             <div class="p-2 bd-highlight">
                 @locale["Text color:"]
-                <input name="tx_color" class="jscolor" value="@Model.TextColor.ToString("X6")">
+                <input name="tx_color" class="jscolor form-control" value="@Model.TextColor.ToString("X6")">
             </div>
             <div class="p-2 bd-highlight">
                 @locale["High contrast:"]
-                <input type="checkbox" name="high_contrast" @(Model.HighContrast ? "checked" : "unchecked")>
+                <input type="checkbox" name="high_contrast" id="customControlValidation1" class="" @(Model.HighContrast ? "checked" : "unchecked")>
             </div>
             <div class="p-2 bd-highlight">
-                @locale["Dots per inch:"]
-                <input name="dpi" type="number" value="@Model.DPI" />%
+                @locale["Dots per inch:"] (%)
+                <input name="dpi" type="number" value="@Model.DPI" class="form-control" />
             </div>
             <div class="p-2 bd-highlight">
-                @locale["Font size:"]
-                <input name="font_size" type="number" value="@((int)Model.FontSize)" />%
+                @locale["Font size:"] (%)
+                <input name="font_size" type="number" value="@((int)Model.FontSize)" class="form-control" />
             </div>
             <div class="p-2 bd-highlight d-flex justify-content-center">
                 <input type="submit" class="btn btn-outline-dark" value="@locale["Save Prefrences"]" />
