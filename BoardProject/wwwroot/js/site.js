@@ -12,7 +12,7 @@ function SetFontSize(change) {
     /* Update parent window / header font size */
     document.getElementById("page_body").style.fontSize = current_font_size + "%";
     /* Update BoardView iframe font size */
-    boardView.contentDocument.body.style.fontSize = current_font_size + "%";
+    boardView.contentDocument.body.style.fontSize = (parseFloat(boardView.contentDocument.body.style.fontSize) + change) + "%";
 
     /* Post updated font size info to update user preference */
     var ajax_query = new XMLHttpRequest();
@@ -29,8 +29,6 @@ document.getElementById("page_body").onload = function () {
     /* Pull current font size from style data */
     var font_size = document.getElementById("page_body").style.fontSize;
     current_font_size = Number(font_size.substr(0, font_size.indexOf("%")));
-    if (boardView != null)
-        boardView.contentDocument.body.style.fontSize = font_size;
 }
 if (boardView != null) {
     boardView.onload = function () {

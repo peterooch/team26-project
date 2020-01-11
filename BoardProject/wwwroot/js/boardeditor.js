@@ -10,6 +10,8 @@
  * DB -> C# Object -> JSON -> JavaScript Object -> JSON -> C# Object -> DB */
 var currentTileObject = null;
 var currentImageObject = null;
+const vw = 19.5;
+const vh = 30;
 /******************* FUNCTIONS *************************************/
 $(document).ready(function () {
     PopulateLists();
@@ -33,12 +35,12 @@ function AjaxDispatcher(method, target, callback_fn, payload) {
 function AddTile(tileid, bg_color, tile_text, image_src, image_name) {
     var tile_container = document.querySelector(".tile_container");
     var outerdiv = document.createElement("div");
-    outerdiv.style.padding = padding;
     outerdiv.className = "tile_outer_container";
     var innerdiv = document.createElement("div");
     innerdiv.className = "tiles";
     innerdiv.id = tileid;
     innerdiv.style.backgroundColor = "#" + bg_color;
+    innerdiv.style.padding = padding + "%";
     var center = document.createElement("center");
     var image_text = document.createTextNode(tile_text);
     center.appendChild(image_text);
@@ -62,8 +64,8 @@ function AddTile(tileid, bg_color, tile_text, image_src, image_name) {
     img.className = "dragme";
     img.src = image_src;
     img.alt = image_name;
-    img.style.width = "24vw";
-    img.style.height = "35vh";
+    img.style.width = vw + "vw";
+    img.style.height = vh + "vh";
     innerdiv.appendChild(img);
     outerdiv.appendChild(innerdiv);
     tile_container.appendChild(outerdiv);
@@ -109,10 +111,10 @@ function RefreshEditor() {
     container.style.backgroundColor = "#" + document.getElementById("bg_color").value;
     container.style.color = "#" + document.getElementById("tx_color").value;
     container.style.fontSize = document.getElementById("font_size").value + "%";
-    padding = document.getElementById("spacing").value + "%";
-    document.querySelectorAll(".tile_outer_container").forEach(tile =>
-        tile.style.padding = padding
-    );
+    padding = parseInt(document.getElementById("spacing").value);
+    document.querySelectorAll(".tiles").forEach(tile => {
+        tile.style.padding = padding + "%";
+    });
 }
 /************** Tile Modal functions *******************************/
 /* Set current tile object to one retreived from the server identified by tileid */

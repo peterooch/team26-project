@@ -6,7 +6,7 @@
 <script src="~/js/draggable.js"></script>
 <script>
     /* Some variables for boardeditor.js stuff */
-    var padding = "@Model.Spacing.ToString()%";
+    var padding = parseFloat("@Model.Spacing.ToString()");
 </script>
 <script src="~/js/boardeditor.js"></script>
 <div class="input-group">
@@ -57,8 +57,8 @@
 <div class="tile_container" style="color: #@Model.TextColor.ToString("x6"); background-color: #@Model.BackgroundColor.ToString("x6"); font-size: @Model.FontSize.ToString()%;">
     @foreach (Tile tile in Model.Tiles)
     {
-        <div class="tile_outer_container" style="padding: @Model.Spacing.ToString()%;">
-            <div class="tiles" id="@tile.ID" style="background-color: #@tile.BackgroundColor.ToString("X6")">
+        <div class="tile_outer_container">
+            <div class="tiles" id="@tile.ID" style="padding: @Model.Spacing.ToString()%; background-color: #@tile.BackgroundColor.ToString("X6")">
                 <center>
                     @tile.TileText
                     <span style="background-color: white;">

@@ -113,7 +113,6 @@ namespace BoardProject.Controllers
         public string UpdateBoard()
         {
             BoardData board = JsonConvert.DeserializeObject<BoardData>(Request.Form["Model"]);
-            int UserID = HttpContext.Session.GetInt32("SelectedUser") ?? default;
 
             /* Check if we have something to work with */
             if (board != null)
@@ -126,6 +125,7 @@ namespace BoardProject.Controllers
                 else
                 {
                     DBCon.BoardData.Add(board);
+                    int UserID = HttpContext.Session.GetInt32("SelectedUser") ?? default;
 
                     UserData user = DBCon.UserData.Find(UserID);
 

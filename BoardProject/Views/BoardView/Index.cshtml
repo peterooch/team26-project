@@ -8,8 +8,10 @@
 }
 <script>
     /* Correct page width and height */
-    document.getElementById("page_body").style.width = "100vw";
-    document.getElementById("page_body").style.height = "80vh";
+    var body = document.getElementById("page_body");
+    body.style.width = "98vw";
+    body.style.height = "80vh";
+    body.style.fontSize = "@Model.FontSize.ToString()%";
 </script>
 @if (Model != null)
 {
@@ -22,11 +24,12 @@
         <div class="tile_container">
             @foreach (Tile tile in Model.Tiles)
             {
-                <div style="background-color: #@tile.BackgroundColor.ToString("X6");" onclick="TileOnClick('@tile.ActionType','@tile.ActionContext','@tile.ID');">
-                    @tile.TileText<br />
-                    <img id="@tile.ID" src="@tile.Source.Source" alt="@tile.Source.ImageName" style="width: 20vw; height:35vh" />
+                <div style="padding: @Model.Spacing.ToString()%; background-color: #@tile.BackgroundColor.ToString("X6");" onclick="TileOnClick('@tile.ActionType','@tile.ActionContext','@tile.ID');">
+                    <center>
+                    @tile.TileText
+                    </center>
+                    <img id="@tile.ID" src="@tile.Source.Source" alt="@tile.Source.ImageName" style="width: 19.5vw; height:30vh;" />
                 </div>
-                <br />
             }
         </div>
     </div>
