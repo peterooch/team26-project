@@ -26,8 +26,8 @@ namespace BoardProject.Controllers
 
             if (user != null && (user.IsPrimary || user.IsManager))
             { 
-                if (user.IsManager)
-                    ViewData["IsManager"] = true;
+                if (user.IsPrimary)
+                    ViewData["IsPrimary"] = true;
                 return true;
             }
             return false;
@@ -96,8 +96,14 @@ namespace BoardProject.Controllers
             //var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
+                IsUserValid(out UserData user);
                 userData.StorePassword(userData.PasswordSalt);
                 _context.Add(userData);
+                await _context.SaveChangesAsync();
+                if (string.IsNullOrEmpty(user.ManagedUsersIDs))
+                    user.ManagedUsersIDs = string.Empty;
+                user.ManagedUsersIDs += userData.ID.ToString() + ";";
+                _context.Update(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
