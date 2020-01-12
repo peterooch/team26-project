@@ -1,7 +1,12 @@
 ﻿body {
     background-color: #c2c2d6;
-    margin-top: 5% !important
+    margin-top: 3% !important
     /*
     set the from in the center.
     */
 }
+form{
+    width : 35%
+}
+
+/*no need to touch in css more.*/

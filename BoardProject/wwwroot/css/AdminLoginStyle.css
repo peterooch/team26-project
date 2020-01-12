@@ -39,4 +39,5 @@ article {
 input[type="submit"]:hover {
     color: red;
     padding: 3px;
+    background-color: #E4FFFD;
 }
