@@ -25,6 +25,7 @@ namespace BoardProject
         {
             /* Enable Localizer object use */
             services.AddScoped<Models.Localizer>();
+            services.AddScoped<Data.DataContext>();
             services.AddControllersWithViews();
             services.AddDistributedMemoryCache();
             services.AddSession();

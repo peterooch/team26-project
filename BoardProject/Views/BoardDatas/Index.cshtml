@@ -1,0 +1,78 @@
+﻿@model IEnumerable<BoardProject.Models.BoardData>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Boards</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TileIDs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BoardName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPublic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BoardHeader)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BackgroundColor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TextColor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FontSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Spacing)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TileIDs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BoardName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPublic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BoardHeader)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BackgroundColor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TextColor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FontSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Spacing)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

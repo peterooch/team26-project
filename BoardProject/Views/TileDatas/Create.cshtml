@@ -1,0 +1,64 @@
+﻿@model BoardProject.Models.TileData
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>TileData</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SourceID" class="control-label"></label>
+                <input asp-for="SourceID" class="form-control" />
+                <span asp-validation-for="SourceID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TileName" class="control-label"></label>
+                <input asp-for="TileName" class="form-control" />
+                <span asp-validation-for="TileName" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsPublic" /> @Html.DisplayNameFor(model => model.IsPublic)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="TileText" class="control-label"></label>
+                <input asp-for="TileText" class="form-control" />
+                <span asp-validation-for="TileText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActionType" class="control-label"></label>
+                <select asp-for="ActionType" class="form-control"></select>
+                <span asp-validation-for="ActionType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActionContext" class="control-label"></label>
+                <input asp-for="ActionContext" class="form-control" />
+                <span asp-validation-for="ActionContext" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BackgroundColor" class="control-label"></label>
+                <input asp-for="BackgroundColor" class="form-control" />
+                <span asp-validation-for="BackgroundColor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

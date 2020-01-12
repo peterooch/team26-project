@@ -1,0 +1,81 @@
+﻿@model BoardProject.Models.UserData
+
+@{
+    ViewData["Title"] = "Create";
+}
+<header>
+    <div class="d-flex justify-content-center">
+        <h1>Create</h1>
+    </div>
+    <br />
+    <div class="d-flex justify-content-center">
+        <h4>UserData</h4>
+    </div>
+    <hr />
+</header>
+<article>
+<div class="row d-flex justify-content-center">
+    <!-- set the enrolment in the center -->
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BoardIDs" class="control-label"></label>
+                <input asp-for="BoardIDs" class="form-control" />
+                <span asp-validation-for="BoardIDs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HomeBoardID" class="control-label"></label>
+                <input asp-for="HomeBoardID" class="form-control" />
+                <span asp-validation-for="HomeBoardID" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display: @((ViewData["IsPrimary"] != null) ? "block" : "none");">
+                <label asp-for="ManagedUsersIDs" class="control-label"></label>
+                <input asp-for="ManagedUsersIDs" class="form-control" />
+                <span asp-validation-for="ManagedUsersIDs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                Password
+                <label for="PasswordSalt" class="control-label"></label>
+                <input asp-for="PasswordSalt" class="form-control" />
+                <span asp-validation-for="PasswordSalt" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check" style="display: @((ViewData["IsPrimary"] != null) ? "block" : "none");">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsPrimary" /> @Html.DisplayNameFor(model => model.IsPrimary)
+                </label>
+            </div>
+            <div class="form-group form-check" style="display: @((ViewData["IsPrimary"] != null) ? "block" : "none");">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsManager" /> @Html.DisplayNameFor(model => model.IsManager)
+                </label>
+            </div>
+            <div class="form-group form-check" style="display:none;">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="HighContrast" /> @Html.DisplayNameFor(model => model.HighContrast)
+                </label>
+            </div>
+            <div class="form-group">
+                <input asp-for="PasswordHash" value="0" type="hidden" class="form-control" />
+                <input asp-for="TextColor" value="0" type="hidden" class="form-control" />
+                <input asp-for="DPI" value="0" type="hidden" class="form-control" />
+                <input asp-for="BackgroundColor" value="16777215" type="hidden" class="form-control" />
+                <input asp-for="FontSize" value="100" type="hidden" class="form-control" />
+                <input asp-for="Font" value="Sans-serif" type="hidden" class="form-control" />
+                <input asp-for="Language" value="en" type="hidden" class="form-control" />
+            </div>
+            <div class="d-flex justify-content-center">
+                <input type="submit" value="Create new user" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div class="d-flex justify-content-center">
+    <a asp-action="Index">Back</a>
+</div>
+</article>

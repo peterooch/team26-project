@@ -33,6 +33,15 @@
         <div>
             <button type="button" class="btn btn-danger d-flex justify-content-end">@locale["Exit"]</button>
         </div>
+            @if (Model.IsManager || Model.IsPrimary)
+            {
+                <a href="/UserDatas" class="btn btn-warning">@locale["Manage"]</a>
+            }
+            <a href="/Home/Contact" class="btn btn-info"><font color="black">@locale["Contact Us"]</font></a>
+            <a href="/UserPref/" class="btn btn-secondary">@locale["Settings"]</a>
+            <div>
+                <button type="button" class="btn btn-danger d-flex justify-content-end">@locale["Logout"]</button>
+            </div>
     </nav>
 </header>
 <iframe id="boardView" src="/BoardView/" style="height: 80vh; width: 100vw;">
@@ -50,7 +59,6 @@
             <div class="modal-body">
                 <button type="button" class="btn btn-primary" onclick="OpenEditor(true);">@locale["New Board"]</button>
                 <button type="button" class="btn btn-primary" onclick="OpenEditor(false,'@Model.HomeBoard.ID');">@locale["This Board"]</button>
-            </div>
         </div>
     </div>
 </div>

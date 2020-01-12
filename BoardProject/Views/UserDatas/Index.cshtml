@@ -1,0 +1,66 @@
+﻿@model IEnumerable<BoardProject.Models.UserData>
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Index";
+}
+
+<h1>User List</h1>
+
+<p>
+    <a asp-action="Create">Create New Acount</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BoardIDs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HomeBoardID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ManagedUsersIDs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPrimary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsManager)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BoardIDs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HomeBoardID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagedUsersIDs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPrimary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsManager)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
