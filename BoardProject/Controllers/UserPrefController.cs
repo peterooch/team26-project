@@ -72,6 +72,7 @@ namespace BoardProject.Controllers
                     userData.TextColor = int.Parse(Request.Form["tx_color"], System.Globalization.NumberStyles.HexNumber);
                     userData.DPI = int.Parse(Request.Form["dpi"]);
                     userData.FontSize = double.Parse(Request.Form["font_size"]);
+                    userData.HomeBoardID = Request.Form["board_id"];
 
                     if (LogMessage.Length != 0)
                     {

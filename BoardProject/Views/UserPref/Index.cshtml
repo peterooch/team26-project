@@ -29,7 +29,18 @@
                     }
                 </select>
             </div>
-
+            <div class="p-2 bd-highlight">
+                <select name="board_id" class="custom-select">
+                    @if (Model.HomeBoard != null)
+                    {
+                        <option value="@Model.HomeBoard.ID" selected>@Model.HomeBoard.BoardName</option>
+                    }
+                    @foreach (Board board in Model.Boards)
+                    {
+                        <option value="@board.ID">@board.BoardName</option>
+                    }
+                </select>
+            </div>
             <div class="p-2 bd-highlight">
                 @locale["Font:"]
                 <input name="font_pick" type="text" value="@Model.Font" class="form-control" />
@@ -42,7 +53,7 @@
                 @locale["Text color:"]
                 <input name="tx_color" class="jscolor form-control" value="@Model.TextColor.ToString("X6")">
             </div>
-            <div class="p-2 bd-highlight">
+            <div class="p-2 bd-highlight" style="display: none;">
                 @locale["High contrast:"]
                 <input type="checkbox" name="high_contrast" @(Model.HighContrast ? "checked" : "unchecked")>
             </div>

@@ -192,8 +192,11 @@ namespace BoardProject.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var userData = await _context.UserData.FindAsync(id);
-            _context.UserData.Remove(userData);
-            await _context.SaveChangesAsync();
+            if (!userData.IsPrimary)
+            {
+                _context.UserData.Remove(userData);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
         }
 
