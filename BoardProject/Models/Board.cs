@@ -1,6 +1,7 @@
 ﻿using BoardProject.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,12 +9,17 @@ namespace BoardProject.Models
 {
     public class BoardBase
     {
-        public int ID { get; set; }              // Identitfier
+        public int ID { get; set; }       // Identitfier
+        [Display(Name = "Board Name")]
         public string BoardName { get; set; }    // Board Name
-        public bool IsPublic { get; set; }       // Is the board public to all users?
+        public bool IsPublic { get; set; }    // Is the board public to all users?
+        [Display(Name = "Board Header")]
         public string BoardHeader { get; set; }  // Header to be displayed in the board
+        [Display(Name = "Background Color")]
         public int BackgroundColor { get; set; }
+        [Display(Name = "Text Color")]
         public int TextColor { get; set; }
+        [Display(Name = "Font size")]
         public double FontSize { get; set; }
         public double Spacing { get; set; }
 
@@ -37,6 +43,7 @@ namespace BoardProject.Models
     /* Database Representation of the Board model */
     public class BoardData : BoardBase
     {
+        [Display(Name = "Included Tile IDs")]
         public string TileIDs { get; set; } //; delimited id numbers (ID1;ID2;ID3;...)
         public BoardData()
         {

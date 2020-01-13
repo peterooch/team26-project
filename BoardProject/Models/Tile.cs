@@ -1,6 +1,7 @@
 ﻿using BoardProject.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,11 +18,16 @@ namespace BoardProject.Models
         }
 
         public int ID { get; set; }               // Identifier
+        [Display(Name = "Tile Name")]
         public string TileName { get; set; }      // Tile Name
         public bool IsPublic { get; set; }        // Is the tile public to all users?
+        [Display(Name = "Tile Description")]
         public string TileText { get; set; }      // Tile Description
+        [Display(Name = "Action Type")]
         public ActionID ActionType { get; set; }  // Action Type specifier
+        [Display(Name = "Action Context")]
         public string ActionContext { get; set; } // Action context (resource location)
+        [Display(Name = "Background Color")]
         public int BackgroundColor { get; set; }  // Tile background color
         public TileBase()
         {
@@ -42,6 +48,7 @@ namespace BoardProject.Models
     /* Database Representation of the Tile model */
     public class TileData : TileBase
     {
+        [Display(Name = "Included Image ID")]
         public int SourceID { get; set; } // Database tile identifier
 
         public TileData()

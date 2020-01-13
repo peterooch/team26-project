@@ -1,5 +1,6 @@
 ﻿using BoardProject.Data;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -9,16 +10,23 @@ namespace BoardProject.Models
     public class UserBase
     {
         public int ID { get; set; }              // Identifier
+        [Display(Name = "User name")]
         public string Username { get; set; }     // Login Identifier
         public string PasswordHash { get; set; } // SHA512 Password Hash <=> sha512(password+salt)
         public string PasswordSalt { get; set; } // Password salt
+        [Display(Name = "Is Administrator")]
         public bool IsPrimary { get; set; }      // Is the user is the primary user? (SuperUser)
+        [Display(Name = "Is Manager")]
         public bool IsManager { get; set; }      // Is the current user is an manager?
         public string Language { get; set; }     // Selected User language
         public string Font { get; set; }         // Selected font name
+        [Display(Name = "Font size")]
         public double FontSize { get; set; }     // Selected font size
+        [Display(Name = "Background Color")]
         public int BackgroundColor { get; set; } // Selected background color
+        [Display(Name = "Text Color")]
         public int TextColor { get; set; }       // Selected text color
+        [Display(Name = "High contrast")]
         public bool HighContrast { get; set; }   // Do we use the high contrast theme?
         public int DPI { get; set; }             // Selected DPI
 
@@ -87,8 +95,11 @@ namespace BoardProject.Models
     /* Database Representation of the User model */
     public class UserData : UserBase
     {
+        [Display(Name = "Used board IDs")]
         public string BoardIDs { get; set; }     // ; delimited id numbers (ID1;ID2;ID3;...)
+        [Display(Name = "Home board ID")]
         public string HomeBoardID { get; set; }// Primary board identifier
+        [Display(Name = "Managed users IDs")]
         public string ManagedUsersIDs { get; set; }
         public UserData()
         {
