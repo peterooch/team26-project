@@ -25,7 +25,7 @@ namespace BoardProject.Controllers
             int UserID =  UnitTest ? 1 : HttpContext.Session.GetInt32("SelectedUser") ?? default;
             using var DBCon = new DataContext();
             User UserObject;
-            Board SelectedBoard;
+            Board SelectedBoard = null;
 
             if (UserID == default)
                 return View(null);
@@ -38,9 +38,20 @@ namespace BoardProject.Controllers
             localizer.SetLocale(UserObject);
 
             if (ID == null)
+            {
                 SelectedBoard = UserObject.HomeBoard;
+            }
+            else if (UserObject.IsManager || UserObject.IsPrimary)
+            {
+                BoardData boardData = DBCon.BoardData.Find(ID);
+
+                if (boardData != null)
+                    SelectedBoard = new Board(boardData);
+            }
             else
+            {
                 SelectedBoard = UserObject.Boards.Find(board => board.ID == ID);
+            }
 
             if (SelectedBoard != null)
             {

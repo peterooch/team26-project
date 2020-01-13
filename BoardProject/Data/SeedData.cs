@@ -17,6 +17,7 @@ namespace BoardProject.Data
             {
                 return;
             }
+#if false
             UserData TestUser = new UserData {
                 Username = "TestUser",
                 IsPrimary = true,
@@ -31,6 +32,7 @@ namespace BoardProject.Data
             };
             TestUser.StorePassword("1234");
             DBConnection.UserData.Add(TestUser);
+#endif
             BoardData TestBoard = new BoardData {
                 BoardName = "TestBoard",
                 BoardHeader = "Test Header",

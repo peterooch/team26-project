@@ -100,11 +100,14 @@ namespace BoardProject.Controllers
                 userData.StorePassword(userData.PasswordSalt);
                 _context.Add(userData);
                 await _context.SaveChangesAsync();
-                if (string.IsNullOrEmpty(user.ManagedUsersIDs))
-                    user.ManagedUsersIDs = string.Empty;
-                user.ManagedUsersIDs += userData.ID.ToString() + ";";
-                _context.Update(user);
-                await _context.SaveChangesAsync();
+                if (user.IsManager)
+                {
+                    if (string.IsNullOrEmpty(user.ManagedUsersIDs))
+                        user.ManagedUsersIDs = string.Empty;
+                    user.ManagedUsersIDs += userData.ID.ToString() + ";";
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(userData);

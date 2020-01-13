@@ -32,7 +32,10 @@ namespace BoardProject.Controllers
             {
                 User user = new User(DBCon.UserData.Find(UserID));
 
-                model = user.Boards.Find(board => board.ID == ID);
+                if (user.IsPrimary || user.IsManager)
+                    model = new Board(DBCon.BoardData.Find(ID));
+                else
+                    model = user.Boards.Find(board => board.ID == ID);
             }
             else
             {
