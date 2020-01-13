@@ -9,8 +9,8 @@
     text-decoration: underline;
     text-shadow: 2px 2px 2px #77B7FF;
 }
-.title{
-    font-family:'Bold Art';
+.t{
+    font-weight:bold;
     text-decoration:underline;
 }
 
