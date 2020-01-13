@@ -91,5 +91,12 @@ namespace BoardProject.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            Response.Cookies.Delete("LoggedUser");
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
