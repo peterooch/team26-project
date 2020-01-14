@@ -5,23 +5,32 @@
   "align": "right",
   // BoardView/Index
   "No board title": "אין כותרת לוח",
-  "There isn't a board defined or the requested board cannot be accessed by the current user.": "לא מוגדר לוח או שהלוח שנדרש אינו לזמין למשתמש הנוכחי",
+  "There isn't a board defined or the requested board cannot be accessed by the current user.": 
+  "לא מוגדר לוח או שהלוח שנדרש אינו לזמין למשתמש הנוכחי",
   // Home/Contact
   "Contact Us": "צור קשר",
   "This system was brought to you by Team 26.": "המערכת הובאה אליך על-ידי צוות 26.",
   "To send us Email.": "לשליחת מייל לצוות",
   // Home/Index
   "Main Page": "עמוד ראשי",
-  "Click to contact the developers": "לחץ כדי ליצור קשר עם המפתחים",
-  "Exit": "יציאה",
+  "Logout": "התנתקות",
   "No iframe support": "אין תמיכה ב-iframe",
   "Boards": "לוחות",
   "Edit Board": "עריכת לוח",
   "New Board": "לוח חדש",
   "This Board": "הלוח הנוכחי",
+  "Manage": "ניהול",
+  "Help": "עזרה",
+  "Settings": "הגדרות",
+  // Home/FirstRun
+  "First run page": "עמוד הפעלה ראשונית",
+  "The system detected that its being run for the first time, please fill out the details for the Administrator account.": 
+  "המערכת זיהתה שהיא מופעלת בפעם הראשונה, בבקשה תמלא את הפרטים עבור חשבון מנהל המערכת.",
+  "First run": "הפעלה ראשונית",
+  "Create user": "צור משתמש",
   // Login/Index
   "Login Page": "עמוד התחברות",
-  "UserName:": "שם משתמש:",
+  "Username:": "שם משתמש:",
   "Enter your user name": "הקלד שם משתמש",
   "Invalid Username!": "שם משתמש שגוי!",
   "Password:": "סיסמה:",
@@ -38,6 +47,7 @@
   "Dots per inch:": "DPI:",
   "Font size:": "גודל גופן:",
   "Save Prefrences": "שמירת העדפות",
+  "Home Board:": "לוח בית:",
   // ObjectManager/BoardEditor
   "Board Editor": "עריכת לוח",
   "Board Name": "שם הלוח",
@@ -79,5 +89,9 @@
   "Existing Image": "תמונה קיימת",
   "Add Image": "הוסף תמונה",
   "Tile action": "פעולת אריח",
-  "Choose file": "בחר קובץ"
+  "Choose file": "בחר קובץ",
+  "New Board Header": "כותרת לוח חדש",
+  "New Tile Name": "שם אריח חדש",
+  "New Tile Description": "תיאור אריח חדש",
+  "No category":"ללא קטגוריה"
 }

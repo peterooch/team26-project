@@ -1,0 +1,35 @@
+@inject Localizer locale
+@{
+    ViewData["Title"] = @locale["First run page"];
+}
+<!-- More copypasta -->
+<div class="d-flex justify-content-center">
+    <div style="justify-content: center" class="d-flex bd-highlight mb-3 border-right border-bottom border-left shadow p-3 mb-5 bg-white rounded">
+        <form asp-action="FirstRunRegister">
+            <div>
+                @foreach (string lang in Localizer.Translations.AvailableTranslations)
+                {
+                    @:&nbsp;
+                    <a href="/Home/FirstRun/?lang=@lang">
+                    @Localizer.Translations.GetString(lang, "lang-native")
+                    </a>
+                    @:&nbsp; &vert;
+                }
+            </div>
+            <header>
+                <h2>@locale["First run"]</h2>
+            </header>
+            <article>
+                @locale["The system detected that its being run for the first time, please fill out the details for the Administrator account."]
+                <br/>
+                @locale["Username:"]&nbsp;
+                <input type="text" name="username" placeholder="@locale["Enter your user name"]" class="form-control" />
+                <br/>
+                @locale["Password:"]&nbsp;
+                <input type="password" name="password" placeholder="@locale["Enter your password"]" class="form-control" />
+                <br/>
+                <input type="submit" value="@locale["Create user"]" class="btn btn-primary" style="justify-content: center" />
+            </article>
+        </form>
+    </div>
+</div>

@@ -5,23 +5,32 @@
   "align": "left",
   // BoardView/Index
   "No board title": "No board title",
-  "There isn't a board defined or the requested board cannot be accessed by the current user.": "There isn't a board defined or the requested board cannot be accessed by the current user.",
+  "There isn't a board defined or the requested board cannot be accessed by the current user.": 
+  "There isn't a board defined or the requested board cannot be accessed by the current user.",
   // Home/Contact
   "Contact Us": "Contact Us",
   "This system was brought to you by Team 26.": "This system was brought to you by Team 26.",
   "To send us Email.": "To send us Email.",
   // Home/Index
   "Main Page": "Main Page",
-  "Click to contact the developers": "Click to contact the developers",
-  "Exit": "Exit",
+  "Logout": "Logout",
   "No iframe support": "No iframe support",
   "Boards": "Boards",
   "Edit Board": "Edit Board",
   "New Board": "New Board",
   "This Board": "This Board",
+  "Manage": "Manage",
+  "Help": "Help",
+  "Settings": "Settings",
+  // Home/FirstRun
+  "First run page": "First run page",
+  "The system detected that its being run for the first time, please fill out the details for the Administrator account.": 
+  "The system detected that its being run for the first time, please fill out the details for the Administrator account.",
+  "First run": "First run",
+  "Create user": "Create user",
   // Login/Index
   "Login Page": "Login Page",
-  "UserName:": "Username:",
+  "Username:": "Username:",
   "Enter your user name": "Enter your user name",
   "Invalid Username!": "Invalid Username!",
   "Password:": "Password:",
@@ -38,6 +47,7 @@
   "Dots per inch:": "Dots per inch:",
   "Font size:": "Font size:",
   "Save Prefrences": "Save Prefrences",
+  "Home Board:": "Home Board:",
   // ObjectManager/BoardEditor
   "Board Editor": "Board Editor",
   "Board Name": "Board Name",
@@ -79,5 +89,9 @@
   "Existing Image": "Existing Image",
   "Add Image": "Add Image",
   "Tile action": "Tile action",
-  "Choose file": "Choose file"
+  "Choose file": "Choose file",
+  "New Board Header": "New Board Header",
+  "New Tile Name": "New Tile Name",
+  "New Tile Description": "New Tile Description",
+  "No category":"No category"
 }

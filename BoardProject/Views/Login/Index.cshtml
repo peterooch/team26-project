@@ -1,14 +1,14 @@
 ﻿@model LoginError
 @inject Localizer locale
 @{
-    ViewData["Title"] = "Login Page";
+    ViewData["Title"] = @locale["Login Page"];
     ViewData["CustomStyle"] = "/css/AdminLoginStyle.css";
 }
 
 <header><h1>Login</h1></header>
 <article>
     <form asp-action="UserLogin">
-        @locale["UserName:"]
+        @locale["Username:"]
         <input type="text" name="username" placeholder="@locale["Enter your user name"]" @if (Model != null && Model.password_error) @Html.Encode($"value ={Model.username}")  class="styleinput" /> <br />
         @if (Model != null && Model.username_error)
         {
