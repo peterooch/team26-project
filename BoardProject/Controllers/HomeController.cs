@@ -24,13 +24,15 @@ namespace BoardProject.Controllers
         // GET /
         public IActionResult Index()
         {
-            /* DEBUG: Seed and pick user no. 1 and redirect to MainPage */
             SeedData.PutTestData();
-            /* END DEBUG */
             int SelectedUser;
 
             /* Open a database connection */
             using DataContext DBCon = new DataContext();
+
+            /* Check if there are any users in the database*/
+            if (!DBCon.UserData.Any())
+                return RedirectToAction(nameof(FirstRun));
 
             /* Try to find the ID of currently logged in User */
             if (!UnitTest)
@@ -77,6 +79,51 @@ namespace BoardProject.Controllers
             /* Get system localization from session variable */
             localizer.SetLocale(HttpContext.Session.GetString("Language"));
             return View();
+        }
+
+        public IActionResult FirstRun(string lang = "en")
+        {
+            using var DBCon = new DataContext();
+
+            if (DBCon.UserData.Any())
+                return RedirectToAction(nameof(Index));
+
+            localizer.SetLocale(lang);
+            HttpContext.Session.SetString("Language", lang);
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult FirstRunRegister()
+        {
+            using var DBCon = new DataContext();
+
+            UserData newUser = new UserData()
+            {
+                Username = Request.Form["username"],
+                IsPrimary = true,
+                IsManager = false,
+                Language = HttpContext.Session.GetString("Language"),
+                Font = "Arial",
+                FontSize = 100,
+                BackgroundColor = 0xFFFFFF,
+                TextColor = 0,
+                HighContrast = false,
+                DPI = 100,
+                /* Give user some boards to toy with */
+                BoardIDs = "1;2;3",
+                HomeBoardID = "1"
+            };
+            newUser.StorePassword(Request.Form["password"]);
+
+            DBCon.UserData.Add(newUser);
+            DBCon.SaveChanges();
+
+            HttpContext.Session.SetInt32("FirstRun", 1);
+            HttpContext.Session.SetInt32("SelectedUser", newUser.ID);
+
+            /* Now go to the preferences page to change some settings */
+            return RedirectToAction("Index", "UserPref");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

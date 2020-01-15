@@ -80,8 +80,16 @@ namespace BoardProject.Controllers
                                                  userData, $"User {userData.Username} (ID:{userData.ID}) has " + LogMessage.ToString()));
                     }
                     DBCon.SaveChanges();
+                    HttpContext.Session.SetString("Language", userData.Language);
                 }
             }
+            if (HttpContext.Session.GetInt32("FirstRun") != null)
+            {
+                /* Redirect user to create their first board, first run sequence is done */
+                HttpContext.Session.Remove("FirstRun");
+                return RedirectToAction("BoardEditor","ObjectManager", null);
+            }
+
             return RedirectToAction("Index", "Home");
         }
         /* Directly update user preferences without need to use the form */
