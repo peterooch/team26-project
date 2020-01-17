@@ -111,7 +111,7 @@ namespace BoardProject.Controllers
                 HighContrast = false,
                 DPI = 100,
                 /* Give user some boards to toy with */
-                BoardIDs = "1;2;3",
+                BoardIDs = "1;2;3;",
                 HomeBoardID = "1"
             };
             newUser.StorePassword(Request.Form["password"]);
